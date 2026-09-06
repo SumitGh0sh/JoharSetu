@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
@@ -17,7 +17,7 @@ import {
   EyeOff
 } from 'lucide-react';
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTarget = searchParams.get('redirect') || '';
@@ -239,5 +239,19 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-canvas flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-terracotta" />
+        </div>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }
