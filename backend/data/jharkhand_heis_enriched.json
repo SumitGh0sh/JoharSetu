@@ -1,0 +1,1675 @@
+[
+  {
+    "id": "hei_iitism_01",
+    "code": "IITISM-DHN",
+    "name": "Indian Institute of Technology (ISM) Dhanbad",
+    "type": "Central/National",
+    "district": "Dhanbad",
+    "district_id": "dhanbad",
+    "lat": 23.8143,
+    "lon": 86.4412,
+    "nirf_rank": 15,
+    "nirf_score": 0.94,
+    "established_year": 1926,
+    "address": "Police Line, Sardar Patel Nagar, Dhanbad, Jharkhand 826004",
+    "website": "https://www.iitism.ac.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "ROAD_INFRASTRUCTURE",
+      "SANITATION_WASTE",
+      "FORESTRY_ENVIRONMENT"
+    ],
+    "departments": [
+      {
+        "name": "Department of Environmental Science & Engineering",
+        "focus": [
+          "Groundwater Arsenic Remediation",
+          "Mine Drainage Filtration",
+          "Industrial Effluent Triage"
+        ],
+        "active_capacity": 10
+      },
+      {
+        "name": "Department of Civil Engineering",
+        "focus": [
+          "Pavement Durability",
+          "Rural Culvert Scour Analysis",
+          "Disaster Resilient Structures"
+        ],
+        "active_capacity": 8
+      }
+    ]
+  },
+  {
+    "id": "hei_nitjsr_02",
+    "code": "NITJSR",
+    "name": "National Institute of Technology Jamshedpur",
+    "type": "Central/National",
+    "district": "East Singhbhum",
+    "district_id": "east-singhbhum",
+    "lat": 22.777,
+    "lon": 86.1441,
+    "nirf_rank": 86,
+    "nirf_score": 0.656,
+    "established_year": 1960,
+    "address": "Adityapur, Jamshedpur, Jharkhand 831014",
+    "website": "https://www.nitjsr.ac.in",
+    "specializations": [
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "ROAD_INFRASTRUCTURE",
+      "WATER_MANAGEMENT"
+    ],
+    "departments": [
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Solar Microgrid Inverters",
+          "Transformer Thermal Faults",
+          "Rural Biomass Hybrid Grids"
+        ],
+        "active_capacity": 9
+      },
+      {
+        "name": "Department of Civil & Infrastructure Engineering",
+        "focus": [
+          "Low-cost Concrete Culverts",
+          "Monsoon Road Stabilization"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_bitmesra_03",
+    "code": "BITMESRA",
+    "name": "Birla Institute of Technology, Mesra",
+    "type": "Deemed University",
+    "district": "Ranchi",
+    "district_id": "ranchi",
+    "lat": 23.4123,
+    "lon": 85.4399,
+    "nirf_rank": 53,
+    "nirf_score": 0.788,
+    "established_year": 1955,
+    "address": "Mesra, Ranchi, Jharkhand 835215",
+    "website": "https://www.bitmesra.ac.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "HEALTHCARE_DELIVERY",
+      "PRIMARY_EDUCATION_DIGITAL",
+      "RURAL_ELECTRIFICATION_SOLAR"
+    ],
+    "departments": [
+      {
+        "name": "Department of Remote Sensing & Geoinformatics",
+        "focus": [
+          "Hydrological Watershed Mapping",
+          "Aquifer Depletion Telemetry",
+          "Drone Land Survey"
+        ],
+        "active_capacity": 9
+      },
+      {
+        "name": "Department of Bioengineering",
+        "focus": [
+          "Point-of-Care Water Pathogen Kits",
+          "Telemedicine Diagnostic Kiosks"
+        ],
+        "active_capacity": 6
+      }
+    ]
+  },
+  {
+    "id": "hei_niamt_04",
+    "code": "NIAMT-RNC",
+    "name": "National Institute of Advanced Manufacturing Technology, Ranchi",
+    "type": "Central/National",
+    "district": "Ranchi",
+    "district_id": "ranchi",
+    "lat": 23.3101,
+    "lon": 85.3134,
+    "nirf_rank": 120,
+    "nirf_score": 0.6,
+    "established_year": 1966,
+    "address": "Near Khunti Road, Hatia, Ranchi, Jharkhand 834003",
+    "website": "https://www.niamt.ac.in",
+    "specializations": [
+      "ROAD_INFRASTRUCTURE",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SUSTAINABLE_AGRICULTURE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Manufacturing & Materials Engineering",
+        "focus": [
+          "Corrosion-Resistant Handpump Valves",
+          "Agricultural Harvester Spares",
+          "Solar Structure Fabrication"
+        ],
+        "active_capacity": 8
+      }
+    ]
+  },
+  {
+    "id": "hei_iiitranchi_05",
+    "code": "IIITRNC",
+    "name": "Indian Institute of Information Technology Ranchi",
+    "type": "Central/National",
+    "district": "Ranchi",
+    "district_id": "ranchi",
+    "lat": 23.3441,
+    "lon": 85.385,
+    "nirf_rank": 175,
+    "nirf_score": 0.6,
+    "established_year": 2016,
+    "address": "ARTTC BSNL Campus, Namkum, Ranchi, Jharkhand 834010",
+    "website": "https://www.iiitranchi.ac.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "ROAD_INFRASTRUCTURE",
+      "SANITATION_WASTE",
+      "FORESTRY_ENVIRONMENT"
+    ],
+    "departments": [
+      {
+        "name": "Department of Environmental Science & Engineering",
+        "focus": [
+          "Groundwater Arsenic Remediation",
+          "Mine Drainage Filtration",
+          "Industrial Effluent Triage"
+        ],
+        "active_capacity": 10
+      },
+      {
+        "name": "Department of Civil Engineering",
+        "focus": [
+          "Pavement Durability",
+          "Rural Culvert Scour Analysis",
+          "Disaster Resilient Structures"
+        ],
+        "active_capacity": 8
+      }
+    ]
+  },
+  {
+    "id": "hei_bitsindri_06",
+    "code": "BITSINDRI",
+    "name": "Birsa Institute of Technology, Sindri",
+    "type": "State Government",
+    "district": "Dhanbad",
+    "district_id": "dhanbad",
+    "lat": 23.6534,
+    "lon": 86.4704,
+    "nirf_rank": 201,
+    "nirf_score": 0.6,
+    "established_year": 1949,
+    "address": "PO Sindri Institute, Dhanbad, Jharkhand 828123",
+    "website": "https://www.bitsindri.ac.in",
+    "specializations": [
+      "ROAD_INFRASTRUCTURE",
+      "WATER_MANAGEMENT",
+      "SANITATION_WASTE",
+      "RURAL_ELECTRIFICATION_SOLAR"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil Engineering",
+        "focus": [
+          "Rural PWD Road Audits",
+          "Erosion Control",
+          "Masonry Culvert Retrofitting"
+        ],
+        "active_capacity": 9
+      },
+      {
+        "name": "Department of Chemical & Metallurgical Engineering",
+        "focus": [
+          "Water Desalination & Iron Stripping",
+          "Waste Slag Utilization"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_ucet_07",
+    "code": "UCET-VBU",
+    "name": "University College of Engineering and Technology, VBU",
+    "type": "State Government",
+    "district": "Hazaribagh",
+    "district_id": "hazaribagh",
+    "lat": 23.9937,
+    "lon": 85.3611,
+    "nirf_rank": null,
+    "nirf_score": 0.78,
+    "established_year": 2009,
+    "address": "VBU Campus, Hazaribagh, Jharkhand 825301",
+    "website": "https://www.vbu.ac.in",
+    "specializations": [
+      "ROAD_INFRASTRUCTURE",
+      "WATER_MANAGEMENT",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Rural Infrastructure",
+        "focus": [
+          "Village Connectivity Roads",
+          "Community Handpump Remediation",
+          "Check Dams"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Solar Streetlight Microgrids",
+          "Transformer Earthing",
+          "Panchayat Solar Power"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_kuengg_08",
+    "code": "KU-ENGG",
+    "name": "Faculty of Engineering, Kolhan University",
+    "type": "State Government",
+    "district": "West Singhbhum",
+    "district_id": "west-singhbhum",
+    "lat": 22.5487,
+    "lon": 85.8118,
+    "nirf_rank": null,
+    "nirf_score": 0.78,
+    "established_year": 2009,
+    "address": "NH 75, Chaibasa, West Singhbhum, Jharkhand 833202",
+    "website": "https://www.kolhanuniversity.ac.in",
+    "specializations": [
+      "ROAD_INFRASTRUCTURE",
+      "WATER_MANAGEMENT",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Rural Infrastructure",
+        "focus": [
+          "Village Connectivity Roads",
+          "Community Handpump Remediation",
+          "Check Dams"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Solar Streetlight Microgrids",
+          "Transformer Earthing",
+          "Panchayat Solar Power"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_cec_09",
+    "code": "CEC-CHAIBASA",
+    "name": "Chaibasa Engineering College",
+    "type": "Government-PPP",
+    "district": "West Singhbhum",
+    "district_id": "west-singhbhum",
+    "lat": 22.4561,
+    "lon": 85.7335,
+    "nirf_rank": null,
+    "nirf_score": 0.78,
+    "established_year": 2013,
+    "address": "Bistumpur, PO Jhinkpani, Chaibasa, Jharkhand 833215",
+    "website": "https://www.chaibasaengg.edu.in",
+    "specializations": [
+      "ROAD_INFRASTRUCTURE",
+      "WATER_MANAGEMENT",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Rural Infrastructure",
+        "focus": [
+          "Village Connectivity Roads",
+          "Community Handpump Remediation",
+          "Check Dams"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Solar Streetlight Microgrids",
+          "Transformer Earthing",
+          "Panchayat Solar Power"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_rec_10",
+    "code": "REC-RAMGARH",
+    "name": "Ramgarh Engineering College",
+    "type": "Government-PPP",
+    "district": "Ramgarh",
+    "district_id": "ramgarh",
+    "lat": 23.618,
+    "lon": 85.5901,
+    "nirf_rank": null,
+    "nirf_score": 0.78,
+    "established_year": 2013,
+    "address": "Murubanda, PO Barkipona, Ramgarh, Jharkhand 825101",
+    "website": "https://www.ramgarhengineeringcollege.org",
+    "specializations": [
+      "ROAD_INFRASTRUCTURE",
+      "WATER_MANAGEMENT",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Rural Infrastructure",
+        "focus": [
+          "Village Connectivity Roads",
+          "Community Handpump Remediation",
+          "Check Dams"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Solar Streetlight Microgrids",
+          "Transformer Earthing",
+          "Panchayat Solar Power"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_dec_11",
+    "code": "DEC-DUMKA",
+    "name": "Dumka Engineering College",
+    "type": "Government-PPP",
+    "district": "Dumka",
+    "district_id": "dumka",
+    "lat": 24.2831,
+    "lon": 87.2435,
+    "nirf_rank": null,
+    "nirf_score": 0.78,
+    "established_year": 2013,
+    "address": "Near S.P. College Ground, Dumka, Jharkhand 814101",
+    "website": "https://www.dumkaengg.edu.in",
+    "specializations": [
+      "ROAD_INFRASTRUCTURE",
+      "WATER_MANAGEMENT",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Rural Infrastructure",
+        "focus": [
+          "Village Connectivity Roads",
+          "Community Handpump Remediation",
+          "Check Dams"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Solar Streetlight Microgrids",
+          "Transformer Earthing",
+          "Panchayat Solar Power"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_gpsilli_12",
+    "code": "GP-SILLI",
+    "name": "Government Polytechnic Silli",
+    "type": "Government-PPP",
+    "district": "Ranchi",
+    "district_id": "ranchi",
+    "lat": 23.3468,
+    "lon": 85.8504,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 2013,
+    "address": "Tuti Silli, Silli, Ranchi, Jharkhand 835102",
+    "website": "http://www.sillipolytechnic.ac.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "ROAD_INFRASTRUCTURE",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Mechanical Technology",
+        "focus": [
+          "Handpump Mechanical Overhaul",
+          "Road Pothole Cold-Mix Repair",
+          "Rural Drainage Channels"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Off-Grid Solar Inverter Repair",
+          "Panchayat Wiring",
+          "Submersible Motor Rewinding"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_gppakur_13",
+    "code": "GP-PAKUR",
+    "name": "Government Polytechnic Pakur",
+    "type": "Government-PPP",
+    "district": "Pakur",
+    "district_id": "pakur",
+    "lat": 24.636,
+    "lon": 87.848,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 2013,
+    "address": "Sweet City, Baghabari, Pakur, Jharkhand 816107",
+    "website": "https://www.pakurpolytechnic.ac.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "ROAD_INFRASTRUCTURE",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Mechanical Technology",
+        "focus": [
+          "Handpump Mechanical Overhaul",
+          "Road Pothole Cold-Mix Repair",
+          "Rural Drainage Channels"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Off-Grid Solar Inverter Repair",
+          "Panchayat Wiring",
+          "Submersible Motor Rewinding"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_gpchandil_14",
+    "code": "GP-CHANDIL",
+    "name": "Government Polytechnic Chandil",
+    "type": "Government-PPP",
+    "district": "Seraikela Kharsawan",
+    "district_id": "seraikela-kharsawan",
+    "lat": 22.9555,
+    "lon": 86.0465,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 2017,
+    "address": "Gaurangdih, Chandil, Seraikela Kharsawan, Jharkhand 832401",
+    "website": "https://www.chandilpolytechnic.ac.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "ROAD_INFRASTRUCTURE",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Mechanical Technology",
+        "focus": [
+          "Handpump Mechanical Overhaul",
+          "Road Pothole Cold-Mix Repair",
+          "Rural Drainage Channels"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Off-Grid Solar Inverter Repair",
+          "Panchayat Wiring",
+          "Submersible Motor Rewinding"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_gpgumla_15",
+    "code": "GP-GUMLA",
+    "name": "Government Polytechnic Gumla",
+    "type": "Government-PPP",
+    "district": "Gumla",
+    "district_id": "gumla",
+    "lat": 23.048,
+    "lon": 84.542,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 2017,
+    "address": "Chandali, Gumla, Jharkhand 835207",
+    "website": "https://www.gumlapolytechnic.ac.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "ROAD_INFRASTRUCTURE",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Mechanical Technology",
+        "focus": [
+          "Handpump Mechanical Overhaul",
+          "Road Pothole Cold-Mix Repair",
+          "Rural Drainage Channels"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Off-Grid Solar Inverter Repair",
+          "Panchayat Wiring",
+          "Submersible Motor Rewinding"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_gpgola_16",
+    "code": "GP-GOLA",
+    "name": "Government Polytechnic Gola",
+    "type": "Government-PPP",
+    "district": "Ramgarh",
+    "district_id": "ramgarh",
+    "lat": 23.535,
+    "lon": 85.718,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 2017,
+    "address": "Gola, Ramgarh, Jharkhand 829110",
+    "website": "https://www.golapolytechnic.ac.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "ROAD_INFRASTRUCTURE",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Mechanical Technology",
+        "focus": [
+          "Handpump Mechanical Overhaul",
+          "Road Pothole Cold-Mix Repair",
+          "Rural Drainage Channels"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Off-Grid Solar Inverter Repair",
+          "Panchayat Wiring",
+          "Submersible Motor Rewinding"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_gpadityapur_17",
+    "code": "GP-ADITYAPUR",
+    "name": "Government Polytechnic, Adityapur",
+    "type": "State Government",
+    "district": "Seraikela Kharsawan",
+    "district_id": "seraikela-kharsawan",
+    "lat": 22.7915,
+    "lon": 86.1662,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 1980,
+    "address": "Adityapur Industrial Area, Jamshedpur, Jharkhand 831013",
+    "website": "http://gpadityapur.ac.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "ROAD_INFRASTRUCTURE",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Mechanical Technology",
+        "focus": [
+          "Handpump Mechanical Overhaul",
+          "Road Pothole Cold-Mix Repair",
+          "Rural Drainage Channels"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Off-Grid Solar Inverter Repair",
+          "Panchayat Wiring",
+          "Submersible Motor Rewinding"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_gpranchi_18",
+    "code": "GP-RANCHI",
+    "name": "Government Polytechnic, Ranchi",
+    "type": "State Government",
+    "district": "Ranchi",
+    "district_id": "ranchi",
+    "lat": 23.3654,
+    "lon": 85.334,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 1935,
+    "address": "Church Road, Karbala Chowk, Ranchi, Jharkhand 834001",
+    "website": "http://gpranchi.ac.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "ROAD_INFRASTRUCTURE",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Mechanical Technology",
+        "focus": [
+          "Handpump Mechanical Overhaul",
+          "Road Pothole Cold-Mix Repair",
+          "Rural Drainage Channels"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Off-Grid Solar Inverter Repair",
+          "Panchayat Wiring",
+          "Submersible Motor Rewinding"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_gpdhanbad_19",
+    "code": "GP-DHANBAD",
+    "name": "Government Polytechnic, Dhanbad",
+    "type": "State Government",
+    "district": "Dhanbad",
+    "district_id": "dhanbad",
+    "lat": 23.8052,
+    "lon": 86.4385,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 1958,
+    "address": "Polytechnic Road, Dhanbad, Jharkhand 828104",
+    "website": "http://gpdhanbad.ac.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "ROAD_INFRASTRUCTURE",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Mechanical Technology",
+        "focus": [
+          "Handpump Mechanical Overhaul",
+          "Road Pothole Cold-Mix Repair",
+          "Rural Drainage Channels"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Off-Grid Solar Inverter Repair",
+          "Panchayat Wiring",
+          "Submersible Motor Rewinding"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_gpnirsa_20",
+    "code": "GP-NIRSA",
+    "name": "Government Polytechnic, Nirsa",
+    "type": "State Government",
+    "district": "Dhanbad",
+    "district_id": "dhanbad",
+    "lat": 23.7845,
+    "lon": 86.711,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 2017,
+    "address": "Nirsa, Dhanbad, Jharkhand 828205",
+    "website": "http://gpnirsa.ac.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "ROAD_INFRASTRUCTURE",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Mechanical Technology",
+        "focus": [
+          "Handpump Mechanical Overhaul",
+          "Road Pothole Cold-Mix Repair",
+          "Rural Drainage Channels"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Off-Grid Solar Inverter Repair",
+          "Panchayat Wiring",
+          "Submersible Motor Rewinding"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_gpbhaga_21",
+    "code": "GP-BHAGA",
+    "name": "Government Polytechnic, Bhaga (Mining Institute)",
+    "type": "State Government",
+    "district": "Dhanbad",
+    "district_id": "dhanbad",
+    "lat": 23.731,
+    "lon": 86.442,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 1905,
+    "address": "Bhaga, Dhanbad, Jharkhand 828301",
+    "website": "http://gpbhaga.ac.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "SANITATION_WASTE",
+      "ROAD_INFRASTRUCTURE",
+      "FORESTRY_ENVIRONMENT"
+    ],
+    "departments": [
+      {
+        "name": "Department of Mining & Environmental Technology",
+        "focus": [
+          "Mine Dust Suppression",
+          "Subsidence Monitoring",
+          "Groundwater Quality"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_gpkharsawan_22",
+    "code": "GP-KHARSAWAN",
+    "name": "Government Polytechnic, Kharsawan",
+    "type": "State Government",
+    "district": "Seraikela Kharsawan",
+    "district_id": "seraikela-kharsawan",
+    "lat": 22.794,
+    "lon": 85.826,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 2006,
+    "address": "Kharsawan, Seraikela Kharsawan, Jharkhand 833220",
+    "website": "http://gpkharsawan.ac.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "ROAD_INFRASTRUCTURE",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Mechanical Technology",
+        "focus": [
+          "Handpump Mechanical Overhaul",
+          "Road Pothole Cold-Mix Repair",
+          "Rural Drainage Channels"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Off-Grid Solar Inverter Repair",
+          "Panchayat Wiring",
+          "Submersible Motor Rewinding"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_gpdumka_23",
+    "code": "GP-DUMKA",
+    "name": "Government Polytechnic, Dumka",
+    "type": "State Government",
+    "district": "Dumka",
+    "district_id": "dumka",
+    "lat": 24.269,
+    "lon": 87.251,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 1958,
+    "address": "Kurwa, Dumka, Jharkhand 814101",
+    "website": "http://gpdumka.ac.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "ROAD_INFRASTRUCTURE",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Mechanical Technology",
+        "focus": [
+          "Handpump Mechanical Overhaul",
+          "Road Pothole Cold-Mix Repair",
+          "Rural Drainage Channels"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Off-Grid Solar Inverter Repair",
+          "Panchayat Wiring",
+          "Submersible Motor Rewinding"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_gplatehar_24",
+    "code": "GP-LATEHAR",
+    "name": "Government Polytechnic, Latehar",
+    "type": "State Government",
+    "district": "Latehar",
+    "district_id": "latehar",
+    "lat": 23.743,
+    "lon": 84.498,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 2006,
+    "address": "By-Pass Road, Latehar, Jharkhand 829206",
+    "website": "http://gplatehar.ac.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "ROAD_INFRASTRUCTURE",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Mechanical Technology",
+        "focus": [
+          "Handpump Mechanical Overhaul",
+          "Road Pothole Cold-Mix Repair",
+          "Rural Drainage Channels"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Off-Grid Solar Inverter Repair",
+          "Panchayat Wiring",
+          "Submersible Motor Rewinding"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_gpkoderma_25",
+    "code": "GP-KODERMA",
+    "name": "Government Polytechnic, Koderma",
+    "type": "State Government",
+    "district": "Koderma",
+    "district_id": "koderma",
+    "lat": 24.435,
+    "lon": 85.529,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 1958,
+    "address": "Jhumri Telaiya, Koderma, Jharkhand 825409",
+    "website": "http://gpkoderma.ac.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "ROAD_INFRASTRUCTURE",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Mechanical Technology",
+        "focus": [
+          "Handpump Mechanical Overhaul",
+          "Road Pothole Cold-Mix Repair",
+          "Rural Drainage Channels"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Off-Grid Solar Inverter Repair",
+          "Panchayat Wiring",
+          "Submersible Motor Rewinding"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_gpkhunti_26",
+    "code": "GP-KHUNTI",
+    "name": "Government Polytechnic, Khunti",
+    "type": "State Government",
+    "district": "Khunti",
+    "district_id": "khunti",
+    "lat": 23.078,
+    "lon": 85.276,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 2017,
+    "address": "Khunti, Jharkhand 835210",
+    "website": "http://gpkhunti.ac.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "ROAD_INFRASTRUCTURE",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Mechanical Technology",
+        "focus": [
+          "Handpump Mechanical Overhaul",
+          "Road Pothole Cold-Mix Repair",
+          "Rural Drainage Channels"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Off-Grid Solar Inverter Repair",
+          "Panchayat Wiring",
+          "Submersible Motor Rewinding"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_gpsimdega_27",
+    "code": "GP-SIMDEGA",
+    "name": "Government Polytechnic, Simdega",
+    "type": "State Government",
+    "district": "Simdega",
+    "district_id": "simdega",
+    "lat": 22.616,
+    "lon": 84.505,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 2017,
+    "address": "Simdega, Jharkhand 835223",
+    "website": "http://gpsimdega.ac.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "ROAD_INFRASTRUCTURE",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Mechanical Technology",
+        "focus": [
+          "Handpump Mechanical Overhaul",
+          "Road Pothole Cold-Mix Repair",
+          "Rural Drainage Channels"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Off-Grid Solar Inverter Repair",
+          "Panchayat Wiring",
+          "Submersible Motor Rewinding"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_gpsahibganj_28",
+    "code": "GP-SAHIBGANJ",
+    "name": "Government Polytechnic, Sahibganj",
+    "type": "State Government",
+    "district": "Sahibganj",
+    "district_id": "sahibganj",
+    "lat": 25.242,
+    "lon": 87.643,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 2017,
+    "address": "Sahibganj, Jharkhand 816109",
+    "website": "http://gpsahibganj.ac.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "ROAD_INFRASTRUCTURE",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Mechanical Technology",
+        "focus": [
+          "Handpump Mechanical Overhaul",
+          "Road Pothole Cold-Mix Repair",
+          "Rural Drainage Channels"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Off-Grid Solar Inverter Repair",
+          "Panchayat Wiring",
+          "Submersible Motor Rewinding"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_gpgarhwa_29",
+    "code": "GP-GARHWA",
+    "name": "Government Polytechnic, Garhwa",
+    "type": "State Government",
+    "district": "Garhwa",
+    "district_id": "garhwa",
+    "lat": 24.161,
+    "lon": 83.809,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 2017,
+    "address": "Garhwa, Jharkhand 822114",
+    "website": "http://gpgarhwa.ac.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "ROAD_INFRASTRUCTURE",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Mechanical Technology",
+        "focus": [
+          "Handpump Mechanical Overhaul",
+          "Road Pothole Cold-Mix Repair",
+          "Rural Drainage Channels"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Off-Grid Solar Inverter Repair",
+          "Panchayat Wiring",
+          "Submersible Motor Rewinding"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_gpbokaro_30",
+    "code": "GP-BOKARO",
+    "name": "Government Polytechnic, Jainamore, Bokaro",
+    "type": "State Government",
+    "district": "Bokaro",
+    "district_id": "bokaro",
+    "lat": 23.633,
+    "lon": 85.992,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 2017,
+    "address": "Jainamore, Bokaro, Jharkhand 829301",
+    "website": "http://gpbokaro.ac.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "ROAD_INFRASTRUCTURE",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Mechanical Technology",
+        "focus": [
+          "Handpump Mechanical Overhaul",
+          "Road Pothole Cold-Mix Repair",
+          "Rural Drainage Channels"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Off-Grid Solar Inverter Repair",
+          "Panchayat Wiring",
+          "Submersible Motor Rewinding"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_gwpranchi_31",
+    "code": "GWP-RANCHI",
+    "name": "Government Women's Polytechnic, Ranchi",
+    "type": "State Government",
+    "district": "Ranchi",
+    "district_id": "ranchi",
+    "lat": 23.3712,
+    "lon": 85.3305,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 1974,
+    "address": "Tharpakhna, Ranchi, Jharkhand 834001",
+    "website": "http://gwpranchi.ac.in",
+    "specializations": [
+      "PRIMARY_EDUCATION_DIGITAL",
+      "HEALTHCARE_DELIVERY",
+      "WATER_MANAGEMENT",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Applied Electronics & Community Welfare",
+        "focus": [
+          "Rural Digital Literacy",
+          "Diagnostic Health Testing Kits",
+          "Sanitation Awareness"
+        ],
+        "active_capacity": 8
+      }
+    ]
+  },
+  {
+    "id": "hei_gwpjamshedpur_32",
+    "code": "GWP-JAMSHEDPUR",
+    "name": "Government Women's Polytechnic, Jamshedpur",
+    "type": "State Government",
+    "district": "East Singhbhum",
+    "district_id": "east-singhbhum",
+    "lat": 22.7925,
+    "lon": 86.1265,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 1987,
+    "address": "Gamharia, Jamshedpur, Jharkhand 832108",
+    "website": "http://gwpjamshedpur.ac.in",
+    "specializations": [
+      "PRIMARY_EDUCATION_DIGITAL",
+      "HEALTHCARE_DELIVERY",
+      "WATER_MANAGEMENT",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Applied Electronics & Community Welfare",
+        "focus": [
+          "Rural Digital Literacy",
+          "Diagnostic Health Testing Kits",
+          "Sanitation Awareness"
+        ],
+        "active_capacity": 8
+      }
+    ]
+  },
+  {
+    "id": "hei_gwpbokaro_33",
+    "code": "GWP-BOKARO",
+    "name": "Government Women's Polytechnic, Bokaro",
+    "type": "State Government",
+    "district": "Bokaro",
+    "district_id": "bokaro",
+    "lat": 23.666,
+    "lon": 86.152,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 1987,
+    "address": "Sector 8, Bokaro Steel City, Jharkhand 827009",
+    "website": "http://gwpbokaro.ac.in",
+    "specializations": [
+      "PRIMARY_EDUCATION_DIGITAL",
+      "HEALTHCARE_DELIVERY",
+      "WATER_MANAGEMENT",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Applied Electronics & Community Welfare",
+        "focus": [
+          "Rural Digital Literacy",
+          "Diagnostic Health Testing Kits",
+          "Sanitation Awareness"
+        ],
+        "active_capacity": 8
+      }
+    ]
+  },
+  {
+    "id": "hei_gwpdumka_34",
+    "code": "GWP-DUMKA",
+    "name": "Government Women's Polytechnic, Dumka",
+    "type": "State Government",
+    "district": "Dumka",
+    "district_id": "dumka",
+    "lat": 24.265,
+    "lon": 87.248,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 2014,
+    "address": "Dumka, Jharkhand 814101",
+    "website": "http://gwpdumka.ac.in",
+    "specializations": [
+      "PRIMARY_EDUCATION_DIGITAL",
+      "HEALTHCARE_DELIVERY",
+      "WATER_MANAGEMENT",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Applied Electronics & Community Welfare",
+        "focus": [
+          "Rural Digital Literacy",
+          "Diagnostic Health Testing Kits",
+          "Sanitation Awareness"
+        ],
+        "active_capacity": 8
+      }
+    ]
+  },
+  {
+    "id": "hei_alkabir_35",
+    "code": "AL-KABIR",
+    "name": "Al-Kabir Polytechnic",
+    "type": "Private",
+    "district": "East Singhbhum",
+    "district_id": "east-singhbhum",
+    "lat": 22.825,
+    "lon": 86.208,
+    "nirf_rank": null,
+    "nirf_score": 0.72,
+    "established_year": 1990,
+    "address": "Kabir Nagar, Mango, Jamshedpur, Jharkhand 831012",
+    "website": "https://www.alkabir.in",
+    "specializations": [
+      "WATER_MANAGEMENT",
+      "ROAD_INFRASTRUCTURE",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Mechanical Technology",
+        "focus": [
+          "Handpump Mechanical Overhaul",
+          "Road Pothole Cold-Mix Repair",
+          "Rural Drainage Channels"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Off-Grid Solar Inverter Repair",
+          "Panchayat Wiring",
+          "Submersible Motor Rewinding"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_citranchi_36",
+    "code": "CIT-RANCHI",
+    "name": "Cambridge Institute of Technology, Ranchi",
+    "type": "Private",
+    "district": "Ranchi",
+    "district_id": "ranchi",
+    "lat": 23.359,
+    "lon": 85.452,
+    "nirf_rank": null,
+    "nirf_score": 0.7,
+    "established_year": 2001,
+    "address": "Cambridge Village, Tatisilwai, Ranchi, Jharkhand 835103",
+    "website": "https://www.citranchi.ac.in",
+    "specializations": [
+      "ROAD_INFRASTRUCTURE",
+      "PRIMARY_EDUCATION_DIGITAL",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "WATER_MANAGEMENT"
+    ],
+    "departments": [
+      {
+        "name": "Department of Engineering Innovations",
+        "focus": [
+          "Rural Smart Infrastructure",
+          "Digital Village Survey",
+          "Solar Water Pumping"
+        ],
+        "active_capacity": 6
+      }
+    ]
+  },
+  {
+    "id": "hei_rvscet_37",
+    "code": "RVSCET-JSR",
+    "name": "RVS College of Engineering & Technology",
+    "type": "Private",
+    "district": "East Singhbhum",
+    "district_id": "east-singhbhum",
+    "lat": 22.842,
+    "lon": 86.265,
+    "nirf_rank": null,
+    "nirf_score": 0.7,
+    "established_year": 2002,
+    "address": "Edalbera, PO Bhilaipahari, Jamshedpur, Jharkhand 831012",
+    "website": "https://www.rvscet.com",
+    "specializations": [
+      "ROAD_INFRASTRUCTURE",
+      "PRIMARY_EDUCATION_DIGITAL",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "WATER_MANAGEMENT"
+    ],
+    "departments": [
+      {
+        "name": "Department of Engineering Innovations",
+        "focus": [
+          "Rural Smart Infrastructure",
+          "Digital Village Survey",
+          "Solar Water Pumping"
+        ],
+        "active_capacity": 6
+      }
+    ]
+  },
+  {
+    "id": "hei_rtcit_38",
+    "code": "RTCIT-RNC",
+    "name": "RTC Institute of Technology",
+    "type": "Private",
+    "district": "Ranchi",
+    "district_id": "ranchi",
+    "lat": 23.473,
+    "lon": 85.492,
+    "nirf_rank": null,
+    "nirf_score": 0.7,
+    "established_year": 2008,
+    "address": "Anandi, Ormanjhi, Ranchi, Jharkhand 835219",
+    "website": "https://www.rtcit.ac.in",
+    "specializations": [
+      "ROAD_INFRASTRUCTURE",
+      "PRIMARY_EDUCATION_DIGITAL",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "WATER_MANAGEMENT"
+    ],
+    "departments": [
+      {
+        "name": "Department of Engineering Innovations",
+        "focus": [
+          "Rural Smart Infrastructure",
+          "Digital Village Survey",
+          "Solar Water Pumping"
+        ],
+        "active_capacity": 6
+      }
+    ]
+  },
+  {
+    "id": "hei_kkcem_39",
+    "code": "KKCEM-DHN",
+    "name": "KK College of Engineering and Management",
+    "type": "Private",
+    "district": "Dhanbad",
+    "district_id": "dhanbad",
+    "lat": 23.778,
+    "lon": 86.723,
+    "nirf_rank": null,
+    "nirf_score": 0.7,
+    "established_year": 2010,
+    "address": "Naya Nirsa, PO Bagsumi, Dhanbad, Jharkhand 828205",
+    "website": "http://www.kkbecon.org",
+    "specializations": [
+      "ROAD_INFRASTRUCTURE",
+      "PRIMARY_EDUCATION_DIGITAL",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "WATER_MANAGEMENT"
+    ],
+    "departments": [
+      {
+        "name": "Department of Engineering Innovations",
+        "focus": [
+          "Rural Smart Infrastructure",
+          "Digital Village Survey",
+          "Solar Water Pumping"
+        ],
+        "active_capacity": 6
+      }
+    ]
+  },
+  {
+    "id": "hei_ggsestc_40",
+    "code": "GGSESTC-BOK",
+    "name": "Guru Gobind Singh Educational Society's Technical Campus",
+    "type": "Private",
+    "district": "Bokaro",
+    "district_id": "bokaro",
+    "lat": 23.632,
+    "lon": 86.082,
+    "nirf_rank": null,
+    "nirf_score": 0.7,
+    "established_year": 2011,
+    "address": "Kandra, Chas, Bokaro, Jharkhand 827013",
+    "website": "https://www.ggsestc.ac.in",
+    "specializations": [
+      "ROAD_INFRASTRUCTURE",
+      "PRIMARY_EDUCATION_DIGITAL",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "WATER_MANAGEMENT"
+    ],
+    "departments": [
+      {
+        "name": "Department of Engineering Innovations",
+        "focus": [
+          "Rural Smart Infrastructure",
+          "Digital Village Survey",
+          "Solar Water Pumping"
+        ],
+        "active_capacity": 6
+      }
+    ]
+  },
+  {
+    "id": "hei_arkajain_41",
+    "code": "AJU-ENGG",
+    "name": "School of Engineering & IT, Arka Jain University",
+    "type": "Private",
+    "district": "Seraikela Kharsawan",
+    "district_id": "seraikela-kharsawan",
+    "lat": 22.7905,
+    "lon": 86.121,
+    "nirf_rank": null,
+    "nirf_score": 0.7,
+    "established_year": 2017,
+    "address": "Opp. Kerala Public School, Mohanpur, Gamharia, Jamshedpur 832108",
+    "website": "https://www.arkajainuniversity.ac.in",
+    "specializations": [
+      "ROAD_INFRASTRUCTURE",
+      "PRIMARY_EDUCATION_DIGITAL",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "WATER_MANAGEMENT"
+    ],
+    "departments": [
+      {
+        "name": "Department of Engineering Innovations",
+        "focus": [
+          "Rural Smart Infrastructure",
+          "Digital Village Survey",
+          "Solar Water Pumping"
+        ],
+        "active_capacity": 6
+      }
+    ]
+  },
+  {
+    "id": "hei_ushamartin_42",
+    "code": "UMU-ENGG",
+    "name": "Faculty of Engineering and Applied Sciences, Usha Martin University",
+    "type": "Private",
+    "district": "Ranchi",
+    "district_id": "ranchi",
+    "lat": 23.361,
+    "lon": 85.456,
+    "nirf_rank": null,
+    "nirf_score": 0.78,
+    "established_year": 2012,
+    "address": "At Village Narayansoli, PO Tatisailei, Angara, Ranchi 835103",
+    "website": "https://www.ushamartinuniversity.com",
+    "specializations": [
+      "ROAD_INFRASTRUCTURE",
+      "WATER_MANAGEMENT",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "SANITATION_WASTE"
+    ],
+    "departments": [
+      {
+        "name": "Department of Civil & Rural Infrastructure",
+        "focus": [
+          "Village Connectivity Roads",
+          "Community Handpump Remediation",
+          "Check Dams"
+        ],
+        "active_capacity": 8
+      },
+      {
+        "name": "Department of Electrical Engineering",
+        "focus": [
+          "Solar Streetlight Microgrids",
+          "Transformer Earthing",
+          "Panchayat Solar Power"
+        ],
+        "active_capacity": 7
+      }
+    ]
+  },
+  {
+    "id": "hei_mitm_43",
+    "code": "MITM-JSR",
+    "name": "Maryland Institute of Technology and Management",
+    "type": "Private",
+    "district": "East Singhbhum",
+    "district_id": "east-singhbhum",
+    "lat": 22.684,
+    "lon": 86.418,
+    "nirf_rank": null,
+    "nirf_score": 0.7,
+    "established_year": 2011,
+    "address": "NH 33, Galudih, Ghatshila, East Singhbhum, Jharkhand 832304",
+    "website": "http://mitmjamshedpur.ac.in",
+    "specializations": [
+      "ROAD_INFRASTRUCTURE",
+      "PRIMARY_EDUCATION_DIGITAL",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "WATER_MANAGEMENT"
+    ],
+    "departments": [
+      {
+        "name": "Department of Engineering Innovations",
+        "focus": [
+          "Rural Smart Infrastructure",
+          "Digital Village Survey",
+          "Solar Water Pumping"
+        ],
+        "active_capacity": 6
+      }
+    ]
+  },
+  {
+    "id": "hei_bacet_44",
+    "code": "BACET-JSR",
+    "name": "B.A. College of Engineering & Technology",
+    "type": "Private",
+    "district": "East Singhbhum",
+    "district_id": "east-singhbhum",
+    "lat": 22.678,
+    "lon": 86.411,
+    "nirf_rank": null,
+    "nirf_score": 0.7,
+    "established_year": 2007,
+    "address": "Ghutia, PO Mahulia, Jamshedpur, Jharkhand 832304",
+    "website": "http://bacet.ac.in",
+    "specializations": [
+      "ROAD_INFRASTRUCTURE",
+      "PRIMARY_EDUCATION_DIGITAL",
+      "RURAL_ELECTRIFICATION_SOLAR",
+      "WATER_MANAGEMENT"
+    ],
+    "departments": [
+      {
+        "name": "Department of Engineering Innovations",
+        "focus": [
+          "Rural Smart Infrastructure",
+          "Digital Village Survey",
+          "Solar Water Pumping"
+        ],
+        "active_capacity": 6
+      }
+    ]
+  }
+]

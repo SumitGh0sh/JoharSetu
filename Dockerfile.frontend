@@ -1,0 +1,46 @@
+# Multi-stage Dockerfile for JoharSetu Next.js PWA
+FROM node:20-alpine AS builder
+WORKDIR /app
+
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
+
+# Install build dependencies
+RUN apk add --no-cache libc6-compat
+
+# Install node dependencies
+COPY package*.json ./
+RUN npm ci --legacy-peer-deps || npm install
+
+# Copy Prisma schema and generate engine binary for Alpine
+COPY prisma ./prisma/
+RUN npx prisma generate
+
+# Copy source code and build Next.js bundle
+COPY . .
+RUN npm run build
+
+# Production Runner Stage
+FROM node:20-alpine AS runner
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs
+
+# Copy runtime assets
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/prisma ./prisma
+
+USER nextjs
+
+EXPOSE 3000
+
+CMD ["npm", "start"]

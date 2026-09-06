@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-jakarta: 'Plus Jakarta Sans', sans-serif;
+  --canvas: #FAF8F5;
+  --terracotta: #D87A53;
+  --sand: #D4A86A;
+  --charcoal: #1E1E1E;
+}
+
+body {
+  background-color: #FAF8F5;
+  color: #1E1E1E;
+  font-family: var(--font-jakarta);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF8F5;
+}
+::-webkit-scrollbar-thumb {
+  background: #E5D5C5;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D87A53;
+}
+
+/* Glassmorphism Surface Classes */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(216, 122, 83, 0.12);
+}
+
+.glass-nav {
+  background: rgba(250, 248, 245, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(30, 30, 30, 0.06);
+}
+
+/* Sohrai & Khovar Art Inspired Border Accent */
+.sohrai-border {
+  border-image: linear-gradient(to right, #D87A53, #D4A86A, #2D6A4F) 1;
+}
+
+/* Pulse animation for active HEI and urgent alerts */
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(216, 122, 83, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(216, 122, 83, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(216, 122, 83, 0); }
+}
+
+.pulsing-indicator {
+  animation: pulse-ring 2.2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}

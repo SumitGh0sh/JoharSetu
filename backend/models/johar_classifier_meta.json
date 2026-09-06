@@ -1,0 +1,87 @@
+{
+  "model_type": "Multilingual Dual-TFIDF (Word+CharWB) + SGDClassifier",
+  "training_date": "2026-09-05 12:50:11",
+  "total_records_ingested": 71740,
+  "classes": [
+    "HEALTHCARE_DELIVERY",
+    "PRIMARY_EDUCATION_DIGITAL",
+    "ROAD_INFRASTRUCTURE",
+    "RURAL_ELECTRIFICATION_SOLAR",
+    "SANITATION_WASTE",
+    "SUSTAINABLE_AGRICULTURE",
+    "WATER_MANAGEMENT"
+  ],
+  "test_accuracy": 0.9999,
+  "macro_f1": 0.9998,
+  "multilingual_sanity_tests": [
+    {
+      "language": "English",
+      "query": "Deep potholes on the bridge after monsoon rain causing vehicle accidents",
+      "predicted_domain": "ROAD_INFRASTRUCTURE",
+      "confidence": 0.954
+    },
+    {
+      "language": "English",
+      "query": "Street lights switched off whole night dark street safety hazard",
+      "predicted_domain": "RURAL_ELECTRIFICATION_SOLAR",
+      "confidence": 0.9808
+    },
+    {
+      "language": "Hindi (Devanagari)",
+      "query": "\u0939\u0948\u0902\u0921\u092a\u0902\u092a \u0915\u093e \u092a\u093e\u0928\u0940 \u092a\u0940\u0932\u093e \u0914\u0930 \u0917\u0902\u0926\u093e \u0906 \u0930\u0939\u093e \u0939\u0948 \u092c\u091a\u094d\u091a\u0947 \u092c\u0940\u092e\u093e\u0930 \u092a\u0921\u093c \u0930\u0939\u0947 \u0939\u0948\u0902",
+      "predicted_domain": "WATER_MANAGEMENT",
+      "confidence": 0.9463
+    },
+    {
+      "language": "Hindi (Devanagari)",
+      "query": "\u0917\u093e\u0901\u0935 \u0915\u093e \u091f\u094d\u0930\u093e\u0902\u0938\u092b\u093e\u0930\u094d\u092e\u0930 \u091c\u0932 \u0917\u092f\u093e \u0939\u0948 \u0914\u0930 \u092a\u093f\u091b\u0932\u0947 3 \u0926\u093f\u0928\u094b\u0902 \u0938\u0947 \u092c\u093f\u091c\u0932\u0940 \u092c\u0902\u0926 \u0939\u0948",
+      "predicted_domain": "RURAL_ELECTRIFICATION_SOLAR",
+      "confidence": 0.9571
+    },
+    {
+      "language": "Hindi (Devanagari)",
+      "query": "\u0915\u091a\u0930\u0947 \u0915\u093e \u092d\u093e\u0930\u0940 \u0922\u0947\u0930 \u0932\u0917\u093e \u0939\u0941\u0906 \u0939\u0948 \u092c\u0926\u092c\u0942 \u0906 \u0930\u0939\u0940 \u0939\u0948 \u0938\u092b\u093e\u0908 \u0928\u0939\u0940\u0902 \u0939\u0941\u0908",
+      "predicted_domain": "SANITATION_WASTE",
+      "confidence": 0.9636
+    },
+    {
+      "language": "Hinglish (Latin)",
+      "query": "sadak me bohot bade bade gaddhe hai gaadi chalana muskil hai",
+      "predicted_domain": "ROAD_INFRASTRUCTURE",
+      "confidence": 0.9564
+    },
+    {
+      "language": "Hinglish (Latin)",
+      "query": "chapakal se arsenic ganda paani aa raha hai urgent filtration chahiye",
+      "predicted_domain": "WATER_MANAGEMENT",
+      "confidence": 0.9663
+    },
+    {
+      "language": "Hinglish (Latin)",
+      "query": "transformer blast ho gaya pura gaon andhere me hai bijli supply",
+      "predicted_domain": "RURAL_ELECTRIFICATION_SOLAR",
+      "confidence": 0.9609
+    },
+    {
+      "language": "Vernacular Agriculture",
+      "query": "dhan ke khet me keeda lag gaya bacterial leaf blight paddy crop damage",
+      "predicted_domain": "SUSTAINABLE_AGRICULTURE",
+      "confidence": 0.9601
+    },
+    {
+      "language": "Healthcare Alert",
+      "query": "dengue fever cases badh rahe hai primary health clinic me dawa nahi hai",
+      "predicted_domain": "HEALTHCARE_DELIVERY",
+      "confidence": 0.9759
+    }
+  ],
+  "default_urgency_matrix": {
+    "HEALTHCARE_DELIVERY": "CRITICAL",
+    "WATER_MANAGEMENT": "HIGH",
+    "SUSTAINABLE_AGRICULTURE": "HIGH",
+    "RURAL_ELECTRIFICATION_SOLAR": "MEDIUM",
+    "ROAD_INFRASTRUCTURE": "MEDIUM",
+    "SANITATION_WASTE": "LOW",
+    "PRIMARY_EDUCATION_DIGITAL": "LOW"
+  }
+}

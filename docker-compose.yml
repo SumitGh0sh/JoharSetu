@@ -1,0 +1,106 @@
+version: '3.8'
+
+services:
+  # ── 1. Next.js 15 Progressive Web App (Client Layer) ─────────────────────────
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: joharsetu_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_FASTAPI_URL=http://localhost:8000
+      - FASTAPI_SERVICE_URL=http://ai-service:8000
+      - NEXT_PUBLIC_CHAT_SERVICE_URL=http://localhost:5000
+      - DATABASE_URL=postgresql://johar_admin:johar_pass_2026@postgres:5432/joharsetu_db?schema=public
+      - JWT_SECRET=joharsetu_sih2026_super_secure_jwt_secret_jharkhand
+      - NEXTAUTH_SECRET=joharsetu_sih_super_secret_2026_key
+      - NEXTAUTH_URL=http://localhost:3000
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ai-service:
+        condition: service_started
+    networks:
+      - joharsetu_net
+
+  # ── 2. FastAPI + ML Spatial Routing Microservice ──────────────────────────────
+  ai-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: joharsetu_ai_service
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://johar_admin:johar_pass_2026@postgres:5432/joharsetu_db?schema=public
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+    depends_on:
+      postgres:
+        condition: service_healthy
+      qdrant:
+        condition: service_started
+    networks:
+      - joharsetu_net
+
+  # ── 3. Express + Groq Multilingual Chat Microservice (Optional) ───────────────
+  chat-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.chat
+    container_name: joharsetu_chat_service
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+    networks:
+      - joharsetu_net
+
+  # ── 4. PostgreSQL 16 with PostGIS Spatial Extension (Prisma SSOT) ─────────────
+  postgres:
+    image: postgis/postgis:16-3.4
+    container_name: joharsetu_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: johar_admin
+      POSTGRES_PASSWORD: johar_pass_2026
+      POSTGRES_DB: joharsetu_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U johar_admin -d joharsetu_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - joharsetu_net
+
+  # ── 5. Vector Database for Semantic Deduplication ────────────────────────────
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: joharsetu_qdrant
+    restart: unless-stopped
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_storage:/qdrant/storage
+    networks:
+      - joharsetu_net
+
+volumes:
+  pgdata:
+    driver: local
+  qdrant_storage:
+    driver: local
+
+networks:
+  joharsetu_net:
+    driver: bridge

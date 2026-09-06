@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline Mode - JoharSetu (जोहारसेतु)</title>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: #FAF8F5;
+      color: #1E1E1E;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      padding: 24px;
+      text-align: center;
+    }
+    .card {
+      background: #FFFFFF;
+      padding: 36px 28px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      max-width: 460px;
+      border: 1px solid rgba(216, 122, 83, 0.15);
+    }
+    .icon {
+      width: 64px;
+      height: 64px;
+      background: #FAF0EB;
+      color: #D87A53;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 28px;
+    }
+    h1 {
+      color: #D87A53;
+      margin: 0 0 10px;
+      font-size: 22px;
+    }
+    p {
+      color: #555555;
+      font-size: 15px;
+      line-height: 1.6;
+      margin: 0 0 24px;
+    }
+    .btn {
+      background-color: #D87A53;
+      color: #ffffff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 9999px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background-color 0.2s ease;
+    }
+    .btn:hover {
+      background-color: #C15E34;
+    }
+    .badge {
+      display: inline-block;
+      background: #F4ECD9;
+      color: #936A2F;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">📶</div>
+    <h1>You are currently Offline (ऑफ़लाइन)</h1>
+    <p>No active internet connection was detected. But don't worry! JoharSetu is built offline-first. You can still compose problem reports with GPS and photos, and they will sync automatically once connectivity is restored.</p>
+    <a href="/" class="btn" onclick="window.location.reload(); return false;">Retry Connection</a>
+    <div>
+      <span class="badge">JoharSetu PWA Offline Cache Active</span>
+    </div>
+  </div>
+</body>
+</html>

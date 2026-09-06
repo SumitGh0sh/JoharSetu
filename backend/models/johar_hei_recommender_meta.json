@@ -1,0 +1,289 @@
+{
+  "model_name": "JoharSetu Multilingual HEI Recommender V2",
+  "trained_date": "2026-09-07 00:35:58",
+  "total_heis_monitored": 44,
+  "classes": [
+    "hei_alkabir_35",
+    "hei_arkajain_41",
+    "hei_bacet_44",
+    "hei_bitmesra_03",
+    "hei_bitsindri_06",
+    "hei_cec_09",
+    "hei_citranchi_36",
+    "hei_dec_11",
+    "hei_ggsestc_40",
+    "hei_gpadityapur_17",
+    "hei_gpbhaga_21",
+    "hei_gpbokaro_30",
+    "hei_gpchandil_14",
+    "hei_gpdhanbad_19",
+    "hei_gpdumka_23",
+    "hei_gpgarhwa_29",
+    "hei_gpgola_16",
+    "hei_gpgumla_15",
+    "hei_gpkharsawan_22",
+    "hei_gpkhunti_26",
+    "hei_gpkoderma_25",
+    "hei_gplatehar_24",
+    "hei_gpnirsa_20",
+    "hei_gppakur_13",
+    "hei_gpranchi_18",
+    "hei_gpsahibganj_28",
+    "hei_gpsilli_12",
+    "hei_gpsimdega_27",
+    "hei_gwpbokaro_33",
+    "hei_gwpdumka_34",
+    "hei_gwpjamshedpur_32",
+    "hei_gwpranchi_31",
+    "hei_iiitranchi_05",
+    "hei_iitism_01",
+    "hei_kkcem_39",
+    "hei_kuengg_08",
+    "hei_mitm_43",
+    "hei_niamt_04",
+    "hei_nitjsr_02",
+    "hei_rec_10",
+    "hei_rtcit_38",
+    "hei_rvscet_37",
+    "hei_ucet_07",
+    "hei_ushamartin_42"
+  ],
+  "top1_accuracy": 0.5613,
+  "top3_accuracy": 0.7892,
+  "sample_evaluations": [
+    {
+      "query": "Water problem in Baghmara Dhanbad with broken handpump",
+      "recommendations": [
+        {
+          "hei_id": "hei_iitism_01",
+          "name": "Indian Institute of Technology (ISM) Dhanbad",
+          "district": "Dhanbad",
+          "code": "IITISM-DHN",
+          "probability": 0.2806
+        },
+        {
+          "hei_id": "hei_bitsindri_06",
+          "name": "Birsa Institute of Technology, Sindri",
+          "district": "Dhanbad",
+          "code": "BITSINDRI",
+          "probability": 0.1946
+        },
+        {
+          "hei_id": "hei_kkcem_39",
+          "name": "KK College of Engineering and Management",
+          "district": "Dhanbad",
+          "code": "KKCEM-DHN",
+          "probability": 0.143
+        }
+      ]
+    },
+    {
+      "query": "Road culvert bridge damaged in Chaibasa West Singhbhum",
+      "recommendations": [
+        {
+          "hei_id": "hei_kuengg_08",
+          "name": "Faculty of Engineering, Kolhan University",
+          "district": "West Singhbhum",
+          "code": "KU-ENGG",
+          "probability": 0.5003
+        },
+        {
+          "hei_id": "hei_cec_09",
+          "name": "Chaibasa Engineering College",
+          "district": "West Singhbhum",
+          "code": "CEC-CHAIBASA",
+          "probability": 0.4451
+        },
+        {
+          "hei_id": "hei_nitjsr_02",
+          "name": "National Institute of Technology Jamshedpur",
+          "district": "East Singhbhum",
+          "code": "NITJSR",
+          "probability": 0.0059
+        }
+      ]
+    },
+    {
+      "query": "Solar microgrid inverter failed in Gamharia Jamshedpur East Singhbhum",
+      "recommendations": [
+        {
+          "hei_id": "hei_alkabir_35",
+          "name": "Al-Kabir Polytechnic",
+          "district": "East Singhbhum",
+          "code": "AL-KABIR",
+          "probability": 0.196
+        },
+        {
+          "hei_id": "hei_nitjsr_02",
+          "name": "National Institute of Technology Jamshedpur",
+          "district": "East Singhbhum",
+          "code": "NITJSR",
+          "probability": 0.19
+        },
+        {
+          "hei_id": "hei_gwpjamshedpur_32",
+          "name": "Government Women's Polytechnic, Jamshedpur",
+          "district": "East Singhbhum",
+          "code": "GWP-JAMSHEDPUR",
+          "probability": 0.1769
+        }
+      ]
+    },
+    {
+      "query": "Drinking water handpump broken in Dumka engineering zone",
+      "recommendations": [
+        {
+          "hei_id": "hei_dec_11",
+          "name": "Dumka Engineering College",
+          "district": "Dumka",
+          "code": "DEC-DUMKA",
+          "probability": 0.3482
+        },
+        {
+          "hei_id": "hei_gwpdumka_34",
+          "name": "Government Women's Polytechnic, Dumka",
+          "district": "Dumka",
+          "code": "GWP-DUMKA",
+          "probability": 0.3398
+        },
+        {
+          "hei_id": "hei_gpdumka_23",
+          "name": "Government Polytechnic, Dumka",
+          "district": "Dumka",
+          "code": "GP-DUMKA",
+          "probability": 0.2822
+        }
+      ]
+    },
+    {
+      "query": "Monsoon road washed away in Latehar district",
+      "recommendations": [
+        {
+          "hei_id": "hei_gplatehar_24",
+          "name": "Government Polytechnic, Latehar",
+          "district": "Latehar",
+          "code": "GP-LATEHAR",
+          "probability": 0.8747
+        },
+        {
+          "hei_id": "hei_citranchi_36",
+          "name": "Cambridge Institute of Technology, Ranchi",
+          "district": "Ranchi",
+          "code": "CIT-RANCHI",
+          "probability": 0.0071
+        },
+        {
+          "hei_id": "hei_rvscet_37",
+          "name": "RVS College of Engineering & Technology",
+          "district": "East Singhbhum",
+          "code": "RVSCET-JSR",
+          "probability": 0.0056
+        }
+      ]
+    },
+    {
+      "query": "Primary school digital tablet lab in Silli Ranchi",
+      "recommendations": [
+        {
+          "hei_id": "hei_bitmesra_03",
+          "name": "Birla Institute of Technology, Mesra",
+          "district": "Ranchi",
+          "code": "BITMESRA",
+          "probability": 0.3336
+        },
+        {
+          "hei_id": "hei_gwpranchi_31",
+          "name": "Government Women's Polytechnic, Ranchi",
+          "district": "Ranchi",
+          "code": "GWP-RANCHI",
+          "probability": 0.1775
+        },
+        {
+          "hei_id": "hei_citranchi_36",
+          "name": "Cambridge Institute of Technology, Ranchi",
+          "district": "Ranchi",
+          "code": "CIT-RANCHI",
+          "probability": 0.1136
+        }
+      ]
+    },
+    {
+      "query": "Agricultural paddy crop pest attack in Pakur",
+      "recommendations": [
+        {
+          "hei_id": "hei_gppakur_13",
+          "name": "Government Polytechnic Pakur",
+          "district": "Pakur",
+          "code": "GP-PAKUR",
+          "probability": 0.806
+        },
+        {
+          "hei_id": "hei_niamt_04",
+          "name": "National Institute of Advanced Manufacturing Technology, Ranchi",
+          "district": "Ranchi",
+          "code": "NIAMT-RNC",
+          "probability": 0.0188
+        },
+        {
+          "hei_id": "hei_nitjsr_02",
+          "name": "National Institute of Technology Jamshedpur",
+          "district": "East Singhbhum",
+          "code": "NITJSR",
+          "probability": 0.0118
+        }
+      ]
+    },
+    {
+      "query": "Transformer burnt out in Garhwa rural grid",
+      "recommendations": [
+        {
+          "hei_id": "hei_gpgarhwa_29",
+          "name": "Government Polytechnic, Garhwa",
+          "district": "Garhwa",
+          "code": "GP-GARHWA",
+          "probability": 0.8354
+        },
+        {
+          "hei_id": "hei_citranchi_36",
+          "name": "Cambridge Institute of Technology, Ranchi",
+          "district": "Ranchi",
+          "code": "CIT-RANCHI",
+          "probability": 0.0078
+        },
+        {
+          "hei_id": "hei_bitsindri_06",
+          "name": "Birsa Institute of Technology, Sindri",
+          "district": "Dhanbad",
+          "code": "BITSINDRI",
+          "probability": 0.0078
+        }
+      ]
+    },
+    {
+      "query": "School sanitation facility clogged in Simdega",
+      "recommendations": [
+        {
+          "hei_id": "hei_gpsimdega_27",
+          "name": "Government Polytechnic, Simdega",
+          "district": "Simdega",
+          "code": "GP-SIMDEGA",
+          "probability": 0.8793
+        },
+        {
+          "hei_id": "hei_gwpranchi_31",
+          "name": "Government Women's Polytechnic, Ranchi",
+          "district": "Ranchi",
+          "code": "GWP-RANCHI",
+          "probability": 0.0074
+        },
+        {
+          "hei_id": "hei_gpranchi_18",
+          "name": "Government Polytechnic, Ranchi",
+          "district": "Ranchi",
+          "code": "GP-RANCHI",
+          "probability": 0.0056
+        }
+      ]
+    }
+  ]
+}

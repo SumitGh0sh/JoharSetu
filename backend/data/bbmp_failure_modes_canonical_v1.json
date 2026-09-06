@@ -1,0 +1,613 @@
+[
+  {
+    "failure_mode_id":"FM_3",
+    "canonical_name":"animal_dog_dogs",
+    "department_system":"veterinary",
+    "cluster_id":3,
+    "member_count":35,
+    "example_complaints":[
+      "Stray dog related complaints",
+      "Animal Rescue - Not well - Requires attention",
+      "Anti Rabies Vaccination of stray dogs",
+      "shifting of the street dogs to other places",
+      "Fatally injured - Needs immediate attention",
+      "Collect the food available to feed dogs",
+      "Feeder Harassment  by Individual \/ Mob but no association",
+      "Animal birth control\/neutering of stray dogs",
+      "Stray\/Rabid dog bite",
+      "Street dog Adaptation process details"
+    ],
+    "description_x":"This failure mode represents recurring urban service breakdowns in the veterinary domain.\nIt includes complaint types such as:\nStray dog related complaints, Animal Rescue - Not well - Requires attention, Anti Rabies Vaccination of stray dogs, shifting of the street dogs to other places, Fatally injured - Needs immediate attention, Collect the food available to feed dogs ...\nThese issues indicate a common underlying system malfunction rather than isolated incidents.",
+    "primary_department_x":"veterinary",
+    "secondary_departments_x":[
+
+    ],
+    "dept_distribution_x":{
+      "veterinary":34,
+      "Health Dept":1
+    },
+    "ownership_type_x":"cross_department_asset",
+    "primary_department_y":"veterinary",
+    "secondary_departments_y":[
+
+    ],
+    "dept_distribution_y":{
+      "veterinary":34,
+      "Health Dept":1
+    },
+    "ownership_type_y":"cross_department_asset",
+    "primary_department":"veterinary",
+    "secondary_departments":[
+
+    ],
+    "ownership_type":"single_owner",
+    "dept_distribution":{
+      "veterinary":34,
+      "Health Dept":1
+    },
+    "description_y":"Failure mode \"animal_dog_dogs\" in the \"veterinary\" domain covers complaints related to: stray dog complaints, animal rescue, anti rabies vaccination, animal birth control, injured animals, dog bites, animal cruelty, feeder harassment, animal death, and pet licensing. Secondary departments involved: None.",
+    "description":"Failure mode \"animal_dog_dogs\" in the \"veterinary\" domain covers complaints related to: stray dog complaints, animal rescue, anti rabies vaccination, animal birth control, injured animals, dog bites, animal cruelty, feeder harassment, animal death, and pet licensing. Secondary departments involved: None."
+  },
+  {
+    "failure_mode_id":"FM_2",
+    "canonical_name":"ekhata_khata_in",
+    "department_system":"E khata \/ Khata services",
+    "cluster_id":2,
+    "member_count":16,
+    "example_complaints":[
+      "Technical Issue In Ekhata",
+      "Discrepancy In Khata Certificate and Khata Extract",
+      "Khata \/ Ekhata mutation \/ transfer",
+      "Ekhata missing in online",
+      "Ekhata - name correction",
+      "Khata Services (Registration, Transfer, Bifurcation and Amalgamation)",
+      "Other Khata \/ ekhata issues",
+      "ekhata approval pending with ARO",
+      "Ekhata Other corrections",
+      "Ekhata in previous owner name"
+    ],
+    "description_x":"This failure mode represents recurring urban service breakdowns in the E khata \/ Khata services domain.\nIt includes complaint types such as:\nTechnical Issue In Ekhata, Discrepancy In Khata Certificate and Khata Extract, Khata \/ Ekhata mutation \/ transfer, Ekhata missing in online, Ekhata - name correction, Khata Services (Registration, Transfer, Bifurcation and Amalgamation) ...\nThese issues indicate a common underlying system malfunction rather than isolated incidents.",
+    "primary_department_x":"E khata \/ Khata services",
+    "secondary_departments_x":[
+
+    ],
+    "dept_distribution_x":{
+      "E khata \/ Khata services":13,
+      "Revenue Department":3
+    },
+    "ownership_type_x":"cross_department_asset",
+    "primary_department_y":"E khata \/ Khata services",
+    "secondary_departments_y":[
+
+    ],
+    "dept_distribution_y":{
+      "E khata \/ Khata services":13,
+      "Revenue Department":3
+    },
+    "ownership_type_y":"cross_department_asset",
+    "primary_department":"E khata \/ Khata services",
+    "secondary_departments":[
+
+    ],
+    "ownership_type":"single_owner",
+    "dept_distribution":{
+      "E khata \/ Khata services":13,
+      "Revenue Department":3
+    },
+    "description_y":"Failure mode \"ekhata_khata_in\" in the \"E khata \/ Khata services\" domain covers complaints related to: technical issues in ekhata, khata mutation, khata transfer, name correction, area correction, missing ekhata, approval pending, bifurcation, amalgamation, and khata certificate discrepancies. Secondary departments involved: None.",
+    "description":"Failure mode \"ekhata_khata_in\" in the \"E khata \/ Khata services\" domain covers complaints related to: technical issues in ekhata, khata mutation, khata transfer, name correction, area correction, missing ekhata, approval pending, bifurcation, amalgamation, and khata certificate discrepancies. Secondary departments involved: None."
+  },
+  {
+    "failure_mode_id":"FM_11",
+    "canonical_name":"lake_in_of",
+    "department_system":"Lakes",
+    "cluster_id":11,
+    "member_count":14,
+    "example_complaints":[
+      "Sewerage water left in SWD",
+      "Maintenance of SWD",
+      "Garbage thrown in storm water drain",
+      "Lake not maintained properly",
+      "Dying of fishes in lake",
+      "Dumping of garbage into lake",
+      "Lake fencing damaged",
+      "Sewage inflow to lake",
+      "Dumping of construction & Demolition waste in to lake",
+      "Lake gates are not opened as per the prescribed timing"
+    ],
+    "description_x":"This failure mode represents recurring urban service breakdowns in the Lakes domain.\nIt includes complaint types such as:\nSewerage water left in SWD, Maintenance of SWD, Garbage thrown in storm water drain, Lake not maintained properly, Dying of fishes in lake, Dumping of garbage into lake ...\nThese issues indicate a common underlying system malfunction rather than isolated incidents.",
+    "primary_department_x":"Lakes",
+    "secondary_departments_x":[
+      "Storm  Water Drain(SWD)"
+    ],
+    "dept_distribution_x":{
+      "Storm  Water Drain(SWD)":3,
+      "Lakes":11
+    },
+    "ownership_type_x":"cross_department_asset",
+    "primary_department_y":"Lakes",
+    "secondary_departments_y":[
+      "Storm  Water Drain(SWD)"
+    ],
+    "dept_distribution_y":{
+      "Storm  Water Drain(SWD)":3,
+      "Lakes":11
+    },
+    "ownership_type_y":"cross_department_asset",
+    "primary_department":"Lakes",
+    "secondary_departments":[
+      "Storm  Water Drain(SWD)"
+    ],
+    "ownership_type":"cross_department_asset",
+    "dept_distribution":{
+      "Storm  Water Drain(SWD)":3,
+      "Lakes":11
+    },
+    "description_y":"Failure mode \"lake_in_of\" in the \"Lakes\" domain covers complaints related to: sewage inflow, garbage dumping, dying of fishes, lake maintenance, fencing damage, lake encroachment, security issues, inspection issues, lake water misuse, and storm water drain overflow. Secondary departments involved: Storm Water Drain(SWD).",
+    "description":"Failure mode \"lake_in_of\" in the \"Lakes\" domain covers complaints related to: sewage inflow, garbage dumping, dying of fishes, lake maintenance, fencing damage, lake encroachment, security issues, inspection issues, lake water misuse, and storm water drain overflow. Secondary departments involved: Storm Water Drain(SWD)."
+  },
+  {
+    "failure_mode_id":"FM_10",
+    "canonical_name":"road_water_footpath",
+    "department_system":"Road Maintenance(Engg)",
+    "cluster_id":10,
+    "member_count":13,
+    "example_complaints":[
+      "footpath encroachment",
+      "Potholes",
+      "Road side drains",
+      "Road cutting",
+      "water stagnation",
+      "Debris Removal \/ Construction Material",
+      "Footpath",
+      "water leakage on road",
+      "Overhanging cables",
+      "UnAuthorised Constructions"
+    ],
+    "description_x":"This failure mode represents recurring urban service breakdowns in the Road Maintenance(Engg) domain.\nIt includes complaint types such as:\nfootpath encroachment, Potholes, Road side drains, Road cutting, water stagnation, Debris Removal \/ Construction Material ...\nThese issues indicate a common underlying system malfunction rather than isolated incidents.",
+    "primary_department_x":"Road Maintenance(Engg)",
+    "secondary_departments_x":[
+      "Projects Central"
+    ],
+    "dept_distribution_x":{
+      "Road Maintenance(Engg)":10,
+      "Projects Central":3
+    },
+    "ownership_type_x":"cross_department_asset",
+    "primary_department_y":"Road Maintenance(Engg)",
+    "secondary_departments_y":[
+      "Projects Central"
+    ],
+    "dept_distribution_y":{
+      "Road Maintenance(Engg)":10,
+      "Projects Central":3
+    },
+    "ownership_type_y":"cross_department_asset",
+    "primary_department":"Road Maintenance(Engg)",
+    "secondary_departments":[
+      "Projects Central"
+    ],
+    "ownership_type":"cross_department_asset",
+    "dept_distribution":{
+      "Road Maintenance(Engg)":10,
+      "Projects Central":3
+    },
+    "description_y":"Failure mode \"road_water_footpath\" in the \"Road Maintenance(Engg)\" domain covers complaints related to: potholes, footpath encroachment, road cutting, water stagnation, drainage blockage, debris on road, water leakage, overhanging cables, unauthorized constructions, and road side drains. Secondary departments involved: Projects Central.",
+    "description":"Failure mode \"road_water_footpath\" in the \"Road Maintenance(Engg)\" domain covers complaints related to: potholes, footpath encroachment, road cutting, water stagnation, drainage blockage, debris on road, water leakage, overhanging cables, unauthorized constructions, and road side drains. Secondary departments involved: Projects Central."
+  },
+  {
+    "failure_mode_id":"FM_12",
+    "canonical_name":"garbage_not_of",
+    "department_system":"Solid Waste (Garbage) Related",
+    "cluster_id":12,
+    "member_count":11,
+    "example_complaints":[
+      "Garbage dump",
+      "Garbage dumping in vacant sites",
+      "Sweeping not done",
+      "Garbage transfer not as per norms & area not kept clean",
+      "Garbage vehicle not arrived",
+      "Dead animal(s)",
+      "Burning of Garbage in Open Space",
+      "Garbage nuisance while transporting",
+      "Public dustbins not cleaned",
+      "Segregation of waste is not done"
+    ],
+    "description_x":"This failure mode represents recurring urban service breakdowns in the Solid Waste (Garbage) Related domain.\nIt includes complaint types such as:\nGarbage dump, Garbage dumping in vacant sites, Sweeping not done, Garbage transfer not as per norms & area not kept clean, Garbage vehicle not arrived, Dead animal(s) ...\nThese issues indicate a common underlying system malfunction rather than isolated incidents.",
+    "primary_department_x":"Solid Waste (Garbage) Related",
+    "secondary_departments_x":[
+
+    ],
+    "dept_distribution_x":{
+      "Solid Waste (Garbage) Related":11
+    },
+    "ownership_type_x":"single_owner",
+    "primary_department_y":"Solid Waste (Garbage) Related",
+    "secondary_departments_y":[
+
+    ],
+    "dept_distribution_y":{
+      "Solid Waste (Garbage) Related":11
+    },
+    "ownership_type_y":"single_owner",
+    "primary_department":"Solid Waste (Garbage) Related",
+    "secondary_departments":[
+
+    ],
+    "ownership_type":"single_owner",
+    "dept_distribution":{
+      "Solid Waste (Garbage) Related":11
+    },
+    "description_y":"Failure mode \"garbage_not_of\" in the \"Solid Waste (Garbage) Related\" domain covers complaints related to: garbage dump, dumping in vacant sites, sweeping not done, garbage vehicle not arrived, dead animals, burning of garbage, dustbins not cleaned, waste segregation not done, garbage transport nuisance, and SWM rule violations. Secondary departments involved: None.",
+    "description":"Failure mode \"garbage_not_of\" in the \"Solid Waste (Garbage) Related\" domain covers complaints related to: garbage dump, dumping in vacant sites, sweeping not done, garbage vehicle not arrived, dead animals, burning of garbage, dustbins not cleaned, waste segregation not done, garbage transport nuisance, and SWM rule violations. Secondary departments involved: None."
+  },
+  {
+    "failure_mode_id":"FM_6",
+    "canonical_name":"food_cleanliness_quality",
+    "department_system":"Indira Canteen",
+    "cluster_id":6,
+    "member_count":10,
+    "example_complaints":[
+      "Others",
+      "Food Quality",
+      "Cleanliness of Canteen \/Food Area",
+      "Food Quantity",
+      "Indira Canteen",
+      "Cleanliness",
+      "Staff Related",
+      "Water quality",
+      "Billing related",
+      "Cleanliness of Utensils"
+    ],
+    "description_x":"This failure mode represents recurring urban service breakdowns in the Indira Canteen domain.\nIt includes complaint types such as:\nOthers, Food Quality, Cleanliness of Canteen \/Food Area, Food Quantity, Indira Canteen, Cleanliness ...\nThese issues indicate a common underlying system malfunction rather than isolated incidents.",
+    "primary_department_x":"Indira Canteen",
+    "secondary_departments_x":[
+
+    ],
+    "dept_distribution_x":{
+      "Indira Canteen":9,
+      "Health Dept":1
+    },
+    "ownership_type_x":"cross_department_asset",
+    "primary_department_y":"Indira Canteen",
+    "secondary_departments_y":[
+
+    ],
+    "dept_distribution_y":{
+      "Indira Canteen":9,
+      "Health Dept":1
+    },
+    "ownership_type_y":"cross_department_asset",
+    "primary_department":"Indira Canteen",
+    "secondary_departments":[
+
+    ],
+    "ownership_type":"single_owner",
+    "dept_distribution":{
+      "Indira Canteen":9,
+      "Health Dept":1
+    },
+    "description_y":"Failure mode \"food_cleanliness_quality\" in the \"Indira Canteen\" domain covers complaints related to: food quality, food quantity, cleanliness of canteen, cleanliness of utensils, water quality, staff issues, billing issues, and general canteen maintenance. Secondary departments involved: None.",
+    "description":"Failure mode \"food_cleanliness_quality\" in the \"Indira Canteen\" domain covers complaints related to: food quality, food quantity, cleanliness of canteen, cleanliness of utensils, water quality, staff issues, billing issues, and general canteen maintenance. Secondary departments involved: None."
+  },
+  {
+    "failure_mode_id":"FM_5",
+    "canonical_name":"encroachment_violation_of",
+    "department_system":"Markets",
+    "cluster_id":5,
+    "member_count":10,
+    "example_complaints":[
+      "Encroachment",
+      "Encroachment",
+      "Trade License",
+      "Violation of rules by Shop rent \/ Leaser",
+      "BBMP  Properties Lease issues",
+      "Violation of rules by property Leasers",
+      "Garbage In Market Premises",
+      "Illegal Parking",
+      "Payment\/Rent issues",
+      "Rent Payment"
+    ],
+    "description_x":"This failure mode represents recurring urban service breakdowns in the Markets domain.\nIt includes complaint types such as:\nEncroachment, Encroachment, Trade License, Violation of rules by Shop rent \/ Leaser, BBMP  Properties Lease issues, Violation of rules by property Leasers ...\nThese issues indicate a common underlying system malfunction rather than isolated incidents.",
+    "primary_department_x":"Markets",
+    "secondary_departments_x":[
+      "Estate"
+    ],
+    "dept_distribution_x":{
+      "Markets":6,
+      "Estate":4
+    },
+    "ownership_type_x":"cross_department_asset",
+    "primary_department_y":"Markets",
+    "secondary_departments_y":[
+      "Estate"
+    ],
+    "dept_distribution_y":{
+      "Markets":6,
+      "Estate":4
+    },
+    "ownership_type_y":"cross_department_asset",
+    "primary_department":"Markets",
+    "secondary_departments":[
+      "Estate"
+    ],
+    "ownership_type":"cross_department_asset",
+    "dept_distribution":{
+      "Markets":6,
+      "Estate":4
+    },
+    "description_y":"Failure mode \"encroachment_violation_of\" in the \"Markets\" domain covers complaints related to: encroachment, trade license issues, rule violations by shop lessees, garbage in market premises, illegal parking, rent payment issues, and BBMP property lease violations. Secondary departments involved: Estate.",
+    "description":"Failure mode \"encroachment_violation_of\" in the \"Markets\" domain covers complaints related to: encroachment, trade license issues, rule violations by shop lessees, garbage in market premises, illegal parking, rent payment issues, and BBMP property lease violations. Secondary departments involved: Estate."
+  },
+  {
+    "failure_mode_id":"FM_4",
+    "canonical_name":"property_tax_unable",
+    "department_system":"Property Tax services",
+    "cluster_id":4,
+    "member_count":8,
+    "example_complaints":[
+      "Unable to generate the property tax challan",
+      "Unable to Generate the receipt after property tax payment.",
+      "unable to generate property tax challan",
+      "Unable to generate receipt after property tax payment",
+      "Property tax owner name not updated",
+      "Other property tax issues",
+      "Issues in property tax portal",
+      "Property tax refund \/ adjustment"
+    ],
+    "description_x":"This failure mode represents recurring urban service breakdowns in the Property Tax services domain.\nIt includes complaint types such as:\nUnable to generate the property tax challan, Unable to Generate the receipt after property tax payment., unable to generate property tax challan, Unable to generate receipt after property tax payment, Property tax owner name not updated, Other property tax issues ...\nThese issues indicate a common underlying system malfunction rather than isolated incidents.",
+    "primary_department_x":"Property Tax services",
+    "secondary_departments_x":[
+      "Revenue Department"
+    ],
+    "dept_distribution_x":{
+      "Revenue Department":2,
+      "Property Tax services":6
+    },
+    "ownership_type_x":"cross_department_asset",
+    "primary_department_y":"Property Tax services",
+    "secondary_departments_y":[
+      "Revenue Department"
+    ],
+    "dept_distribution_y":{
+      "Revenue Department":2,
+      "Property Tax services":6
+    },
+    "ownership_type_y":"cross_department_asset",
+    "primary_department":"Property Tax services",
+    "secondary_departments":[
+      "Revenue Department"
+    ],
+    "ownership_type":"cross_department_asset",
+    "dept_distribution":{
+      "Revenue Department":2,
+      "Property Tax services":6
+    },
+    "description_y":"Failure mode \"property_tax_unable\" in the \"Property Tax services\" domain covers complaints related to: inability to generate challan, inability to generate receipt, portal issues, owner name not updated, tax refund, adjustment issues, and payment discrepancies. Secondary departments involved: Revenue Department.",
+    "description":"Failure mode \"property_tax_unable\" in the \"Property Tax services\" domain covers complaints related to: inability to generate challan, inability to generate receipt, portal issues, owner name not updated, tax refund, adjustment issues, and payment discrepancies. Secondary departments involved: Revenue Department."
+  },
+  {
+    "failure_mode_id":"FM_0",
+    "canonical_name":"increase_in_mosquito",
+    "department_system":"CORONA COVID19",
+    "cluster_id":0,
+    "member_count":7,
+    "example_complaints":[
+      "Increase in mosquito density",
+      "Dengue positive",
+      "Stockout",
+      "Overcharging",
+      "Some other person affected from COVID",
+      "Others",
+      "Government regulations not being followed"
+    ],
+    "description_x":"This failure mode represents recurring urban service breakdowns in the CORONA COVID19 domain.\nIt includes complaint types such as:\nIncrease in mosquito density, Dengue positive, Stockout, Overcharging, Some other person affected from COVID, Others ...\nThese issues indicate a common underlying system malfunction rather than isolated incidents.",
+    "primary_department_x":"CORONA COVID19",
+    "secondary_departments_x":[
+      "Health Dept"
+    ],
+    "dept_distribution_x":{
+      "Health Dept":2,
+      "CORONA COVID19":5
+    },
+    "ownership_type_x":"cross_department_asset",
+    "primary_department_y":"CORONA COVID19",
+    "secondary_departments_y":[
+      "Health Dept"
+    ],
+    "dept_distribution_y":{
+      "Health Dept":2,
+      "CORONA COVID19":5
+    },
+    "ownership_type_y":"cross_department_asset",
+    "primary_department":"Health Dept",
+    "secondary_departments":[
+
+    ],
+    "ownership_type":"single_owner",
+    "dept_distribution":{
+      "Health Dept":2,
+      "CORONA COVID19":5
+    },
+    "description_y":"Failure mode \"increase_in_mosquito\" in the \"Health Dept\" domain covers complaints related to: mosquito density, dengue positive cases, fogging, spraying, stockouts, overcharging, regulation violations, and epidemic related grievances. Secondary departments involved: None.",
+    "description":"Failure mode \"increase_in_mosquito\" in the \"Health Dept\" domain covers complaints related to: mosquito density, dengue positive cases, fogging, spraying, stockouts, overcharging, regulation violations, and epidemic related grievances. Secondary departments involved: None."
+  },
+  {
+    "failure_mode_id":"FM_1",
+    "canonical_name":"schemes_related_to",
+    "department_system":"Welfare Schemes",
+    "cluster_id":1,
+    "member_count":6,
+    "example_complaints":[
+      "Senior  Citizen",
+      "Onti Mane",
+      "Schemes Related to BCM Program",
+      "Women Welfare Program",
+      "Issues Regarding SC\/ST Schemes.",
+      "Schemes Related to Physically Abled Person"
+    ],
+    "description_x":"This failure mode represents recurring urban service breakdowns in the Welfare Schemes domain.\nIt includes complaint types such as:\nSenior  Citizen, Onti Mane, Schemes Related to BCM Program, Women Welfare Program, Issues Regarding SC\/ST Schemes., Schemes Related to Physically Abled Person ...\nThese issues indicate a common underlying system malfunction rather than isolated incidents.",
+    "primary_department_x":"Welfare Schemes",
+    "secondary_departments_x":[
+
+    ],
+    "dept_distribution_x":{
+      "Welfare Schemes":6
+    },
+    "ownership_type_x":"single_owner",
+    "primary_department_y":"Welfare Schemes",
+    "secondary_departments_y":[
+
+    ],
+    "dept_distribution_y":{
+      "Welfare Schemes":6
+    },
+    "ownership_type_y":"single_owner",
+    "primary_department":"Welfare Schemes",
+    "secondary_departments":[
+
+    ],
+    "ownership_type":"single_owner",
+    "dept_distribution":{
+      "Welfare Schemes":6
+    },
+    "description_y":"Failure mode \"schemes_related_to\" in the \"Welfare Schemes\" domain covers complaints related to: senior citizen schemes, women welfare programs, SC\/ST schemes, BCM programs, physically abled person schemes, and social welfare entitlements. Secondary departments involved: None.",
+    "description":"Failure mode \"schemes_related_to\" in the \"Welfare Schemes\" domain covers complaints related to: senior citizen schemes, women welfare programs, SC\/ST schemes, BCM programs, physically abled person schemes, and social welfare entitlements. Secondary departments involved: None."
+  },
+  {
+    "failure_mode_id":"FM_7",
+    "canonical_name":"in_public_toilets",
+    "department_system":"Sanitation",
+    "cluster_id":7,
+    "member_count":6,
+    "example_complaints":[
+      "Unhygienic  premises in hospital",
+      "Public toilet(s) blockage",
+      "Urination in Public\/Open Defecation",
+      "Public toilet(s) cleaning",
+      "No electricity in public toilet(s)",
+      "No water supply in public toilet(s)"
+    ],
+    "description_x":"This failure mode represents recurring urban service breakdowns in the Sanitation domain.\nIt includes complaint types such as:\nUnhygienic  premises in hospital, Public toilet(s) blockage, Urination in Public\/Open Defecation, Public toilet(s) cleaning, No electricity in public toilet(s), No water supply in public toilet(s) ...\nThese issues indicate a common underlying system malfunction rather than isolated incidents.",
+    "primary_department_x":"Sanitation",
+    "secondary_departments_x":[
+
+    ],
+    "dept_distribution_x":{
+      "Health Dept":1,
+      "Sanitation":5
+    },
+    "ownership_type_x":"cross_department_asset",
+    "primary_department_y":"Sanitation",
+    "secondary_departments_y":[
+
+    ],
+    "dept_distribution_y":{
+      "Health Dept":1,
+      "Sanitation":5
+    },
+    "ownership_type_y":"cross_department_asset",
+    "primary_department":"Sanitation",
+    "secondary_departments":[
+
+    ],
+    "ownership_type":"single_owner",
+    "dept_distribution":{
+      "Health Dept":1,
+      "Sanitation":5
+    },
+    "description_y":"Failure mode \"in_public_toilets\" in the \"Sanitation\" domain covers complaints related to: public toilet blockage, toilet cleaning, lack of water supply, lack of electricity, open defecation, and unhygienic toilet premises. Secondary departments involved: None.",
+    "description":"Failure mode \"in_public_toilets\" in the \"Sanitation\" domain covers complaints related to: public toilet blockage, toilet cleaning, lack of water supply, lack of electricity, open defecation, and unhygienic toilet premises. Secondary departments involved: None."
+  },
+  {
+    "failure_mode_id":"FM_8",
+    "canonical_name":"play_issues_related",
+    "department_system":"Parks and Play grounds",
+    "cluster_id":8,
+    "member_count":5,
+    "example_complaints":[
+      "Issues Related to Parks\/Medians\/Circles\/Island.",
+      "Gym\/Children Play equipment in the parks",
+      "Play Grounds",
+      "Environmental protection",
+      "Inspection not done"
+    ],
+    "description_x":"This failure mode represents recurring urban service breakdowns in the Parks and Play grounds domain.\nIt includes complaint types such as:\nIssues Related to Parks\/Medians\/Circles\/Island., Gym\/Children Play equipment in the parks, Play Grounds, Environmental protection, Inspection not done ...\nThese issues indicate a common underlying system malfunction rather than isolated incidents.",
+    "primary_department_x":"Parks and Play grounds",
+    "secondary_departments_x":[
+
+    ],
+    "dept_distribution_x":{
+      "Parks and Play grounds":5
+    },
+    "ownership_type_x":"single_owner",
+    "primary_department_y":"Parks and Play grounds",
+    "secondary_departments_y":[
+
+    ],
+    "dept_distribution_y":{
+      "Parks and Play grounds":5
+    },
+    "ownership_type_y":"single_owner",
+    "primary_department":"Parks and Play grounds",
+    "secondary_departments":[
+
+    ],
+    "ownership_type":"single_owner",
+    "dept_distribution":{
+      "Parks and Play grounds":5
+    },
+    "description_y":"Failure mode \"play_issues_related\" in the \"Parks and Play grounds\" domain covers complaints related to: park maintenance, playground facilities, gym equipment, environmental protection, inspection issues, and public park infrastructure. Secondary departments involved: None.",
+    "description":"Failure mode \"play_issues_related\" in the \"Parks and Play grounds\" domain covers complaints related to: park maintenance, playground facilities, gym equipment, environmental protection, inspection issues, and public park infrastructure. Secondary departments involved: None."
+  },
+  {
+    "failure_mode_id":"FM_9",
+    "canonical_name":"street_light_not",
+    "department_system":"Electrical",
+    "cluster_id":9,
+    "member_count":5,
+    "example_complaints":[
+      "Street Light Not Working",
+      "Requirement For New Street Lights",
+      "Street Lights Switched On During Day Time",
+      "Street light issues",
+      "Street Light Not Working"
+    ],
+    "description_x":"This failure mode represents recurring urban service breakdowns in the Electrical domain.\nIt includes complaint types such as:\nStreet Light Not Working, Requirement For New Street Lights, Street Lights Switched On During Day Time, Street light issues, Street Light Not Working ...\nThese issues indicate a common underlying system malfunction rather than isolated incidents.",
+    "primary_department_x":"Electrical",
+    "secondary_departments_x":[
+      "Projects Central",
+      "Road Maintenance(Engg)"
+    ],
+    "dept_distribution_x":{
+      "Electrical":3,
+      "Projects Central":1,
+      "Road Maintenance(Engg)":1
+    },
+    "ownership_type_x":"cross_department_asset",
+    "primary_department_y":"Electrical",
+    "secondary_departments_y":[
+      "Projects Central",
+      "Road Maintenance(Engg)"
+    ],
+    "dept_distribution_y":{
+      "Electrical":3,
+      "Projects Central":1,
+      "Road Maintenance(Engg)":1
+    },
+    "ownership_type_y":"cross_department_asset",
+    "primary_department":"Electrical",
+    "secondary_departments":[
+      "Projects Central",
+      "Road Maintenance(Engg)"
+    ],
+    "ownership_type":"cross_department_asset",
+    "dept_distribution":{
+      "Electrical":3,
+      "Projects Central":1,
+      "Road Maintenance(Engg)":1
+    },
+    "description_y":"Failure mode \"street_light_not\" in the \"Electrical\" domain covers complaints related to: street light not working, requirement for new street lights, lights switched on during daytime, street light maintenance, and lighting infrastructure issues. Secondary departments involved: Projects Central, Road Maintenance(Engg).",
+    "description":"Failure mode \"street_light_not\" in the \"Electrical\" domain covers complaints related to: street light not working, requirement for new street lights, lights switched on during daytime, street light maintenance, and lighting infrastructure issues. Secondary departments involved: Projects Central, Road Maintenance(Engg)."
+  }
+]

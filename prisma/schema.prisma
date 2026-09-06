@@ -1,0 +1,225 @@
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [postgis]
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+enum Role {
+  CITIZEN
+  PANCHAYAT_OFFICER
+  STUDENT
+  FACULTY_MENTOR
+  DEPT_HEAD
+  HEI_DIRECTOR
+  INDUSTRY_CSR
+  GOVT_OFFICER
+  SUPER_ADMIN
+}
+
+enum TicketCategory {
+  WATER_MANAGEMENT
+  SANITATION_WASTE
+  RURAL_ELECTRIFICATION_SOLAR
+  SUSTAINABLE_AGRICULTURE
+  HEALTHCARE_DELIVERY
+  ROAD_INFRASTRUCTURE
+  PRIMARY_EDUCATION_DIGITAL
+  FORESTRY_ENVIRONMENT
+}
+
+enum TicketStatus {
+  DRAFT
+  SUBMITTED
+  AI_VERIFIED
+  AI_ROUTED
+  ACCEPTED_BY_HEI
+  IN_PROGRESS
+  PROTOTYPE_DEPLOYED
+  FIELD_TESTED
+  RESOLVED
+  MERGED_DUPLICATE
+}
+
+enum UrgencyLevel {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+model User {
+  id                 String             @id @default(uuid())
+  phone              String             @unique
+  email              String?            @unique
+  fullName           String
+  passwordHash       String             @default("$2a$10$defaultPlaceholderHash")
+  role               Role               @default(CITIZEN)
+  district           String?
+  block              String?
+  panchayat          String?
+  organization       String?
+  designation        String?
+  heiId              String?
+  hei                HEI?               @relation(fields: [heiId], references: [id])
+  departmentId       String?
+  department         Department?        @relation(fields: [departmentId], references: [id])
+  ticketsReported    ProblemTicket[]    @relation("ReportedBy")
+  studentTeams       TeamMember[]
+  facultyMentorships ProjectTeam[]      @relation("FacultyMentor")
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+}
+
+model District {
+  id          String          @id @default(uuid())
+  name        String          @unique
+  division    String
+  heis        HEI[]
+  tickets     ProblemTicket[]
+}
+
+model HEI {
+  id              String          @id @default(uuid())
+  code            String          @unique
+  name            String
+  type            String          // IIT, NIT, Central Univ, State Univ, Polytech
+  districtId      String
+  district        District        @relation(fields: [districtId], references: [id])
+  nirfRank        Int?
+  address         String
+  website         String?
+  departments     Department[]
+  users           User[]
+  assignedTickets ProblemTicket[]
+  activeProjects  ProjectTeam[]
+  createdAt       DateTime        @default(now())
+}
+
+model Department {
+  id           String        @id @default(uuid())
+  heiId        String
+  hei          HEI           @relation(fields: [heiId], references: [id], onDelete: Cascade)
+  name         String
+  code         String
+  researchTags String[]
+  maxCapacity  Int           @default(10)
+  activeTeams  ProjectTeam[]
+  users        User[]
+}
+
+model ProblemTicket {
+  id                   String             @id @default(uuid())
+  ticketCode           String             @unique // e.g. JS-RNC-2026-0042
+  reporterId           String
+  reporter             User               @relation("ReportedBy", fields: [reporterId], references: [id])
+  title                String
+  description          String
+  voiceRecordingUrl    String?
+  transcribedText      String?
+  detectedLanguage     String?            // hi, sat, mun, en
+  category             TicketCategory
+  urgency              UrgencyLevel       @default(MEDIUM)
+  status               TicketStatus       @default(SUBMITTED)
+  latitude             Float
+  longitude            Float
+  districtId           String
+  district             District           @relation(fields: [districtId], references: [id])
+  villageOrWard        String?
+  imageUrls            String[]
+  aiConfidenceScore    Float?
+  yoloDetections       Json?
+  embeddingVectorId    String?
+  similarityClusterId  String?
+  duplicateOfId        String?
+  duplicateOf          ProblemTicket?     @relation("Duplicates", fields: [duplicateOfId], references: [id])
+  duplicates           ProblemTicket[]    @relation("Duplicates")
+  assignedHeiId        String?
+  assignedHei          HEI?               @relation(fields: [assignedHeiId], references: [id])
+  routingScore         Float?
+  routingJustification String?
+  projectTeam          ProjectTeam?
+  auditLedger          AuditLedgerEntry[]
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  @@index([category, status])
+  @@index([districtId])
+}
+
+model ProjectTeam {
+  id                String             @id @default(uuid())
+  ticketId          String             @unique
+  ticket            ProblemTicket      @relation(fields: [ticketId], references: [id])
+  heiId             String
+  hei               HEI                @relation(fields: [heiId], references: [id])
+  departmentId      String
+  department        Department         @relation(fields: [departmentId], references: [id])
+  facultyMentorId   String
+  facultyMentor     User               @relation("FacultyMentor", fields: [facultyMentorId], references: [id])
+  members           TeamMember[]
+  milestones        ProjectMilestone[]
+  sponsorships      CSRSponsorship[]
+  nepCreditsAwarded Int                @default(0)
+  githubRepoUrl     String?
+  prototypeDocUrl   String?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+}
+
+model TeamMember {
+  id             String      @id @default(uuid())
+  teamId         String
+  team           ProjectTeam @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  userId         String
+  user           User        @relation(fields: [userId], references: [id])
+  roleInTeam     String
+  creditsClaimed Boolean     @default(false)
+}
+
+model ProjectMilestone {
+  id            String      @id @default(uuid())
+  teamId        String
+  team          ProjectTeam @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  sequenceIndex Int
+  title         String
+  description   String
+  targetDate    DateTime
+  submittedAt   DateTime?
+  proofUrls     String[]
+  status        String      // PENDING, SUBMITTED, APPROVED, REJECTED
+  milestoneHash String?     // SHA-256 (prevHash + payload)
+  approvedBy    String?
+  approvedAt    DateTime?
+}
+
+model CSRSponsorship {
+  id              String      @id @default(uuid())
+  teamId          String
+  team            ProjectTeam @relation(fields: [teamId], references: [id])
+  corporateName   String
+  sponsorUserId   String
+  pledgedAmount   Decimal     @db.Decimal(12, 2)
+  disbursedAmount Decimal     @default(0) @db.Decimal(12, 2)
+  status          String
+  transactionRef  String?
+  createdAt       DateTime    @default(now())
+}
+
+model AuditLedgerEntry {
+  id           String        @id @default(uuid())
+  blockIndex   BigInt        @default(autoincrement())
+  ticketId     String
+  ticket       ProblemTicket @relation(fields: [ticketId], references: [id])
+  actionType   String
+  payloadHash  String
+  previousHash String
+  currentHash  String
+  timestamp    DateTime      @default(now())
+
+  @@index([blockIndex])
+}
