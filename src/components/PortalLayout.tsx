@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import PWAInstaller from './PWAInstaller';
 import AuditLedgerModal from './AuditLedgerModal';
@@ -35,13 +35,69 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
   const [isLedgerOpen, setIsLedgerOpen] = useState(false);
   const [certificateTicket, setCertificateTicket] = useState<ProblemTicket | null>(null);
 
+  // Sync with localStorage & live Supabase PostgreSQL via /api/tickets
+  useEffect(() => {
+    // 1. Immediate sync from localStorage cache
+    try {
+      const stored = localStorage.getItem('joharsetu_live_tickets');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          const storedCodes = new Set(parsed.map((p: ProblemTicket) => p.ticketCode));
+          const combined = [...parsed, ...INITIAL_TICKETS.filter((t) => !storedCodes.has(t.ticketCode))];
+          setTickets(combined);
+        }
+      }
+      const storedChain = localStorage.getItem('joharsetu_audit_chain');
+      if (storedChain) {
+        const parsedChain = JSON.parse(storedChain);
+        if (Array.isArray(parsedChain) && parsedChain.length > 0) {
+          setAuditChain(parsedChain);
+        }
+      }
+    } catch {
+      // Fallback to default in-memory state
+    }
+
+    // 2. Fetch live tickets from Supabase DB
+    const fetchLiveTickets = async () => {
+      try {
+        const res = await fetch('/api/tickets');
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+            setTickets((prev) => {
+              const apiCodes = new Set(json.data.map((d: ProblemTicket) => d.ticketCode));
+              const localOnly = prev.filter((p) => !apiCodes.has(p.ticketCode));
+              const merged = [...localOnly, ...json.data];
+              try {
+                localStorage.setItem('joharsetu_live_tickets', JSON.stringify(merged));
+              } catch {}
+              return merged;
+            });
+          }
+        }
+      } catch (err) {
+        console.warn('API tickets fetch notice:', err);
+      }
+    };
+
+    fetchLiveTickets();
+  }, []);
+
   const handleNewTicket = (ticket: ProblemTicket) => {
-    setTickets((prev) => [ticket, ...prev]);
+    setTickets((prev) => {
+      const next = [ticket, ...prev.filter((t) => t.ticketCode !== ticket.ticketCode && t.id !== ticket.id)];
+      try {
+        localStorage.setItem('joharsetu_live_tickets', JSON.stringify(next));
+      } catch {}
+      return next;
+    });
 
     const newBlock: AuditBlock = {
       index: auditChain.length,
       timestamp: Math.floor(Date.now() / 1000),
-      previous_hash: auditChain[auditChain.length - 1].hash,
+      previous_hash: auditChain[auditChain.length - 1]?.hash || '0000000000000000',
       ticket_id: ticket.ticketCode,
       action: 'TICKET_SUBMITTED_AND_AI_ROUTED',
       data: {
@@ -54,18 +110,28 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
       hash: '9a7b' + Math.random().toString(16).substring(2, 10) + 'ef12' + Math.random().toString(16).substring(2, 10) + '5432',
     };
 
-    setAuditChain((prev) => [...prev, newBlock]);
+    setAuditChain((prev) => {
+      const nextChain = [...prev, newBlock];
+      try {
+        localStorage.setItem('joharsetu_audit_chain', JSON.stringify(nextChain));
+      } catch {}
+      return nextChain;
+    });
   };
 
   const handleUpdateTicket = (updatedTicket: ProblemTicket) => {
-    setTickets((prev) =>
-      prev.map((t) => (t.id === updatedTicket.id ? updatedTicket : t))
-    );
+    setTickets((prev) => {
+      const next = prev.map((t) => (t.id === updatedTicket.id ? updatedTicket : t));
+      try {
+        localStorage.setItem('joharsetu_live_tickets', JSON.stringify(next));
+      } catch {}
+      return next;
+    });
   };
 
   const handleUpvoteTicket = (ticketId: string) => {
-    setTickets((prev) =>
-      prev.map((t) => {
+    setTickets((prev) => {
+      const next = prev.map((t) => {
         if (t.id !== ticketId) return t;
         const currentEng = t.socialEngagement || {
           upvotes: 0,
@@ -86,8 +152,12 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
             hypeScore: (currentEng.hypeScore || 100) + (nextHasUpvoted ? 15 : -15),
           },
         };
-      })
-    );
+      });
+      try {
+        localStorage.setItem('joharsetu_live_tickets', JSON.stringify(next));
+      } catch {}
+      return next;
+    });
   };
 
   const handleAddComment = (
@@ -105,8 +175,8 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
       isOfficial: authorRole !== 'CITIZEN',
     };
 
-    setTickets((prev) =>
-      prev.map((t) => {
+    setTickets((prev) => {
+      const next = prev.map((t) => {
         if (t.id !== ticketId) return t;
         const currentEng = t.socialEngagement || {
           upvotes: 0,
@@ -123,8 +193,12 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
             hypeScore: (currentEng.hypeScore || 100) + 20,
           },
         };
-      })
-    );
+      });
+      try {
+        localStorage.setItem('joharsetu_live_tickets', JSON.stringify(next));
+      } catch {}
+      return next;
+    });
   };
 
   const handleDonateCampaign = (
@@ -143,8 +217,8 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
       timestamp: new Date().toISOString(),
     };
 
-    setTickets((prev) =>
-      prev.map((t) => {
+    setTickets((prev) => {
+      const next = prev.map((t) => {
         if (t.id !== ticketId) return t;
         const currentCf = t.crowdfunding || {
           id: 'cf-' + Date.now(),
@@ -164,8 +238,12 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
             donations: [newDonation, ...(currentCf.donations || [])],
           },
         };
-      })
-    );
+      });
+      try {
+        localStorage.setItem('joharsetu_live_tickets', JSON.stringify(next));
+      } catch {}
+      return next;
+    });
 
     handleRecordLedgerEvent(ticketId, 'CROWDFUND_ESCROW_PLEDGED', {
       donor: isAnonymous ? 'Anonymous' : donorName,

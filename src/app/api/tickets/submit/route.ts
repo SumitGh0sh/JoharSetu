@@ -105,6 +105,19 @@ export async function POST(req: NextRequest) {
           },
         });
 
+        // Find or associate optimal HEI
+        let heiRecord = await prisma.hEI.findFirst({
+          where: {
+            OR: [
+              { code: optimalHei.code },
+              { name: { contains: optimalHei.name.substring(0, 10), mode: 'insensitive' } },
+            ],
+          },
+        });
+        if (!heiRecord) {
+          heiRecord = await prisma.hEI.findFirst();
+        }
+
         // Create ProblemTicket
         await prisma.problemTicket.create({
           data: {
@@ -119,6 +132,7 @@ export async function POST(req: NextRequest) {
             districtId: distRecord.id,
             villageOrWard: village,
             reporterId: user.id,
+            assignedHeiId: heiRecord?.id,
             imageUrls: finalImageUrls,
           },
         });

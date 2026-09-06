@@ -592,14 +592,14 @@ export default function CitizenPortal({
       // Graceful offline fallback
     }
 
-    const newTicket: ProblemTicket = {
+    let newTicket: ProblemTicket = {
       id: 'tkt-' + Date.now(),
       ticketCode: `JS-${district.substring(0, 3).toUpperCase()}-2026-${Math.floor(1000 + Math.random() * 9000)}`,
       title: title || 'Problem reported in ' + village,
       description: description || 'Problem report submitted with photo and voice note.',
       category: detectedCat,
       urgency: detectedUrg,
-      status: 'AI_VERIFIED',
+      status: 'AI_ROUTED',
       latitude,
       longitude,
       district,
@@ -616,7 +616,44 @@ export default function CitizenPortal({
       assignedHei: assignedHeiData,
     };
 
-    // Save locally to IndexedDB if offline or as backup
+    // 1. Submit to Next.js API route to persist permanently in Supabase PostgreSQL
+    try {
+      const submitRes = await fetch(API_ENDPOINTS.internalTicketsSubmit, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ticketCode: newTicket.ticketCode,
+          title: newTicket.title,
+          description: newTicket.description,
+          category: newTicket.category,
+          urgency: newTicket.urgency,
+          district: newTicket.district,
+          village: newTicket.village,
+          latitude: newTicket.latitude,
+          longitude: newTicket.longitude,
+          reporterName: newTicket.reporterName,
+          reporterPhone: newTicket.reporterPhone,
+          imageDataUrl: selectedPhoto,
+          imageUrls: newTicket.imageUrls,
+        }),
+      });
+
+      if (submitRes.ok) {
+        const resData = await submitRes.json();
+        if (resData.ticket) {
+          newTicket = {
+            ...newTicket,
+            id: resData.ticket.id || newTicket.id,
+            ticketCode: resData.ticketCode || newTicket.ticketCode,
+            status: 'AI_ROUTED',
+          };
+        }
+      }
+    } catch (apiErr) {
+      console.warn('Could not reach /api/tickets/submit, using edge fallback:', apiErr);
+    }
+
+    // 2. Save locally to IndexedDB as offline PWA backup
     await saveOfflineReport({
       title: newTicket.title,
       description: newTicket.description,
@@ -631,14 +668,12 @@ export default function CitizenPortal({
       imageDataUrl: selectedPhoto,
     });
 
-    setTimeout(() => {
-      onNewTicket(newTicket);
-      setIsSubmitting(false);
-      setSubmitSuccess(newTicket.ticketCode);
-      // Reset form
-      setTitle('');
-      setDescription('');
-    }, 600);
+    onNewTicket(newTicket);
+    setIsSubmitting(false);
+    setSubmitSuccess(newTicket.ticketCode);
+    // Reset form
+    setTitle('');
+    setDescription('');
   };
 
   const filteredTickets = tickets.filter((tkt) => {
