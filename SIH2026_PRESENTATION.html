@@ -1,0 +1,1967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JoharSetu (जोहारसेतु) - SIH 2026 Presentation (SIH26043)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================================================
+       JOHARSETU SIH 2026 PRESENTATION DESIGN SYSTEM
+       Strictly adhering to official SIH 6-slide template guidelines.
+       Sohrai Cultural Heritage Palette: Terracotta, Warm Sand, Off-White, Charcoal
+       Zero technology stack mentions; 100% capability and workflow focused.
+       ========================================================================== */
+
+    :root {
+      --terracotta: #D87A53;
+      --terracotta-dark: #B85933;
+      --terracotta-light: #F7EAE3;
+      --sand-gold: #D4A86A;
+      --sand-dark: #9E7438;
+      --sand-light: #FDF8F0;
+      --canvas: #FAF8F5;
+      --surface: #FFFFFF;
+      --surface-subtle: #F5F1EB;
+      --charcoal: #1E242B;
+      --charcoal-light: #4A5568;
+      --charcoal-muted: #718096;
+      --border-color: #E2D9CC;
+      --border-subtle: rgba(216, 122, 83, 0.18);
+      --emerald: #10B981;
+      --emerald-light: #ECFDF5;
+      --amber: #F59E0B;
+      --amber-light: #FFFBEB;
+      --indigo: #6366F1;
+      --indigo-light: #EEF2FF;
+      --shadow-sm: 0 2px 6px rgba(30, 36, 43, 0.04);
+      --shadow-md: 0 8px 24px rgba(30, 36, 43, 0.08);
+      --shadow-lg: 0 16px 40px rgba(30, 36, 43, 0.12);
+      --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #12161B;
+      color: var(--charcoal);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    /* Top Progress Ribbon */
+    #progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--terracotta), var(--sand-gold));
+      width: 16.666%;
+      z-index: 1000;
+      transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Presentation Viewport */
+    #presentation-viewport {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: radial-gradient(circle at 50% 10%, #202731 0%, #12161B 100%);
+    }
+
+    /* Slide Stage (16:9 Aspect Ratio Container) */
+    .slide-stage {
+      position: relative;
+      width: 100%;
+      max-width: 1380px;
+      aspect-ratio: 16 / 9;
+      max-height: 92vh;
+      background: var(--canvas);
+      border-radius: 18px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Individual Slide */
+    .slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      padding: 38px 48px 48px 48px;
+      display: none;
+      flex-direction: column;
+      background: var(--canvas);
+      opacity: 0;
+      transform: translateX(30px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      overflow-y: auto;
+    }
+
+    .slide.active {
+      display: flex;
+      opacity: 1;
+      transform: translateX(0);
+      z-index: 10;
+    }
+
+    /* Slide Header */
+    .slide-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1.5px solid var(--border-color);
+      flex-shrink: 0;
+    }
+
+    .slide-header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .slide-num-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: var(--terracotta);
+      color: #FFF;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 15px;
+      box-shadow: 0 3px 8px rgba(216, 122, 83, 0.35);
+    }
+
+    .slide-title-group h2 {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--charcoal);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .slide-title-group p {
+      font-size: 12.5px;
+      color: var(--charcoal-muted);
+      font-weight: 500;
+    }
+
+    .slide-header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sih-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      background: var(--sand-light);
+      border: 1px solid var(--sand-gold);
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--sand-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .gov-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      background: var(--terracotta-light);
+      border: 1px solid var(--terracotta);
+      border-radius: 8px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--terracotta-dark);
+    }
+
+    /* Content Area */
+    .slide-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 0;
+    }
+
+    /* Universal Cards */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: rgba(216, 122, 83, 0.4);
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title .icon {
+      width: 22px;
+      height: 22px;
+      color: var(--terracotta);
+      flex-shrink: 0;
+    }
+
+    .card p {
+      font-size: 13px;
+      color: var(--charcoal-light);
+      line-height: 1.55;
+    }
+
+    /* Slide 1 Specifics: Title Page */
+    .hero-layout {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 32px;
+      height: 100%;
+      align-items: center;
+    }
+
+    .brand-logo-area {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .brand-icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--terracotta), var(--sand-gold));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFF;
+      font-size: 26px;
+      font-weight: 900;
+      box-shadow: 0 8px 18px rgba(216, 122, 83, 0.35);
+    }
+
+    .brand-name {
+      font-family: var(--font-display);
+      font-size: 42px;
+      font-weight: 900;
+      color: var(--charcoal);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .brand-name span {
+      color: var(--terracotta);
+    }
+
+    .hero-tagline {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--terracotta-dark);
+      margin-bottom: 14px;
+      line-height: 1.35;
+    }
+
+    .hero-desc {
+      font-size: 13.5px;
+      color: var(--charcoal-light);
+      line-height: 1.6;
+      margin-bottom: 22px;
+      max-width: 620px;
+    }
+
+    .title-pill-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .title-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 600;
+      background: #FFF;
+      border: 1px solid var(--border-color);
+      color: var(--charcoal);
+    }
+
+    .title-pill strong {
+      color: var(--terracotta);
+    }
+
+    .meta-spec-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-color);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .meta-spec-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--terracotta), var(--sand-gold));
+    }
+
+    .meta-spec-item {
+      padding: 10px 0;
+      border-bottom: 1px dashed var(--border-color);
+    }
+
+    .meta-spec-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .meta-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+      color: var(--charcoal-muted);
+      margin-bottom: 3px;
+    }
+
+    .meta-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+
+    .meta-value.accent {
+      color: var(--terracotta);
+    }
+
+    /* Slide 2: Idea & Solution */
+    .contrast-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 20px;
+      margin-bottom: 16px;
+    }
+
+    .contrast-card {
+      border-radius: 14px;
+      padding: 20px;
+      position: relative;
+    }
+
+    .card-problem {
+      background: #FFF5F5;
+      border: 1.5px solid #FED7D7;
+    }
+
+    .card-solution {
+      background: #F0FDF4;
+      border: 1.5px solid #BBF7D0;
+    }
+
+    .contrast-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 10px;
+    }
+
+    .badge-red {
+      background: #FEE2E2;
+      color: #991B1B;
+    }
+
+    .badge-green {
+      background: #DCFCE7;
+      color: #166534;
+    }
+
+    .analogy-quote {
+      font-size: 12.5px;
+      font-style: italic;
+      color: #7F1D1D;
+      padding: 10px 14px;
+      background: rgba(254, 226, 226, 0.6);
+      border-left: 3px solid #EF4444;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .solution-quote {
+      font-size: 12.5px;
+      color: #14532D;
+      padding: 10px 14px;
+      background: rgba(220, 252, 231, 0.6);
+      border-left: 3px solid #22C55E;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .feature-points {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .feature-points li {
+      font-size: 12.5px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.45;
+    }
+
+    .feature-points li svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .uvp-banner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      background: linear-gradient(135deg, #FFF, var(--sand-light));
+      border: 1.5px solid var(--sand-gold);
+      border-radius: 12px;
+      padding: 14px 20px;
+    }
+
+    .uvp-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .uvp-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--terracotta);
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .uvp-text h4 {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--charcoal);
+    }
+
+    .uvp-text p {
+      font-size: 11.5px;
+      color: var(--charcoal-muted);
+    }
+
+    /* Slide 3: Technical Approach & Architecture */
+    .arch-flow-diagram {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-color);
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .flow-steps-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      position: relative;
+    }
+
+    .flow-step-card {
+      background: var(--canvas);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 12px 10px;
+      text-align: center;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+
+    .flow-step-card:hover {
+      background: #FFF;
+      border-color: var(--terracotta);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .step-number {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--terracotta);
+      color: #FFF;
+      font-size: 10.5px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 6px;
+    }
+
+    .step-icon-svg {
+      width: 26px;
+      height: 26px;
+      color: var(--terracotta-dark);
+      margin-bottom: 6px;
+    }
+
+    .step-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--charcoal);
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+
+    .step-desc {
+      font-size: 10px;
+      color: var(--charcoal-muted);
+      line-height: 1.35;
+    }
+
+    .arch-modules-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .module-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 14px;
+      border-top: 3px solid var(--terracotta);
+    }
+
+    .module-card h4 {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--charcoal);
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .module-card p {
+      font-size: 11.5px;
+      color: var(--charcoal-light);
+      line-height: 1.45;
+    }
+
+    /* Slide 4: Feasibility and Viability */
+    .feasibility-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.25fr;
+      gap: 18px;
+      height: 100%;
+    }
+
+    .pillar-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .pillar-card.highlight {
+      border-color: var(--sand-gold);
+      background: linear-gradient(180deg, #FFFFFF, var(--sand-light));
+    }
+
+    .pillar-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .pillar-header .pillar-badge {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--charcoal);
+    }
+
+    .pillar-item {
+      margin-bottom: 12px;
+    }
+
+    .pillar-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .pillar-item-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--terracotta-dark);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 3px;
+    }
+
+    .pillar-item-desc {
+      font-size: 11.5px;
+      color: var(--charcoal-light);
+      line-height: 1.45;
+    }
+
+    .risk-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 4px;
+    }
+
+    .risk-table th {
+      background: var(--surface-subtle);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 6px 10px;
+      text-align: left;
+      border: 1px solid var(--border-color);
+      color: var(--charcoal-muted);
+    }
+
+    .risk-table td {
+      padding: 8px 10px;
+      font-size: 11px;
+      border: 1px solid var(--border-color);
+      vertical-align: top;
+      line-height: 1.4;
+    }
+
+    .risk-table tr:nth-child(even) td {
+      background: #FAFAFA;
+    }
+
+    .risk-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 9.5px;
+      font-weight: 800;
+      background: #FEE2E2;
+      color: #991B1B;
+      margin-bottom: 2px;
+    }
+
+    /* Slide 5: Impact and Comparison Table */
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .metric-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px 14px;
+      text-align: center;
+      border-bottom: 3px solid var(--terracotta);
+    }
+
+    .metric-num {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--terracotta);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .metric-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--charcoal);
+      line-height: 1.25;
+    }
+
+    /* Comparison Table */
+    .comparison-table-wrap {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11.5px;
+    }
+
+    .comparison-table th {
+      padding: 9px 12px;
+      font-weight: 800;
+      text-align: left;
+      border-bottom: 1.5px solid var(--border-color);
+      background: var(--surface-subtle);
+      color: var(--charcoal);
+    }
+
+    .comparison-table th.johar-col {
+      background: var(--terracotta);
+      color: #FFF;
+      text-align: center;
+    }
+
+    .comparison-table td {
+      padding: 7px 12px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--charcoal-light);
+      line-height: 1.35;
+    }
+
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .comparison-table td.johar-col {
+      background: #FFF8F5;
+      font-weight: 700;
+      color: var(--terracotta-dark);
+      text-align: center;
+      border-left: 1.5px solid rgba(216, 122, 83, 0.3);
+      border-right: 1.5px solid rgba(216, 122, 83, 0.3);
+    }
+
+    .comparison-table td.feature-title {
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+
+    .tag-yes {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      color: #059669;
+      font-weight: 700;
+    }
+
+    .tag-no {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      color: #DC2626;
+      font-weight: 500;
+    }
+
+    .modes-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .mode-item {
+      background: var(--surface);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mode-badge {
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: var(--sand-light);
+      border: 1px solid var(--sand-gold);
+      font-size: 10.5px;
+      font-weight: 800;
+      color: var(--sand-dark);
+      white-space: nowrap;
+    }
+
+    .mode-text {
+      font-size: 11px;
+      color: var(--charcoal);
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    /* Slide 6: Research and References */
+    .refs-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 20px;
+      margin-bottom: 16px;
+    }
+
+    .ref-block {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .ref-block h3 {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--charcoal);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .policy-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .policy-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .policy-tag {
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: var(--terracotta-light);
+      border: 1px solid var(--terracotta);
+      color: var(--terracotta-dark);
+      font-size: 10.5px;
+      font-weight: 800;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .policy-desc {
+      font-size: 12px;
+      color: var(--charcoal-light);
+      line-height: 1.45;
+    }
+
+    .policy-desc strong {
+      color: var(--charcoal);
+    }
+
+    .links-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .link-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: var(--canvas);
+      border: 1px solid var(--border-color);
+      transition: all 0.2s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .link-card:hover {
+      background: #FFF;
+      border-color: var(--terracotta);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .link-info h5 {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+
+    .link-info p {
+      font-size: 11px;
+      color: var(--charcoal-muted);
+    }
+
+    .link-badge {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--terracotta);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .conclusion-callout {
+      background: linear-gradient(135deg, var(--terracotta), var(--sand-gold));
+      color: #FFFFFF;
+      padding: 16px 24px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      box-shadow: 0 10px 25px rgba(216, 122, 83, 0.35);
+    }
+
+    .conclusion-text h4 {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin-bottom: 2px;
+    }
+
+    .conclusion-text p {
+      font-size: 12px;
+      opacity: 0.92;
+      line-height: 1.4;
+    }
+
+    .conclusion-button {
+      padding: 8px 18px;
+      background: #FFFFFF;
+      color: var(--terracotta-dark);
+      font-weight: 800;
+      font-size: 12px;
+      border-radius: 8px;
+      border: none;
+      white-space: nowrap;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      transition: transform 0.15s ease;
+    }
+
+    .conclusion-button:hover {
+      transform: scale(1.04);
+    }
+
+    /* Navigation Dock (Floating Bottom Controls) */
+    #nav-dock {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(18, 22, 27, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 50px;
+      padding: 8px 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      z-index: 1000;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    }
+
+    .dock-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #FFF;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .dock-btn:hover {
+      background: var(--terracotta);
+      border-color: var(--terracotta);
+      transform: scale(1.08);
+    }
+
+    .dock-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .dock-dots {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dock-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.25);
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .dock-dot.active {
+      width: 24px;
+      border-radius: 10px;
+      background: var(--terracotta);
+      box-shadow: 0 0 10px var(--terracotta);
+    }
+
+    .dock-counter {
+      color: rgba(255, 255, 255, 0.75);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 0 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .dock-utility-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 10px;
+      border-radius: 20px;
+      transition: color 0.2s ease;
+    }
+
+    .dock-utility-btn:hover {
+      color: #FFF;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Keyboard shortcuts helper popup */
+    #shortcuts-popup {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1E242B;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #FFF;
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-size: 11.5px;
+      display: none;
+      z-index: 1001;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+
+    #shortcuts-popup.show {
+      display: flex;
+      gap: 16px;
+    }
+
+    .shortcut-key {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+    }
+
+    /* Printable Media Layout */
+    @media print {
+      html, body {
+        overflow: visible;
+        background: #FFF;
+      }
+      #progress-bar, #nav-dock, #shortcuts-popup {
+        display: none !important;
+      }
+      #presentation-viewport {
+        padding: 0;
+        height: auto;
+        background: none;
+        display: block;
+      }
+      .slide-stage {
+        max-width: 100%;
+        max-height: none;
+        box-shadow: none;
+        border-radius: 0;
+      }
+      .slide {
+        display: flex !important;
+        opacity: 1 !important;
+        transform: none !important;
+        position: relative !important;
+        page-break-after: always;
+        height: 100vh;
+        max-height: 100vh;
+        padding: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Progress Ribbon -->
+  <div id="progress-bar"></div>
+
+  <!-- Main Presentation Stage Viewport -->
+  <div id="presentation-viewport">
+    <div class="slide-stage">
+
+      <!-- ===================================================================
+           SLIDE 1: TITLE SLIDE (TITLE PAGE)
+           =================================================================== -->
+      <section class="slide active" id="slide-1" data-slide="1">
+        <div class="slide-header">
+          <div class="slide-header-left">
+            <span class="slide-num-pill">1</span>
+            <div class="slide-title-group">
+              <h2>Smart India Hackathon 2026</h2>
+              <p>Official Idea & Solution Presentation Template</p>
+            </div>
+          </div>
+          <div class="slide-header-right">
+            <span class="sih-badge">Problem Statement: SIH26043</span>
+            <span class="gov-badge">Category: Software</span>
+          </div>
+        </div>
+
+        <div class="slide-content">
+          <div class="hero-layout">
+            <!-- Left Column: Hero Brand & Scope -->
+            <div>
+              <div class="brand-logo-area">
+                <div class="brand-icon-box">जो</div>
+                <div class="brand-name">Johar<span>Setu</span></div>
+              </div>
+              <div class="hero-tagline">
+                Bridging Rural Civic Challenges with Academic Innovation & CSR Impact
+              </div>
+              <p class="hero-desc">
+                An autonomous digital bridge transforming grassroots village infrastructure deficits into accredited student engineering capstones and milestone-funded CSR development projects across 24 administrative districts and 44 Higher Educational Institutions.
+              </p>
+
+              <div class="title-pill-grid">
+                <div class="title-pill">
+                  <span>🏛️ Target Beneficiary:</span>
+                  <strong>Dept. of Higher & Technical Education, Govt. of Jharkhand</strong>
+                </div>
+                <div class="title-pill">
+                  <span>🎯 Theme:</span>
+                  <strong>Smart Education & Civic Rural Innovation</strong>
+                </div>
+                <div class="title-pill">
+                  <span>🎓 Mandate:</span>
+                  <strong>National Education Policy (NEP 2020) 4-Credit Capstone</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Official Submission Metadata Card -->
+            <div>
+              <div class="meta-spec-card">
+                <div class="meta-spec-item">
+                  <div class="meta-label">Problem Statement ID</div>
+                  <div class="meta-value accent">SIH26043</div>
+                </div>
+
+                <div class="meta-spec-item">
+                  <div class="meta-label">Problem Statement Title</div>
+                  <div class="meta-value">Higher Educational Institutions (HEIs) and Citizen Bridge Platform</div>
+                </div>
+
+                <div class="meta-spec-item">
+                  <div class="meta-label">Assigned Theme</div>
+                  <div class="meta-value">Smart Education / Civic Innovation / Rural Development</div>
+                </div>
+
+                <div class="meta-spec-item">
+                  <div class="meta-label">Team Name & Team ID</div>
+                  <div class="meta-value accent">[Team JoharSetu | Team ID: SIH2026-TEAM-XXXX]</div>
+                </div>
+
+                <div class="meta-spec-item">
+                  <div class="meta-label">Platform Identity</div>
+                  <div class="meta-value">JoharSetu (जोहारसेतु) • Statewide Civic-Academic SSOT</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           SLIDE 2: IDEA & PROPOSED SOLUTION (IDEA TITLE)
+           =================================================================== -->
+      <section class="slide" id="slide-2" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-header-left">
+            <span class="slide-num-pill">2</span>
+            <div class="slide-title-group">
+              <h2>Idea & Proposed Solution</h2>
+              <p>Grassroots Rural Challenges Directly Bridged to 44 Higher Educational Institutions</p>
+            </div>
+          </div>
+          <div class="slide-header-right">
+            <span class="sih-badge">Core Innovation</span>
+          </div>
+        </div>
+
+        <div class="slide-content">
+          <!-- Real-world Analogy vs. JoharSetu Bridge -->
+          <div class="contrast-grid">
+            <!-- Problem Card -->
+            <div class="contrast-card card-problem">
+              <span class="contrast-badge badge-red">The Current Disconnected Reality</span>
+              <div class="analogy-quote">
+                <strong>Real-World Analogy:</strong> When a community handpump breaks or arsenic contaminates water in Baghmara Block, a villager must travel 30 km to lodge a physical paper grievance. The complaint enters a bureaucratic black hole with zero tracking. Concurrently, 5 km away at IIT (ISM) Dhanbad, senior engineering students simulate generic textbook problems for their final semester project.
+              </div>
+              <ul class="feature-points">
+                <li>
+                  <svg fill="currentColor" viewBox="0 0 20 20" style="color: #DC2626;"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+                  <span>High friction: Literacy barriers and complex English/formal web forms prevent rural reporting.</span>
+                </li>
+                <li>
+                  <svg fill="currentColor" viewBox="0 0 20 20" style="color: #DC2626;"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+                  <span>Academic detachment: Students lack access to verified ground engineering problems.</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Solution Card -->
+            <div class="contrast-card card-solution">
+              <span class="contrast-badge badge-green">The JoharSetu Bridge Model</span>
+              <div class="solution-quote">
+                <strong>The Bridge:</strong> JoharSetu transforms village grievances into accredited university capstones and corporate CSR co-funded solutions. Citizens speak in local dialects; regional universities diagnose and resolve the defects for academic credits.
+              </div>
+              <ul class="feature-points">
+                <li>
+                  <svg fill="currentColor" viewBox="0 0 20 20" style="color: #16A34A;"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM13.707 9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                  <span><strong>Multilingual Voice & Photo Ingestion:</strong> Conversational assistant supports Hindi, Santhali, Mundari, and Ho with instant live GPS auto-capture.</span>
+                </li>
+                <li>
+                  <svg fill="currentColor" viewBox="0 0 20 20" style="color: #16A34A;"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM13.707 9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                  <span><strong>Crowdsourced Upvote Engine:</strong> Communities upvote neighborhood challenges, driving algorithmic "Hype" ranking to prioritize critical bottlenecks.</span>
+                </li>
+                <li>
+                  <svg fill="currentColor" viewBox="0 0 20 20" style="color: #16A34A;"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM13.707 9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                  <span><strong>Autonomous Spatial HEI Routing:</strong> Geodesic distance calculation routes tickets to the nearest specialized engineering department among 44 mapped universities.</span>
+                </li>
+                <li>
+                  <svg fill="currentColor" viewBox="0 0 20 20" style="color: #16A34A;"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM13.707 9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                  <span><strong>Identity Anonymity Engine:</strong> Default public masking of citizen phone and identity with selective reveal for government officers.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Dual Unique Value Proposition Banner -->
+          <div class="uvp-banner">
+            <div class="uvp-item">
+              <div class="uvp-icon">🎓</div>
+              <div class="uvp-text">
+                <h4>NEP 2020 Academic Credit Integration</h4>
+                <p>Translates 60 mandatory NSS community service hours into 4 accredited course credits upon verified problem resolution.</p>
+              </div>
+            </div>
+            <div class="uvp-item">
+              <div class="uvp-icon">🤝</div>
+              <div class="uvp-text">
+                <h4>CSR Crowdfunding & Co-Financing Hub</h4>
+                <p>Enables corporate sponsors (Coal India, Tata Steel, NTPC) to discover verified village needs and fund hardware under milestone escrow.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           SLIDE 3: TECHNICAL APPROACH & ARCHITECTURE
+           =================================================================== -->
+      <section class="slide" id="slide-3" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-header-left">
+            <span class="slide-num-pill">3</span>
+            <div class="slide-title-group">
+              <h2>Technical Approach & Architecture</h2>
+              <p>End-to-End Operational Workflow from Grassroots Capture to Institutional Resolution</p>
+            </div>
+          </div>
+          <div class="slide-header-right">
+            <span class="sih-badge">System Topology</span>
+          </div>
+        </div>
+
+        <div class="slide-content">
+          <!-- Flowchart Visual Architecture Diagram -->
+          <div class="arch-flow-diagram">
+            <div class="flow-steps-grid">
+              <!-- Step 1 -->
+              <div class="flow-step-card">
+                <span class="step-number">1</span>
+                <svg class="step-icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z" />
+                </svg>
+                <div class="step-title">Citizen Ground Ingestion</div>
+                <div class="step-desc">Voice in 4 dialects, multi-photo evidence, and live GPS auto-capture.</div>
+              </div>
+
+              <!-- Step 2 -->
+              <div class="flow-step-card">
+                <span class="step-number">2</span>
+                <svg class="step-icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+                <div class="step-title">Privacy & Verification</div>
+                <div class="step-desc">Identity masking, coordinate geofencing, and duplicate screening.</div>
+              </div>
+
+              <!-- Step 3 -->
+              <div class="flow-step-card">
+                <span class="step-number">3</span>
+                <svg class="step-icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+                <div class="step-title">Social Hype Engine</div>
+                <div class="step-desc">Community upvoting, viral velocity, and urgency weighting algorithms.</div>
+              </div>
+
+              <!-- Step 4 -->
+              <div class="flow-step-card">
+                <span class="step-number">4</span>
+                <svg class="step-icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                </svg>
+                <div class="step-title">Spatial HEI Routing</div>
+                <div class="step-desc">Autonomous match with nearest of 44 universities by lab specialization.</div>
+              </div>
+
+              <!-- Step 5 -->
+              <div class="flow-step-card">
+                <span class="step-number">5</span>
+                <svg class="step-icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                <div class="step-title">Student & CSR Action</div>
+                <div class="step-desc">NSS field roster mobilization + milestone-locked CSR grants.</div>
+              </div>
+
+              <!-- Step 6 -->
+              <div class="flow-step-card">
+                <span class="step-number">6</span>
+                <svg class="step-icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                </svg>
+                <div class="step-title">Verified NEP Resolution</div>
+                <div class="step-desc">Before/After photo audit, faculty sign-off, and 4 credits conferral.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4 Core Functional Components -->
+          <div class="arch-modules-grid">
+            <div class="module-card">
+              <h4>🎙️ Dual-Mode Input Module</h4>
+              <p>Provides an AI-driven vernacular voice wizard for low-literacy citizens alongside a structured manual form for detailed submissions.</p>
+            </div>
+            <div class="module-card">
+              <h4>🛡️ Privacy Protection Layer</h4>
+              <p>Implements role-based access control masking public citizen identities while ensuring authorized officers retain verified inspection details.</p>
+            </div>
+            <div class="module-card">
+              <h4>⚡ Algorithmic Hype Engine</h4>
+              <p>Dynamically computes priority scores using community upvote velocity, geographical clustering, and issue urgency levels.</p>
+            </div>
+            <div class="module-card">
+              <h4>🗺️ Interactive GIS Heatmap</h4>
+              <p>Visualizes statewide civic hotspots across 24 Jharkhand districts with cluster drill-downs, filtering, and institutional proximity radii.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           SLIDE 4: FEASIBILITY AND VIABILITY
+           =================================================================== -->
+      <section class="slide" id="slide-4" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-header-left">
+            <span class="slide-num-pill">4</span>
+            <div class="slide-title-group">
+              <h2>Feasibility and Viability</h2>
+              <p>Real-World Deployment Readiness, Sustainable Economics, and Proactive Risk Mitigations</p>
+            </div>
+          </div>
+          <div class="slide-header-right">
+            <span class="sih-badge">Sustainability Matrix</span>
+          </div>
+        </div>
+
+        <div class="slide-content">
+          <div class="feasibility-grid">
+            <!-- Pillar 1: Technical Feasibility -->
+            <div class="pillar-card">
+              <div class="pillar-header">
+                <span style="font-size: 20px;">⚙️</span>
+                <span class="pillar-badge">Technical & Operational</span>
+              </div>
+              <div class="pillar-item">
+                <div class="pillar-item-title">Offline-First PWA Capabilities</div>
+                <p class="pillar-item-desc">Functions seamlessly in 2G/low-connectivity tribal zones with background synchronization when network re-establishes.</p>
+              </div>
+              <div class="pillar-item">
+                <div class="pillar-item-title">Zero App Store Installation Barrier</div>
+                <p class="pillar-item-desc">Runs directly in standard mobile browsers without requiring heavy downloads or consuming precious smartphone storage.</p>
+              </div>
+              <div class="pillar-item">
+                <div class="pillar-item-title">Institutional Resource Readiness</div>
+                <p class="pillar-item-desc">Directly interfaces with existing university National Service Scheme (NSS) cells and departmental lab mentors.</p>
+              </div>
+            </div>
+
+            <!-- Pillar 2: Financial Viability -->
+            <div class="pillar-card highlight">
+              <div class="pillar-header">
+                <span style="font-size: 20px;">💰</span>
+                <span class="pillar-badge">Economic & Financial</span>
+              </div>
+              <div class="pillar-item">
+                <div class="pillar-item-title">Zero Citizen Cost Model</div>
+                <p class="pillar-item-desc">100% free public service for rural citizens with no subscriptions, transactional fees, or hidden gatekeeping.</p>
+              </div>
+              <div class="pillar-item">
+                <div class="pillar-item-title">CSR Crowdfunding Marketplace</div>
+                <p class="pillar-item-desc">Taps into mandatory 2% CSR budgets of state industrial leaders (Tata Steel, Coal India, NTPC) under milestone escrow.</p>
+              </div>
+              <div class="pillar-item">
+                <div class="pillar-item-title">High Return on Social Investment</div>
+                <p class="pillar-item-desc">Saves millions in government diagnostic inspection costs by deploying student engineering field teams as first responders.</p>
+              </div>
+            </div>
+
+            <!-- Pillar 3: Risk Analysis & Mitigation -->
+            <div class="pillar-card">
+              <div class="pillar-header">
+                <span style="font-size: 20px;">🛡️</span>
+                <span class="pillar-badge">Risk & Mitigation Matrix</span>
+              </div>
+
+              <table class="risk-table">
+                <thead>
+                  <tr>
+                    <th>Identified Risk</th>
+                    <th>Mitigation Strategy</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <span class="risk-badge">Adoption</span><br>
+                      <strong>Low digital literacy</strong> in remote forest/tribal hamlets.
+                    </td>
+                    <td>Interactive vernacular voice assistant in Hindi, Santhali, Mundari, and Ho with single-tap visual presets.</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span class="risk-badge">Integrity</span><br>
+                      <strong>Spam & duplicate</strong> issue reporting across wards.
+                    </td>
+                    <td>Automatic image similarity screening, 50-meter GPS proximity clustering, and community consensus upvoting.</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span class="risk-badge">Execution</span><br>
+                      <strong>Student project delays</strong> or incomplete field works.
+                    </td>
+                    <td>Faculty coordinator sign-off, milestone-based credit escrow, and Before/After verification photo auditing.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           SLIDE 5: IMPACT AND BENEFITS
+           =================================================================== -->
+      <section class="slide" id="slide-5" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-header-left">
+            <span class="slide-num-pill">5</span>
+            <div class="slide-title-group">
+              <h2>Impact and Benefits</h2>
+              <p>Quantifiable Social Transformations and Feature Comparison against Legacy Portals</p>
+            </div>
+          </div>
+          <div class="slide-header-right">
+            <span class="sih-badge">Comparison & Outcomes</span>
+          </div>
+        </div>
+
+        <div class="slide-content">
+          <!-- Top Row: 4 Quantifiable Impact Metrics -->
+          <div class="metric-row">
+            <div class="metric-card">
+              <div class="metric-num">70%</div>
+              <div class="metric-label">Reduction in Rural Issue Turnaround Time</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-num">4 Credits</div>
+              <div class="metric-label">NEP 2020 Course Credits for Student Capstones</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-num">44 HEIs</div>
+              <div class="metric-label">Universities Mobilized across 24 Districts</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-num">100%</div>
+              <div class="metric-label">Milestone-Gated CSR Fund Transparency</div>
+            </div>
+          </div>
+
+          <!-- Feature Comparison Table -->
+          <div class="comparison-table-wrap">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th style="width: 32%;">Capability / Feature Benchmark</th>
+                  <th style="width: 25%;">Traditional Grievance Portals</th>
+                  <th class="johar-col" style="width: 25%;">JoharSetu (जोहारसेतु)</th>
+                  <th style="width: 18%;">Strategic Advantage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="feature-title">Multilingual Voice-Guided Reporting</td>
+                  <td><span class="tag-no">❌ No</span> (Complex English/Hindi forms)</td>
+                  <td class="johar-col"><span class="tag-yes">✔ Yes</span> (4 Dialects + Audio Mic)</td>
+                  <td>Inclusive for Low-Literacy</td>
+                </tr>
+                <tr>
+                  <td class="feature-title">Crowdsourced Social Upvote ("Hype") Feed</td>
+                  <td><span class="tag-no">❌ No</span> (Opaque ticketing queue)</td>
+                  <td class="johar-col"><span class="tag-yes">✔ Yes</span> (Public Community Upvoting)</td>
+                  <td>Democratized Urgency</td>
+                </tr>
+                <tr>
+                  <td class="feature-title">Public Identity Anonymity Protection</td>
+                  <td><span class="tag-no">❌ No</span> (Vulnerable exposed names)</td>
+                  <td class="johar-col"><span class="tag-yes">✔ Yes</span> (Role-Based Privacy Masking)</td>
+                  <td>Citizen Safety & Trust</td>
+                </tr>
+                <tr>
+                  <td class="feature-title">Student Academic Credit Integration (NSS)</td>
+                  <td><span class="tag-no">❌ No</span> (Zero university linkage)</td>
+                  <td class="johar-col"><span class="tag-yes">✔ Yes</span> (4 NEP Capstone Credits)</td>
+                  <td>Empowered Youth Workforce</td>
+                </tr>
+                <tr>
+                  <td class="feature-title">CSR Sponsor Crowdfunding Gateway</td>
+                  <td><span class="tag-no">❌ No</span> (State budget dependent)</td>
+                  <td class="johar-col"><span class="tag-yes">✔ Yes</span> (Direct Corporate Co-Financing)</td>
+                  <td>Accelerated Funding Escrow</td>
+                </tr>
+                <tr>
+                  <td class="feature-title">Interactive Statewide GIS Heatmap</td>
+                  <td><span class="tag-no">❌ No</span> (Static tabular reports)</td>
+                  <td class="johar-col"><span class="tag-yes">✔ Yes</span> (Real-Time Proximity Mapping)</td>
+                  <td>Targeted Governance</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Three Operational Modes Summary -->
+          <div class="modes-strip">
+            <div class="mode-item">
+              <span class="mode-badge">MODE 1</span>
+              <div class="mode-text"><strong>Citizen Social Reporting:</strong> Voice/photo input, live GPS lock, and community upvote feed.</div>
+            </div>
+            <div class="mode-item">
+              <span class="mode-badge">MODE 2</span>
+              <div class="mode-text"><strong>HEI Student Resolution:</strong> Field work diagnosis, NSS hours tracking, and credit certification.</div>
+            </div>
+            <div class="mode-item">
+              <span class="mode-badge">MODE 3</span>
+              <div class="mode-text"><strong>Admin & CSR Governance:</strong> 24-district GIS heatmap, department dispatch, and grant escrow.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           SLIDE 6: RESEARCH AND REFERENCES
+           =================================================================== -->
+      <section class="slide" id="slide-6" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-header-left">
+            <span class="slide-num-pill">6</span>
+            <div class="slide-title-group">
+              <h2>Research and References</h2>
+              <p>Institutional Policy Alignment, Pilot Validation Across Jharkhand, and Project References</p>
+            </div>
+          </div>
+          <div class="slide-header-right">
+            <span class="sih-badge">Policy & Evidence</span>
+          </div>
+        </div>
+
+        <div class="slide-content">
+          <div class="refs-grid">
+            <!-- Left Column: National Policy Governance Alignment -->
+            <div class="ref-block">
+              <h3>📜 National Policy Governance Alignment</h3>
+              <div class="policy-list">
+                <div class="policy-item">
+                  <span class="policy-tag">NEP 2020</span>
+                  <div class="policy-desc">
+                    <strong>National Education Policy Experiential Learning Mandate:</strong> Aligns with Clauses 11 & 12 requiring mandatory community engagement and project-based capstones for all higher education degrees.
+                  </div>
+                </div>
+
+                <div class="policy-item">
+                  <span class="policy-tag">NSS Guidelines</span>
+                  <div class="policy-desc">
+                    <strong>National Service Scheme Field Hours:</strong> Fulfills the 60-hour community fieldwork validation protocol with verifiable photographic evidence and faculty sign-offs.
+                  </div>
+                </div>
+
+                <div class="policy-item">
+                  <span class="policy-tag">Digital India</span>
+                  <div class="policy-desc">
+                    <strong>Viksit Bharat 2047 & Digital Governance:</strong> Brings intuitive, vernacular governance tools to tribal rural citizens without app store dependencies.
+                  </div>
+                </div>
+
+                <div class="policy-item">
+                  <span class="policy-tag">CSR Section 135</span>
+                  <div class="policy-desc">
+                    <strong>Companies Act 2013 Corporate Social Responsibility:</strong> Provides an accredited, transparent channel for industrial public sector undertakings to sponsor audited rural infrastructure repairs.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Pilot Validation & Artifact Links -->
+            <div class="ref-block">
+              <h3>🌐 Pilot Validation & Deliverables</h3>
+              <div class="links-grid">
+                <div class="link-card">
+                  <div class="link-info">
+                    <h5>Statewide 24-District Mapping</h5>
+                    <p>44 universities geocoded with academic lab specializations.</p>
+                  </div>
+                  <span class="link-badge">Validated ✔</span>
+                </div>
+
+                <div class="link-card">
+                  <div class="link-info">
+                    <h5>Interactive Working Prototype</h5>
+                    <p>Production citizen, student, CSR, and admin portal experience.</p>
+                  </div>
+                  <span class="link-badge">Ready 🚀</span>
+                </div>
+
+                <div class="link-card">
+                  <div class="link-info">
+                    <h5>Conversational Voice Assistant</h5>
+                    <p>Multilingual vernacular speech-to-text in 4 native dialects.</p>
+                  </div>
+                  <span class="link-badge">Tested 🎙️</span>
+                </div>
+
+                <div class="link-card">
+                  <div class="link-info">
+                    <h5>Cryptographic Audit Trail</h5>
+                    <p>Tamper-proof ledger ensuring transparency in credit & fund conferral.</p>
+                  </div>
+                  <span class="link-badge">Audited 🔒</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Conclusion Banner -->
+          <div class="conclusion-callout">
+            <div class="conclusion-text">
+              <h4>Conclusion: A Self-Sustaining Bridge for Viksit Jharkhand</h4>
+              <p>JoharSetu turns rural civic despair into accredited student innovation and transparent corporate funding—creating a sustainable, scalable ecosystem for youth empowerment and community development.</p>
+            </div>
+            <button class="conclusion-button" onclick="goToSlide(1)">
+              ↺ Return to Title Slide
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Floating Navigation Dock -->
+  <nav id="nav-dock" aria-label="Slide Navigation">
+    <button class="dock-btn" id="prev-btn" title="Previous Slide (Left Arrow / PageUp)" onclick="changeSlide(-1)">
+      &#9664;
+    </button>
+
+    <div class="dock-dots" id="dock-dots">
+      <div class="dock-dot active" onclick="goToSlide(1)" title="Slide 1: Title Slide"></div>
+      <div class="dock-dot" onclick="goToSlide(2)" title="Slide 2: Idea & Solution"></div>
+      <div class="dock-dot" onclick="goToSlide(3)" title="Slide 3: Technical Approach"></div>
+      <div class="dock-dot" onclick="goToSlide(4)" title="Slide 4: Feasibility & Viability"></div>
+      <div class="dock-dot" onclick="goToSlide(5)" title="Slide 5: Impact & Benefits"></div>
+      <div class="dock-dot" onclick="goToSlide(6)" title="Slide 6: Research & References"></div>
+    </div>
+
+    <button class="dock-btn" id="next-btn" title="Next Slide (Right Arrow / Space / PageDown)" onclick="changeSlide(1)">
+      &#9654;
+    </button>
+
+    <span class="dock-counter" id="dock-counter">1 / 6</span>
+
+    <button class="dock-utility-btn" onclick="toggleFullscreen()" title="Toggle Fullscreen (F)">
+      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+      <span>Fullscreen</span>
+    </button>
+
+    <button class="dock-utility-btn" onclick="window.print()" title="Print / Export to PDF">
+      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+      <span>Print PDF</span>
+    </button>
+
+    <button class="dock-utility-btn" onclick="toggleShortcuts()" title="Keyboard Shortcuts (?)">
+      <span>⌨️ Keys</span>
+    </button>
+  </nav>
+
+  <!-- Shortcuts Helper Tooltip -->
+  <div id="shortcuts-popup">
+    <div><span class="shortcut-key">➔</span> or <span class="shortcut-key">Space</span> Next Slide</div>
+    <div><span class="shortcut-key">⬅</span> Previous Slide</div>
+    <div><span class="shortcut-key">1</span>-<span class="shortcut-key">6</span> Direct Jump</div>
+    <div><span class="shortcut-key">F</span> Fullscreen</div>
+    <div><span class="shortcut-key">Ctrl+P</span> Print / Save PDF</div>
+  </div>
+
+  <!-- JavaScript Slide Controller -->
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 6;
+
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dock-dot');
+    const counter = document.getElementById('dock-counter');
+    const progressBar = document.getElementById('progress-bar');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    function updatePresentation() {
+      // Update Slide Visibility
+      slides.forEach((slide, idx) => {
+        const slideIndex = idx + 1;
+        if (slideIndex === currentSlide) {
+          slide.classList.add('active');
+          slide.scrollTop = 0;
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+
+      // Update Navigation Dots
+      dots.forEach((dot, idx) => {
+        if (idx + 1 === currentSlide) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+
+      // Update Counter and Progress Bar
+      counter.textContent = `${currentSlide} / ${totalSlides}`;
+      progressBar.style.width = `${(currentSlide / totalSlides) * 100}%`;
+
+      // Update Button States
+      prevBtn.disabled = (currentSlide === 1);
+      nextBtn.disabled = (currentSlide === totalSlides);
+    }
+
+    function changeSlide(direction) {
+      const target = currentSlide + direction;
+      if (target >= 1 && target <= totalSlides) {
+        currentSlide = target;
+        updatePresentation();
+      }
+    }
+
+    function goToSlide(slideNum) {
+      if (slideNum >= 1 && slideNum <= totalSlides) {
+        currentSlide = slideNum;
+        updatePresentation();
+      }
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    function toggleShortcuts() {
+      const popup = document.getElementById('shortcuts-popup');
+      popup.classList.toggle('show');
+      setTimeout(() => popup.classList.remove('show'), 6000);
+    }
+
+    // Keyboard Navigation Listeners
+    document.addEventListener('keydown', (e) => {
+      // Don't intercept if user is inside an input/textarea
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+
+      switch (e.key) {
+        case 'ArrowRight':
+        case 'PageDown':
+        case ' ': // Spacebar
+          e.preventDefault();
+          changeSlide(1);
+          break;
+        case 'ArrowLeft':
+        case 'PageUp':
+          e.preventDefault();
+          changeSlide(-1);
+          break;
+        case 'Home':
+          e.preventDefault();
+          goToSlide(1);
+          break;
+        case 'End':
+          e.preventDefault();
+          goToSlide(totalSlides);
+          break;
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+          e.preventDefault();
+          goToSlide(parseInt(e.key, 10));
+          break;
+        case 'f':
+        case 'F':
+          e.preventDefault();
+          toggleFullscreen();
+          break;
+        case '?':
+          toggleShortcuts();
+          break;
+      }
+    });
+
+    // Touch Swipe Gesture Support for Tablets / Mobile Presentation
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    document.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+      const threshold = 50;
+      if (touchEndX < touchStartX - threshold) {
+        changeSlide(1); // Swipe left -> Next
+      }
+      if (touchEndX > touchStartX + threshold) {
+        changeSlide(-1); // Swipe right -> Previous
+      }
+    }
+
+    // Initial state
+    updatePresentation();
+  </script>
+</body>
+</html>
