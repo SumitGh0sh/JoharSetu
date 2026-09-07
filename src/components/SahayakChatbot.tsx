@@ -28,12 +28,20 @@ import {
   CornerDownLeft,
   ChevronRight,
   Layers,
-  Wand2
+  Wand2,
+  Upload,
+  Trash2
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { ProblemTicket, TicketCategory, UrgencyLevel } from '../lib/types';
 import { CATEGORY_PRESET_IMAGES } from '../lib/issueImagePromptEngine';
-import { JHARKHAND_DISTRICTS, JHARKHAND_DISTRICT_CENTERS } from '../lib/locationUtils';
+import {
+  JHARKHAND_DISTRICTS,
+  JHARKHAND_DISTRICT_CENTERS,
+  acquireBrowserPosition,
+  reverseGeocodeCoordinates,
+  fetchIpLocation
+} from '../lib/locationUtils';
 import { findOptimalHeiForTicket } from '../lib/heiRegistry';
 import { API_ENDPOINTS } from '../lib/apiConfig';
 
@@ -361,19 +369,56 @@ export default function SahayakChatbot({ onNewTicket }: SahayakChatbotProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [chatLanguage, setChatLanguage] = useState<ChatLangCode>('hinglish');
 
-  // Conversational Form Filing Wizard State
+  // Conversational Form Filing Wizard State - Matching all manual form questions & options
   const [isFilingMode, setIsFilingMode] = useState(false);
   const [filingStep, setFilingStep] = useState<1 | 2 | 3 | 4 | 5>(1);
+  const [filingTitle, setFilingTitle] = useState('Broken village handpump with contaminated water');
   const [filingCategory, setFilingCategory] = useState<TicketCategory>('WATER_MANAGEMENT');
+  const [filingUrgency, setFilingUrgency] = useState<UrgencyLevel>('HIGH');
   const [filingDistrict, setFilingDistrict] = useState('Dhanbad');
   const [filingVillage, setFilingVillage] = useState('Baghmara Block, Tola 4');
   const [filingLat, setFilingLat] = useState(23.8145);
   const [filingLng, setFilingLng] = useState(86.4412);
   const [filingDescription, setFilingDescription] = useState('');
-  const [filingPhoto, setFilingPhoto] = useState<string>(CATEGORY_PRESET_IMAGES.WATER_MANAGEMENT);
+  const [filingPhotos, setFilingPhotos] = useState<string[]>([
+    CATEGORY_PRESET_IMAGES.WATER_MANAGEMENT || '/images/issues/handpump_broken.jpg'
+  ]);
+  const [filingReporterName, setFilingReporterName] = useState('Mangal Soren');
+  const [filingReporterPhone, setFilingReporterPhone] = useState('+91 94311 82910');
   const [isLocatingGps, setIsLocatingGps] = useState(false);
+  const [isGpsAutoAcquired, setIsGpsAutoAcquired] = useState(false);
   const [isSubmittingTicket, setIsSubmittingTicket] = useState(false);
   const [isVoiceRecording, setIsVoiceRecording] = useState(false);
+
+  // Auto-acquire real live device GPS coordinates automatically so location is shared even if person forgets
+  const autoDetectGps = async () => {
+    setIsLocatingGps(true);
+    try {
+      const pos = await acquireBrowserPosition();
+      setFilingLat(pos.latitude);
+      setFilingLng(pos.longitude);
+      setIsGpsAutoAcquired(true);
+      const geo = await reverseGeocodeCoordinates(pos.latitude, pos.longitude);
+      if (geo.district) setFilingDistrict(geo.district);
+      if (geo.village) setFilingVillage(geo.village);
+    } catch {
+      try {
+        const ipLoc = await fetchIpLocation();
+        setFilingLat(ipLoc.latitude);
+        setFilingLng(ipLoc.longitude);
+        setIsGpsAutoAcquired(true);
+        if (ipLoc.district) setFilingDistrict(ipLoc.district);
+        if (ipLoc.village) setFilingVillage(ipLoc.village);
+      } catch {}
+    } finally {
+      setIsLocatingGps(false);
+    }
+  };
+
+  // Run auto-GPS on mount
+  useEffect(() => {
+    autoDetectGps();
+  }, []);
 
   // Initialize language from app context or localStorage
   useEffect(() => {
@@ -398,6 +443,7 @@ export default function SahayakChatbot({ onNewTicket }: SahayakChatbotProps) {
       setIsOpen(true);
       setIsFilingMode(true);
       setFilingStep(1);
+      autoDetectGps();
     };
 
     window.addEventListener('open-sahayak-filing', handleOpenFiling);
@@ -454,22 +500,34 @@ export default function SahayakChatbot({ onNewTicket }: SahayakChatbotProps) {
   };
 
   const handleCaptureGps = () => {
-    if (!navigator.geolocation) {
-      alert('GPS is not supported on this device.');
-      return;
+    autoDetectGps();
+  };
+
+  // Multiple Photos Management
+  const handleAddFilingPhotos = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    Array.from(files).forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (typeof reader.result === 'string') {
+          setFilingPhotos((prev) => [...prev, reader.result as string]);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleRemoveFilingPhoto = (indexToRemove: number) => {
+    setFilingPhotos((prev) => prev.filter((_, i) => i !== indexToRemove));
+  };
+
+  const handleAddPresetPhoto = () => {
+    const preset = CATEGORY_PRESET_IMAGES[filingCategory] || CATEGORY_PRESET_IMAGES.WATER_MANAGEMENT;
+    if (preset) {
+      setFilingPhotos((prev) => [...prev, preset]);
     }
-    setIsLocatingGps(true);
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        setFilingLat(pos.coords.latitude);
-        setFilingLng(pos.coords.longitude);
-        setIsLocatingGps(false);
-      },
-      () => {
-        setIsLocatingGps(false);
-      },
-      { timeout: 8000 }
-    );
   };
 
   // Voice recording helper using Web Speech API
@@ -516,18 +574,28 @@ export default function SahayakChatbot({ onNewTicket }: SahayakChatbotProps) {
 
   const handleSelectFilingCategory = (cat: TicketCategory) => {
     setFilingCategory(cat);
-    setFilingPhoto(CATEGORY_PRESET_IMAGES[cat] || CATEGORY_PRESET_IMAGES.WATER_MANAGEMENT);
-    setFilingStep(2);
+    const defaultPhoto = CATEGORY_PRESET_IMAGES[cat] || CATEGORY_PRESET_IMAGES.WATER_MANAGEMENT;
+    if (filingPhotos.length <= 1) {
+      setFilingPhotos([defaultPhoto]);
+    }
+    // Pre-fill title suggestions if default or empty
+    if (!filingTitle || filingTitle.includes('Broken village handpump') || filingTitle.includes('Issue')) {
+      if (cat === 'WATER_MANAGEMENT') setFilingTitle('Broken village handpump with contaminated water');
+      else if (cat === 'ROAD_INFRASTRUCTURE') setFilingTitle('Monsoon eroded road culvert and damaged bridge');
+      else if (cat === 'RURAL_ELECTRIFICATION_SOLAR') setFilingTitle('Solar microgrid streetlight battery failure');
+      else if (cat === 'SUSTAINABLE_AGRICULTURE') setFilingTitle('Irrigation canal breach affecting crop fields');
+      else if (cat === 'HEALTHCARE_DELIVERY') setFilingTitle('Health sub-center water and electricity outage');
+      else if (cat === 'SANITATION_WASTE') setFilingTitle('Blocked open drainage and overflowing waste dump');
+    }
   };
 
   const handleSelectFilingDistrict = (dist: string) => {
     setFilingDistrict(dist);
     const center = JHARKHAND_DISTRICT_CENTERS[dist];
-    if (center) {
+    if (center && !isGpsAutoAcquired) {
       setFilingLat(center.lat);
       setFilingLng(center.lng);
     }
-    setFilingStep(3);
   };
 
   const handleConfirmFilingTicket = async () => {
@@ -543,29 +611,39 @@ export default function SahayakChatbot({ onNewTicket }: SahayakChatbotProps) {
     const deptName = winnerHei.departments[0]?.name || 'Department of Technology & Engineering Solutions';
     const facultyMentor = `Prof. ${winnerHei.name.split(' ')[0]} (Faculty Coordinator)`;
 
+    const effectiveTitle = filingTitle.trim() || `${filingCategory.replace(/_/g, ' ')} Issue in ${filingVillage}`;
+    const effectiveDescription =
+      filingDescription.trim() ||
+      `Citizen reported civic challenge regarding ${filingCategory} in ${filingVillage}, ${filingDistrict}.`;
+
+    const effectivePhotos =
+      filingPhotos.length > 0
+        ? filingPhotos
+        : [CATEGORY_PRESET_IMAGES[filingCategory] || '/images/issues/handpump_broken.jpg'];
+
     const newTicket: ProblemTicket = {
       id: 'tkt-' + Date.now(),
       ticketCode,
-      title: `${filingCategory.replace(/_/g, ' ')} Issue in ${filingVillage}`,
-      description: filingDescription || `Citizen reported civic challenge regarding ${filingCategory} in ${filingVillage}, ${filingDistrict}.`,
+      title: effectiveTitle,
+      description: effectiveDescription,
       category: filingCategory,
-      urgency: 'HIGH',
-      status: 'AI_VERIFIED',
+      urgency: filingUrgency,
+      status: 'AI_ROUTED',
       latitude: filingLat,
       longitude: filingLng,
       district: filingDistrict,
       village: filingVillage,
-      reporterName: 'Citizen (Sahayak AI Reporter)',
-      reporterPhone: '+91 94311 82910',
+      reporterName: filingReporterName.trim() || 'Mangal Soren',
+      reporterPhone: filingReporterPhone.trim() || '+91 94311 82910',
       reportedAt: new Date().toISOString(),
-      imageUrls: [filingPhoto],
+      imageUrls: effectivePhotos,
       aiVerification: {
-        confidence: 0.94,
+        confidence: 0.95,
         detectedObjects: [
           { label: 'Ground Infrastructure Anomaly', confidence: 0.96 },
-          { label: 'Verified Low-Bandwidth GPS Fix', confidence: 0.93 },
+          { label: 'Verified Live GPS Coordinate Fix', confidence: 0.94 },
         ],
-        severityScore: 0.88,
+        severityScore: filingUrgency === 'CRITICAL' ? 0.95 : filingUrgency === 'HIGH' ? 0.85 : 0.65,
       },
       assignedHei: {
         id: winnerHei.id,
@@ -579,12 +657,36 @@ export default function SahayakChatbot({ onNewTicket }: SahayakChatbotProps) {
       },
     };
 
-    // Notify JoharSetu global state
+    // 1. Submit directly to JoharSetu DB via internal submit route for PostgreSQL/Supabase persistence
+    try {
+      await fetch(API_ENDPOINTS.internalTicketsSubmit, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: newTicket.title,
+          description: newTicket.description,
+          category: newTicket.category,
+          urgency: newTicket.urgency,
+          district: newTicket.district,
+          village: newTicket.village,
+          latitude: newTicket.latitude,
+          longitude: newTicket.longitude,
+          reporterName: newTicket.reporterName,
+          reporterPhone: newTicket.reporterPhone,
+          imageUrls: newTicket.imageUrls,
+          status: 'AI_ROUTED',
+        }),
+      });
+    } catch (e) {
+      console.warn('Direct ticket submit fetch failed, relying on state sync:', e);
+    }
+
+    // 2. Notify JoharSetu global state & save to localStorage
     if (onNewTicket) {
       onNewTicket(newTicket);
     }
 
-    // Try posting to friend backend if alive
+    // 3. Post to friend backend if alive
     try {
       await fetch(API_ENDPOINTS.chatChallenges, {
         method: 'POST',
@@ -614,18 +716,22 @@ export default function SahayakChatbot({ onNewTicket }: SahayakChatbotProps) {
         id: 'ticket-created-' + Date.now(),
         sender: 'bot',
         text:
-          `🎉 **Complain Successfully Registered!**\n\n` +
+          `🎉 **Complaint Successfully Registered & AI Routed!**\n\n` +
           `**Ticket Code:** \`${ticketCode}\`\n` +
+          `**Title:** ${effectiveTitle}\n` +
+          `**Urgency:** ${filingUrgency}\n` +
           `**Category:** ${filingCategory.replace(/_/g, ' ')}\n` +
-          `**Location:** ${filingVillage}, ${filingDistrict}\n` +
+          `**Location:** ${filingVillage}, ${filingDistrict} (📍 ${filingLat.toFixed(4)}, ${filingLng.toFixed(4)})\n` +
+          `**Evidence Photos:** ${effectivePhotos.length} photo(s) attached\n` +
           `**Assigned HEI:** ${winnerHei.name} (${winnerHei.distanceKm} km away)\n` +
-          `**NEP 2020 Capstone Value:** 4 Credits for solving student team.\n\n` +
-          `A physical inspection team and engineering mentors have been alerted. You can track this ticket on the Citizen Portal or Regional Map at any time!`,
+          `**Department:** ${deptName}\n` +
+          `**NEP 2020 Capstone Value:** 4 Credits for student problem-solvers.\n\n` +
+          `Status is marked as **AI Routed**. A physical inspection team and student engineers have been alerted. You can track this ticket on the Citizen, HEI, CSR, and Admin portals!`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         autoCreatedChallenge: {
           id: newTicket.id,
           title: newTicket.title,
-          status: 'AI_VERIFIED',
+          status: 'AI_ROUTED',
         },
       },
     ]);
@@ -839,300 +945,476 @@ export default function SahayakChatbot({ onNewTicket }: SahayakChatbotProps) {
               </div>
 
               {/* Step 1: Select Category */}
+              {/* Step 1: Category & Problem Name */}
               {filingStep === 1 && (
-                <div className="space-y-2.5 animate-in fade-in duration-200">
-                  <div className="bg-surface p-3 rounded-2xl border border-charcoal-border/40">
-                    <p className="text-xs font-bold text-charcoal mb-1">
-                      1. What type of community problem are you reporting?
-                    </p>
-                    <p className="text-[11px] text-charcoal-muted">
-                      Tap once to choose category. We will route it to the best engineering department.
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2">
-                    {[
-                      { cat: 'WATER_MANAGEMENT', label: '💧 Drinking Water', desc: 'Handpumps, water contamination, ponds' },
-                      { cat: 'ROAD_INFRASTRUCTURE', label: '🛣️ Roads & Bridges', desc: 'Culverts, potholes, monsoon damage' },
-                      { cat: 'RURAL_ELECTRIFICATION_SOLAR', label: '⚡ Solar Microgrid', desc: 'Streetlights, inverters, power cuts' },
-                      { cat: 'SUSTAINABLE_AGRICULTURE', label: '🌾 Agriculture', desc: 'Irrigation canals, crop disease' },
-                      { cat: 'HEALTHCARE_DELIVERY', label: '🏥 Healthcare', desc: 'Health sub-centers, electricity/water' },
-                      { cat: 'SANITATION_WASTE', label: '♻️ Sanitation', desc: 'Drainage, waste pits, hygiene' },
-                    ].map((item) => (
-                      <button
-                        key={item.cat}
-                        type="button"
-                        onClick={() => handleSelectFilingCategory(item.cat as TicketCategory)}
-                        className={`p-3 rounded-xl border text-left cursor-pointer transition-all hover:scale-[1.02] flex flex-col justify-between ${
-                          filingCategory === item.cat
-                            ? 'bg-terracotta-50 border-terracotta shadow-xs'
-                            : 'bg-surface border-charcoal-border/50 hover:bg-canvas-subtle'
-                        }`}
-                      >
-                        <span className="text-xs font-bold text-charcoal">{item.label}</span>
-                        <span className="text-[10px] text-charcoal-muted mt-1 leading-snug">{item.desc}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Step 2: Location */}
-              {filingStep === 2 && (
                 <div className="space-y-3 animate-in fade-in duration-200">
                   <div className="bg-surface p-3 rounded-2xl border border-charcoal-border/40">
-                    <p className="text-xs font-bold text-charcoal mb-1">
-                      2. Where is this problem located in Jharkhand?
+                    <p className="text-xs font-bold text-charcoal mb-0.5">
+                      1. Problem Category & Title
                     </p>
                     <p className="text-[11px] text-charcoal-muted">
-                      Auto-detect with device GPS or pick your district below.
+                      Select the civic domain and specify the problem title.
                     </p>
                   </div>
 
-                  {/* GPS Auto Detect */}
-                  <button
-                    type="button"
-                    onClick={handleCaptureGps}
-                    disabled={isLocatingGps}
-                    className="w-full p-2.5 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-bold flex items-center justify-center gap-2 cursor-pointer hover:bg-emerald-100 transition-colors"
-                  >
-                    <Navigation className={`w-3.5 h-3.5 ${isLocatingGps ? 'animate-spin' : ''}`} />
-                    <span>
-                      {isLocatingGps
-                        ? 'Acquiring GPS Satellite Lock...'
-                        : `📍 GPS Auto-Fix: ${filingLat.toFixed(3)}, ${filingLng.toFixed(3)}`}
-                    </span>
-                  </button>
-
                   <div>
-                    <label className="text-[11px] font-bold text-charcoal block mb-1">Village / Tola / Block</label>
-                    <input
-                      type="text"
-                      value={filingVillage}
-                      onChange={(e) => setFilingVillage(e.target.value)}
-                      placeholder="e.g., Baghmara Block, Tola 4"
-                      className="w-full px-3 py-2 rounded-xl border border-charcoal-border text-xs bg-surface"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="text-[11px] font-bold text-charcoal block mb-1">Choose District</label>
-                    <div className="grid grid-cols-3 gap-1.5 max-h-36 overflow-y-auto pr-1">
-                      {JHARKHAND_DISTRICTS.slice(0, 15).map((dist) => (
+                    <label className="text-[11px] font-bold text-charcoal block mb-1.5">
+                      What kind of problem is this?
+                    </label>
+                    <div className="grid grid-cols-2 gap-2">
+                      {[
+                        { cat: 'WATER_MANAGEMENT', label: '💧 Drinking Water', desc: 'Handpumps, water contamination, ponds' },
+                        { cat: 'ROAD_INFRASTRUCTURE', label: '🛣️ Roads & Bridges', desc: 'Culverts, potholes, monsoon damage' },
+                        { cat: 'RURAL_ELECTRIFICATION_SOLAR', label: '⚡ Solar Microgrid', desc: 'Streetlights, inverters, power cuts' },
+                        { cat: 'SUSTAINABLE_AGRICULTURE', label: '🌾 Agriculture', desc: 'Irrigation canals, crop disease' },
+                        { cat: 'HEALTHCARE_DELIVERY', label: '🏥 Healthcare', desc: 'Health sub-centers, electricity/water' },
+                        { cat: 'SANITATION_WASTE', label: '♻️ Sanitation', desc: 'Drainage, waste pits, hygiene' },
+                      ].map((item) => (
                         <button
-                          key={dist}
+                          key={item.cat}
                           type="button"
-                          onClick={() => handleSelectFilingDistrict(dist)}
-                          className={`p-1.5 rounded-lg text-[10px] font-semibold text-center border cursor-pointer truncate ${
-                            filingDistrict === dist
-                              ? 'bg-terracotta text-white border-terracotta'
-                              : 'bg-surface text-charcoal border-charcoal-border/40 hover:bg-terracotta-50'
+                          onClick={() => handleSelectFilingCategory(item.cat as TicketCategory)}
+                          className={`p-2.5 rounded-xl border text-left cursor-pointer transition-all hover:scale-[1.01] flex flex-col justify-between ${
+                            filingCategory === item.cat
+                              ? 'bg-terracotta-50 border-terracotta shadow-xs ring-1 ring-terracotta'
+                              : 'bg-surface border-charcoal-border/50 hover:bg-canvas-subtle'
                           }`}
                         >
-                          {dist}
+                          <span className="text-xs font-bold text-charcoal">{item.label}</span>
+                          <span className="text-[10px] text-charcoal-muted mt-0.5 leading-snug">{item.desc}</span>
                         </button>
                       ))}
                     </div>
                   </div>
 
-                  <div className="flex gap-2 pt-2">
+                  <div>
+                    <label className="text-[11px] font-bold text-charcoal block mb-1">
+                      Problem Name / Title <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={filingTitle}
+                      onChange={(e) => setFilingTitle(e.target.value)}
+                      placeholder="e.g. Village handpump is broken and gives dirty red water"
+                      className="w-full px-3 py-2 rounded-xl border border-charcoal-border text-xs bg-surface focus:border-terracotta outline-none"
+                    />
+                    {/* Quick suggestion chips */}
+                    <div className="flex flex-wrap gap-1.5 mt-1.5">
+                      {[
+                        'Broken handpump with red water',
+                        'Monsoon culvert washed away',
+                        'Solar streetlight battery down',
+                      ].map((preset, i) => (
+                        <button
+                          key={i}
+                          type="button"
+                          onClick={() => setFilingTitle(preset)}
+                          className="text-[10px] px-2 py-0.5 rounded-full bg-sand-100 hover:bg-sand-200 text-charcoal border border-sand-300 transition-colors cursor-pointer"
+                        >
+                          + {preset}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="pt-1">
+                    <button
+                      type="button"
+                      onClick={() => setFilingStep(2)}
+                      className="w-full py-2.5 rounded-xl bg-terracotta text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs hover:bg-terracotta-600 transition-colors cursor-pointer"
+                    >
+                      <span>Continue to Urgency & Description</span>
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 2: Urgency Level & Problem Description */}
+              {filingStep === 2 && (
+                <div className="space-y-3 animate-in fade-in duration-200">
+                  <div className="bg-surface p-3 rounded-2xl border border-charcoal-border/40">
+                    <p className="text-xs font-bold text-charcoal mb-0.5">
+                      2. How Urgent is This & What is the Problem?
+                    </p>
+                    <p className="text-[11px] text-charcoal-muted">
+                      Set priority level and describe what is broken. Tap mic to speak.
+                    </p>
+                  </div>
+
+                  {/* Urgency Selector */}
+                  <div>
+                    <label className="text-[11px] font-bold text-charcoal block mb-1.5">
+                      How urgent is this? <span className="text-red-500">*</span>
+                    </label>
+                    <div className="grid grid-cols-2 gap-2">
+                      {[
+                        { level: 'CRITICAL', label: '🔴 Critical Emergency', desc: 'Immediate threat to community' },
+                        { level: 'HIGH', label: '🟠 High Priority', desc: 'Resolution within 2 days' },
+                        { level: 'MEDIUM', label: '🟡 Medium Priority', desc: 'Resolution within 1 week' },
+                        { level: 'LOW', label: '🔵 Routine Priority', desc: 'Scheduled maintenance' },
+                      ].map((item) => (
+                        <button
+                          key={item.level}
+                          type="button"
+                          onClick={() => setFilingUrgency(item.level as UrgencyLevel)}
+                          className={`p-2.5 rounded-xl border text-left cursor-pointer transition-all ${
+                            filingUrgency === item.level
+                              ? 'bg-terracotta-50 border-terracotta ring-1 ring-terracotta shadow-xs'
+                              : 'bg-surface border-charcoal-border/50 hover:bg-canvas-subtle'
+                          }`}
+                        >
+                          <span className="text-xs font-bold text-charcoal">{item.label}</span>
+                          <span className="text-[10px] text-charcoal-muted mt-0.5 block leading-tight">{item.desc}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Description Textarea + Voice Mic */}
+                  <div>
+                    <label className="text-[11px] font-bold text-charcoal block mb-1">
+                      What is the problem? <span className="text-red-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <textarea
+                        rows={3}
+                        value={filingDescription}
+                        onChange={(e) => setFilingDescription(e.target.value)}
+                        placeholder="Describe what is broken, how long, and how many families are affected..."
+                        className="w-full p-3 rounded-xl border border-charcoal-border text-xs bg-surface resize-none focus:border-terracotta outline-none pr-24"
+                      />
+
+                      <button
+                        type="button"
+                        onClick={handleToggleVoiceInput}
+                        className={`absolute bottom-2.5 right-2.5 px-2.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs ${
+                          isVoiceRecording
+                            ? 'bg-red-600 text-white animate-pulse'
+                            : 'bg-sand-100 hover:bg-sand-200 text-charcoal'
+                        }`}
+                        title="Voice speech-to-text"
+                      >
+                        {isVoiceRecording ? <MicOff className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5 text-terracotta" />}
+                        <span className="text-[10px]">{isVoiceRecording ? 'Listening...' : 'Voice Mic'}</span>
+                      </button>
+                    </div>
+
+                    {/* Quick Suggestions Chips */}
+                    <div className="space-y-1 mt-2">
+                      <span className="text-[10px] font-bold text-charcoal-muted uppercase tracking-wider">Quick Suggestions:</span>
+                      <div className="space-y-1">
+                        {[
+                          'Village handpump broken; reddish contaminated water affects 45 families.',
+                          'Monsoon washed away road culvert; vehicles and school kids cannot cross.',
+                          'Community solar microgrid inverter failed; village street is dark at night.',
+                        ].map((preset, i) => (
+                          <button
+                            key={i}
+                            type="button"
+                            onClick={() => setFilingDescription(preset)}
+                            className="w-full text-left p-1.5 rounded-lg bg-surface hover:bg-terracotta-50 border border-charcoal-border/40 text-[10px] text-charcoal transition-colors block truncate cursor-pointer"
+                          >
+                            "{preset}"
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2 pt-1">
                     <button
                       type="button"
                       onClick={() => setFilingStep(1)}
-                      className="px-3 py-2 rounded-xl border border-charcoal-border text-xs font-bold text-charcoal"
+                      className="px-3.5 py-2 rounded-xl border border-charcoal-border text-xs font-bold text-charcoal hover:bg-surface cursor-pointer"
                     >
                       Back
                     </button>
                     <button
                       type="button"
                       onClick={() => setFilingStep(3)}
-                      className="flex-1 px-4 py-2 rounded-xl bg-terracotta text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs"
+                      className="flex-1 py-2.5 rounded-xl bg-terracotta text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs hover:bg-terracotta-600 transition-colors cursor-pointer"
                     >
-                      <span>Continue to Description</span>
-                      <ChevronRight className="w-3.5 h-3.5" />
+                      <span>Continue to Location</span>
+                      <ChevronRight className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
               )}
 
-              {/* Step 3: Issue Description & Voice Input */}
+              {/* Step 3: Location with Automatic Live GPS */}
               {filingStep === 3 && (
                 <div className="space-y-3 animate-in fade-in duration-200">
                   <div className="bg-surface p-3 rounded-2xl border border-charcoal-border/40">
-                    <p className="text-xs font-bold text-charcoal mb-1">
-                      3. Describe what is broken or required
+                    <p className="text-xs font-bold text-charcoal mb-0.5">
+                      3. Where is this problem located?
                     </p>
                     <p className="text-[11px] text-charcoal-muted">
-                      Type in your own words or tap the microphone to speak in Hindi/English/Hinglish.
+                      Your live GPS location is automatically captured so it is shared even if you forget to adjust it.
                     </p>
                   </div>
 
-                  <div className="relative">
-                    <textarea
-                      rows={3}
-                      value={filingDescription}
-                      onChange={(e) => setFilingDescription(e.target.value)}
-                      placeholder="e.g., The village handpump lever is broken and contaminated reddish muddy water has been coming out for 5 days..."
-                      className="w-full p-3 rounded-xl border border-charcoal-border text-xs bg-surface resize-none focus:border-terracotta outline-none"
-                    />
-
-                    <button
-                      type="button"
-                      onClick={handleToggleVoiceInput}
-                      className={`absolute bottom-2.5 right-2.5 px-2.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer ${
-                        isVoiceRecording
-                          ? 'bg-red-600 text-white animate-pulse'
-                          : 'bg-sand-100 hover:bg-sand-200 text-charcoal'
-                      }`}
-                      title="Voice speech-to-text"
-                    >
-                      {isVoiceRecording ? <MicOff className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5" />}
-                      <span className="text-[10px]">{isVoiceRecording ? 'Listening...' : 'Voice Mic'}</span>
-                    </button>
-                  </div>
-
-                  {/* 1-Tap Preset Descriptions */}
-                  <div className="space-y-1">
-                    <span className="text-[10px] font-bold text-charcoal-muted uppercase tracking-wider">Quick Suggestions:</span>
-                    <div className="space-y-1.5">
-                      {[
-                        'Handpump is broken and pumping reddish contaminated muddy water.',
-                        'Monsoon rains eroded road culvert; vehicles and school kids cannot cross.',
-                        'Solar microgrid battery inverter failed; community streetlights are dark.',
-                      ].map((preset, i) => (
-                        <button
-                          key={i}
-                          type="button"
-                          onClick={() => setFilingDescription(preset)}
-                          className="w-full text-left p-2 rounded-lg bg-surface hover:bg-terracotta-50 border border-charcoal-border/40 text-[10px] text-charcoal transition-colors block truncate"
-                        >
-                          "{preset}"
-                        </button>
-                      ))}
+                  {/* Live GPS Auto-Captured Card */}
+                  <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-900 space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1.5 text-xs font-bold">
+                        <Navigation className={`w-4 h-4 text-emerald-600 ${isLocatingGps ? 'animate-spin' : ''}`} />
+                        <span>Live GPS Auto-Acquired</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={handleCaptureGps}
+                        disabled={isLocatingGps}
+                        className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white transition-colors cursor-pointer"
+                      >
+                        {isLocatingGps ? 'Locating...' : 'Refresh GPS'}
+                      </button>
                     </div>
+                    <div className="text-[11px] font-mono flex items-center justify-between">
+                      <span>Coords: {filingLat.toFixed(4)}, {filingLng.toFixed(4)}</span>
+                      <span className="text-[10px] text-emerald-700 font-sans font-semibold">
+                        {isGpsAutoAcquired ? '✓ Auto-Shared' : '✓ Default Coords'}
+                      </span>
+                    </div>
+                    <p className="text-[10px] text-emerald-800">
+                      Automatic geo-routing will allocate the nearest institutional engineering team ({filingDistrict}).
+                    </p>
                   </div>
 
-                  <div className="flex gap-2 pt-2">
+                  {/* District Selector */}
+                  <div>
+                    <label className="text-[11px] font-bold text-charcoal block mb-1">
+                      District <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      value={filingDistrict}
+                      onChange={(e) => handleSelectFilingDistrict(e.target.value)}
+                      className="w-full px-3 py-2 rounded-xl border border-charcoal-border text-xs bg-surface focus:border-terracotta outline-none cursor-pointer"
+                    >
+                      {JHARKHAND_DISTRICTS.map((dist) => (
+                        <option key={dist} value={dist}>
+                          {dist}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Village / Ward Name */}
+                  <div>
+                    <label className="text-[11px] font-bold text-charcoal block mb-1">
+                      Village or Ward Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={filingVillage}
+                      onChange={(e) => setFilingVillage(e.target.value)}
+                      placeholder="e.g., Baghmara Block, Tola 4"
+                      className="w-full px-3 py-2 rounded-xl border border-charcoal-border text-xs bg-surface focus:border-terracotta outline-none"
+                    />
+                  </div>
+
+                  <div className="flex gap-2 pt-1">
                     <button
                       type="button"
                       onClick={() => setFilingStep(2)}
-                      className="px-3 py-2 rounded-xl border border-charcoal-border text-xs font-bold text-charcoal"
+                      className="px-3.5 py-2 rounded-xl border border-charcoal-border text-xs font-bold text-charcoal hover:bg-surface cursor-pointer"
                     >
                       Back
                     </button>
                     <button
                       type="button"
                       onClick={() => setFilingStep(4)}
-                      className="flex-1 px-4 py-2 rounded-xl bg-terracotta text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs"
+                      className="flex-1 py-2.5 rounded-xl bg-terracotta text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs hover:bg-terracotta-600 transition-colors cursor-pointer"
                     >
-                      <span>Continue to Photo</span>
-                      <ChevronRight className="w-3.5 h-3.5" />
+                      <span>Continue to Photos</span>
+                      <ChevronRight className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
               )}
 
-              {/* Step 4: Photo Attachment */}
+              {/* Step 4: Ground Reality Photos (Multiple Photos Support) */}
               {filingStep === 4 && (
                 <div className="space-y-3 animate-in fade-in duration-200">
                   <div className="bg-surface p-3 rounded-2xl border border-charcoal-border/40">
-                    <p className="text-xs font-bold text-charcoal mb-1">
-                      4. Attach Ground Reality Photo
-                    </p>
-                    <p className="text-[11px] text-charcoal-muted">
-                      Use the realistic category photo preset or upload a custom image.
-                    </p>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-xs font-bold text-charcoal mb-0.5">
+                          4. Ground Evidence Photos
+                        </p>
+                        <p className="text-[11px] text-charcoal-muted">
+                          Upload multiple photos to document the defect clearly.
+                        </p>
+                      </div>
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-sand-200 text-charcoal border border-sand-300 shrink-0">
+                        {filingPhotos.length} Photo{filingPhotos.length !== 1 ? 's' : ''} Attached
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="relative rounded-2xl overflow-hidden border border-charcoal-border h-40 bg-black/5">
-                    <img
-                      src={filingPhoto}
-                      alt="Ground reality preview"
-                      className="w-full h-full object-cover"
-                    />
-                    <span className="absolute bottom-2 left-2 px-2.5 py-1 rounded bg-black/70 text-white text-[10px] font-bold backdrop-blur-xs flex items-center gap-1">
-                      <Camera className="w-3 h-3 text-sand-300" />
-                      Attached Photo Evidence
-                    </span>
-                  </div>
+                  {/* Photos Grid Reel */}
+                  {filingPhotos.length > 0 ? (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                      {filingPhotos.map((photo, i) => (
+                        <div key={i} className="relative rounded-xl overflow-hidden border border-charcoal-border/60 aspect-square group bg-black/5">
+                          <img src={photo} alt={`Evidence ${i + 1}`} className="w-full h-full object-cover" />
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveFilingPhoto(i)}
+                            className="absolute top-1.5 right-1.5 p-1 rounded-full bg-red-600/90 text-white hover:bg-red-700 shadow-md cursor-pointer transition-transform hover:scale-110"
+                            title="Remove photo"
+                          >
+                            <Trash2 className="w-3 h-3" />
+                          </button>
+                          <span className="absolute bottom-1 left-1 px-1.5 py-0.5 rounded bg-black/60 text-white text-[9px] font-mono">
+                            #{i + 1}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="p-4 rounded-xl border border-dashed border-charcoal-border text-center bg-surface space-y-1">
+                      <Camera className="w-6 h-6 text-charcoal-muted mx-auto" />
+                      <p className="text-xs font-medium text-charcoal">No photos attached yet</p>
+                      <p className="text-[10px] text-charcoal-muted">Upload ground photos or add a category preset below</p>
+                    </div>
+                  )}
 
-                  <div className="flex gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setFilingPhoto(CATEGORY_PRESET_IMAGES[filingCategory] || CATEGORY_PRESET_IMAGES.WATER_MANAGEMENT)}
-                      className="flex-1 p-2 rounded-xl bg-surface border border-charcoal-border text-[11px] font-bold text-charcoal hover:bg-sand-50 transition-colors"
-                    >
-                      Use Category Preset
-                    </button>
-
-                    <label className="flex-1 p-2 rounded-xl bg-sand-100 hover:bg-sand-200 border border-sand-300 text-[11px] font-bold text-charcoal text-center cursor-pointer transition-colors">
-                      <span>Upload Custom</span>
+                  {/* Photo Action Buttons */}
+                  <div className="grid grid-cols-2 gap-2">
+                    <label className="p-2.5 rounded-xl bg-terracotta hover:bg-terracotta-600 text-white text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer transition-colors shadow-xs">
+                      <Upload className="w-3.5 h-3.5" />
+                      <span>Upload Photos</span>
                       <input
                         type="file"
                         accept="image/*"
+                        multiple
                         className="hidden"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0];
-                          if (file) {
-                            const r = new FileReader();
-                            r.onload = () => setFilingPhoto(r.result as string);
-                            r.readAsDataURL(file);
-                          }
-                        }}
+                        onChange={handleAddFilingPhotos}
                       />
                     </label>
+
+                    <button
+                      type="button"
+                      onClick={handleAddPresetPhoto}
+                      className="p-2.5 rounded-xl bg-surface hover:bg-sand-100 border border-charcoal-border text-xs font-bold text-charcoal flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
+                    >
+                      <Camera className="w-3.5 h-3.5 text-terracotta" />
+                      <span>+ Category Sample</span>
+                    </button>
                   </div>
 
-                  <div className="flex gap-2 pt-2">
+                  <div className="flex gap-2 pt-1">
                     <button
                       type="button"
                       onClick={() => setFilingStep(3)}
-                      className="px-3 py-2 rounded-xl border border-charcoal-border text-xs font-bold text-charcoal"
+                      className="px-3.5 py-2 rounded-xl border border-charcoal-border text-xs font-bold text-charcoal hover:bg-surface cursor-pointer"
                     >
                       Back
                     </button>
                     <button
                       type="button"
                       onClick={() => setFilingStep(5)}
-                      className="flex-1 px-4 py-2 rounded-xl bg-terracotta text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs"
+                      className="flex-1 py-2.5 rounded-xl bg-terracotta text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs hover:bg-terracotta-600 transition-colors cursor-pointer"
                     >
-                      <span>Review & Submit</span>
-                      <ChevronRight className="w-3.5 h-3.5" />
+                      <span>Continue to Reporter & Review</span>
+                      <ChevronRight className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
               )}
 
-              {/* Step 5: Review & Submit */}
+              {/* Step 5: Reporter Contact & Final Review */}
               {filingStep === 5 && (
                 <div className="space-y-3 animate-in fade-in duration-200">
-                  <div className="bg-surface p-3.5 rounded-2xl border border-charcoal-border/50 shadow-xs space-y-2.5">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-extrabold text-charcoal">Report Summary Review</span>
-                      <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
-                        Ready to Dispatch
-                      </span>
+                  <div className="bg-surface p-3 rounded-2xl border border-charcoal-border/40">
+                    <p className="text-xs font-bold text-charcoal mb-0.5">
+                      5. Reporter Contact & Final Review
+                    </p>
+                    <p className="text-[11px] text-charcoal-muted">
+                      Confirm your contact details and review autonomous NEP 2020 HEI allocation.
+                    </p>
+                  </div>
+
+                  {/* Contact Information */}
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="text-[11px] font-bold text-charcoal block mb-1">
+                        Your Name <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={filingReporterName}
+                        onChange={(e) => setFilingReporterName(e.target.value)}
+                        placeholder="e.g. Mangal Soren"
+                        className="w-full px-3 py-2 rounded-xl border border-charcoal-border text-xs bg-surface focus:border-terracotta outline-none"
+                      />
                     </div>
 
-                    <div className="flex gap-3">
-                      <img
-                        src={filingPhoto}
-                        alt="Evidence"
-                        className="w-16 h-16 rounded-xl object-cover border border-charcoal-border/40 shrink-0"
+                    <div>
+                      <label className="text-[11px] font-bold text-charcoal block mb-1">
+                        Mobile Number <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="tel"
+                        value={filingReporterPhone}
+                        onChange={(e) => setFilingReporterPhone(e.target.value)}
+                        placeholder="+91 94311 82910"
+                        className="w-full px-3 py-2 rounded-xl border border-charcoal-border text-xs bg-surface focus:border-terracotta outline-none"
                       />
-                      <div className="text-xs space-y-0.5">
-                        <p className="font-bold text-charcoal">{filingCategory.replace(/_/g, ' ')}</p>
-                        <p className="text-[11px] text-charcoal-muted">{filingVillage}, {filingDistrict}</p>
-                        <p className="text-[10px] text-terracotta font-mono">
-                          Coords: {filingLat.toFixed(3)}, {filingLng.toFixed(3)}
-                        </p>
+                    </div>
+                  </div>
+
+                  {/* Summary Card */}
+                  <div className="bg-surface p-3.5 rounded-2xl border border-charcoal-border/50 shadow-xs space-y-2.5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-extrabold text-charcoal">Report Summary</span>
+                      <div className="flex items-center gap-1.5">
+                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                          filingUrgency === 'CRITICAL' ? 'bg-red-100 text-red-800' :
+                          filingUrgency === 'HIGH' ? 'bg-amber-100 text-amber-800' :
+                          'bg-blue-100 text-blue-800'
+                        }`}>
+                          {filingUrgency} PRIORITY
+                        </span>
+                        <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+                          Ready to Dispatch
+                        </span>
                       </div>
                     </div>
+
+                    <div className="space-y-1">
+                      <p className="font-bold text-xs text-charcoal">{filingTitle || 'Civic Problem'}</p>
+                      <div className="flex items-center gap-2 text-[11px] text-charcoal-muted">
+                        <span>{filingCategory.replace(/_/g, ' ')}</span>
+                        <span>•</span>
+                        <span>{filingVillage}, {filingDistrict}</span>
+                      </div>
+                      <p className="text-[10px] text-terracotta font-mono flex items-center gap-1">
+                        <Navigation className="w-3 h-3 text-emerald-600" />
+                        <span>Live GPS: {filingLat.toFixed(4)}, {filingLng.toFixed(4)} (Auto-Attached)</span>
+                      </p>
+                    </div>
+
+                    {/* Photo previews */}
+                    {filingPhotos.length > 0 && (
+                      <div className="flex gap-1.5 overflow-x-auto pb-1">
+                        {filingPhotos.map((p, i) => (
+                          <img
+                            key={i}
+                            src={p}
+                            alt="Evidence"
+                            className="w-12 h-12 rounded-lg object-cover border border-charcoal-border/40 shrink-0"
+                          />
+                        ))}
+                      </div>
+                    )}
 
                     <p className="text-xs text-charcoal bg-canvas p-2.5 rounded-xl border border-charcoal-border/30 line-clamp-2 leading-relaxed">
                       {filingDescription || 'Citizen ground problem report submitted.'}
                     </p>
 
+                    {/* Autonomous HEI Allocation Preview */}
                     {(() => {
                       const previewHei = findOptimalHeiForTicket(filingLat, filingLng, filingCategory, filingDistrict).winner;
                       return (
@@ -1179,9 +1461,9 @@ export default function SahayakChatbot({ onNewTicket }: SahayakChatbotProps) {
                   <button
                     type="button"
                     onClick={() => setFilingStep(4)}
-                    className="w-full py-1.5 text-center text-xs font-semibold text-charcoal-muted hover:text-charcoal"
+                    className="w-full py-1 text-center text-xs font-semibold text-charcoal-muted hover:text-charcoal cursor-pointer"
                   >
-                    ← Edit Details
+                    ← Edit Photos / Back
                   </button>
                 </div>
               )}
