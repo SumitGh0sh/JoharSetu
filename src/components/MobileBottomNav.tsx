@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import {
   Compass,
   Flame,
@@ -16,8 +16,14 @@ import {
 
 export default function MobileBottomNav() {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const currentView = searchParams.get('view');
+  const [currentView, setCurrentView] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      setCurrentView(params.get('view'));
+    }
+  }, [pathname]);
 
   const isFeedActive = (pathname === '/feed' && currentView !== 'map') || pathname === '/';
   const isReportActive = pathname.startsWith('/portal/citizen');

@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import {
   Flame,
   Search,
@@ -86,17 +86,19 @@ export default function LiveCivicFeed({
   onDonateCampaign
 }: LiveCivicFeedProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const viewParam = searchParams?.get('view');
-  const [feedView, setFeedView] = useState<'GRID' | 'MAP'>(viewParam === 'map' ? 'MAP' : 'GRID');
+  const [feedView, setFeedView] = useState<'GRID' | 'MAP'>('GRID');
 
   useEffect(() => {
-    if (viewParam === 'map') {
-      setFeedView('MAP');
-    } else if (viewParam === 'feed') {
-      setFeedView('GRID');
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const viewParam = params.get('view');
+      if (viewParam === 'map') {
+        setFeedView('MAP');
+      } else if (viewParam === 'feed') {
+        setFeedView('GRID');
+      }
     }
-  }, [viewParam]);
+  }, []);
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDistrict, setSelectedDistrict] = useState('All Districts');

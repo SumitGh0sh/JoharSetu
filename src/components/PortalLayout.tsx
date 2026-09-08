@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Navbar from './Navbar';
 import PWAInstaller from './PWAInstaller';
 import AuditLedgerModal from './AuditLedgerModal';
@@ -362,7 +362,9 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
       <SahayakChatbot onNewTicket={handleNewTicket} />
 
       {/* Mobile-First Bottom Navigation Dock (Instagram / Reddit Style) */}
-      <MobileBottomNav />
+      <Suspense fallback={null}>
+        <MobileBottomNav />
+      </Suspense>
     </div>
   );
 }
