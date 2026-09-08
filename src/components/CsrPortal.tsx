@@ -16,7 +16,16 @@ import {
   Flame,
   Users,
   Lock,
-  ExternalLink
+  ExternalLink,
+  BarChart3,
+  PieChart,
+  FileCheck,
+  FileText,
+  Download,
+  Search,
+  SlidersHorizontal,
+  Printer,
+  X
 } from 'lucide-react';
 import { ProblemTicket } from '../lib/types';
 import { useLanguage } from '../context/LanguageContext';
@@ -44,8 +53,21 @@ export default function CsrPortal({
   onDonateCampaign,
 }: CsrPortalProps) {
   const { t } = useLanguage();
-  const [activeView, setActiveView] = useState<'projects' | 'campaigns' | 'map'>('projects');
+  const [activeView, setActiveView] = useState<'projects' | 'campaigns' | 'analytics' | 'map'>('projects');
   const [fundingSuccess, setFundingSuccess] = useState<string | null>(null);
+
+  // CSR Analytics States
+  const [selectedCert, setSelectedCert] = useState<{
+    certId: string;
+    donor: string;
+    pan: string;
+    amount: number;
+    project: string;
+    hei: string;
+    date: string;
+    hash: string;
+  } | null>(null);
+  const [unfundedSearch, setUnfundedSearch] = useState('');
 
   const eligibleProjects = tickets.filter((t) => t.projectTeam);
   const crowdfundTickets = tickets.filter((t) => t.crowdfunding);
@@ -225,6 +247,18 @@ export default function CsrPortal({
         </button>
         <button
           type="button"
+          onClick={() => setActiveView('analytics')}
+          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+            activeView === 'analytics'
+              ? 'bg-terracotta text-white shadow-xs'
+              : 'text-charcoal hover:text-terracotta'
+          }`}
+        >
+          <BarChart3 className="w-3.5 h-3.5" />
+          <span>📊 CSR Financial & 80G Tax Analytics</span>
+        </button>
+        <button
+          type="button"
           onClick={() => setActiveView('map')}
           className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
             activeView === 'map'
@@ -376,6 +410,360 @@ export default function CsrPortal({
               );
             })}
           </div>
+        </div>
+      ) : activeView === 'analytics' ? (
+        /* CSR Financial & 80G Tax Analytics Dashboard */
+        <div className="space-y-8 animate-in fade-in duration-200">
+          
+          {/* Corporate RBAC & Section 135 Compliance Banner */}
+          <div className="bg-surface rounded-3xl p-6 border border-charcoal-border/50 shadow-soft">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <div className="flex flex-wrap items-center gap-2 mb-2">
+                  <span className="px-3 py-1 rounded-full bg-sand-200 text-sand-800 text-xs font-bold uppercase flex items-center gap-1.5">
+                    <Building2 className="w-3.5 h-3.5" />
+                    <span>Authorized CSR Partner Desk (Tata Steel / Coal India / NTPC)</span>
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold">
+                    Section 135 & 80G Compliant
+                  </span>
+                </div>
+                <h2 className="text-xl sm:text-2xl font-black text-charcoal">
+                  CSR Capital Allocation & Verified Tax Exemption Portfolio
+                </h2>
+                <p className="text-xs text-charcoal-muted mt-1 max-w-3xl">
+                  Real-time financial audit trail of corporate social responsibility co-financing for higher education capstones across rural and urban Jharkhand.
+                </p>
+              </div>
+
+              {/* RBAC Notice */}
+              <div className="p-3.5 rounded-2xl bg-canvas border border-charcoal-border/40 text-xs max-w-xs shrink-0">
+                <div className="flex items-center gap-1.5 font-bold text-charcoal mb-1">
+                  <ShieldCheck className="w-4 h-4 text-emerald-700" />
+                  <span>Role: CSR Corporate Sponsor</span>
+                </div>
+                <p className="text-[10px] text-charcoal-muted">
+                  Strict RBAC: Write access for milestone grants & 80G certificate downloads; no civic ticket deletion or academic grade modification permitted.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Financial Metrics Dials */}
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
+            <div className="bg-surface rounded-2xl p-4 sm:p-5 border border-charcoal-border/50 shadow-soft">
+              <span className="text-[11px] font-bold text-charcoal-muted uppercase">Pledged CSR Pool</span>
+              <p className="text-2xl font-black text-terracotta mt-1">₹2.85 Cr</p>
+              <p className="text-[10px] text-charcoal-muted mt-0.5">Total Corporate Allocation</p>
+            </div>
+            <div className="bg-surface rounded-2xl p-4 sm:p-5 border border-charcoal-border/50 shadow-soft">
+              <span className="text-[11px] font-bold text-charcoal-muted uppercase">Disbursed to HEIs</span>
+              <p className="text-2xl font-black text-emerald-700 mt-1">₹1.92 Cr</p>
+              <p className="text-[10px] text-emerald-700 font-semibold mt-0.5">67.5% Utilized</p>
+            </div>
+            <div className="bg-surface rounded-2xl p-4 sm:p-5 border border-charcoal-border/50 shadow-soft">
+              <span className="text-[11px] font-bold text-charcoal-muted uppercase">Committed Escrow</span>
+              <p className="text-2xl font-black text-sand-700 mt-1">₹92.60 L</p>
+              <p className="text-[10px] text-charcoal-muted mt-0.5">Milestone Release Pending</p>
+            </div>
+            <div className="bg-surface rounded-2xl p-4 sm:p-5 border border-charcoal-border/50 shadow-soft">
+              <span className="text-[11px] font-bold text-charcoal-muted uppercase">Co-Financed Projects</span>
+              <p className="text-2xl font-black text-charcoal mt-1">14 Projects</p>
+              <p className="text-[10px] text-charcoal-muted mt-0.5">Across 8 Districts</p>
+            </div>
+            <div className="bg-surface rounded-2xl p-4 sm:p-5 border border-charcoal-border/50 shadow-soft">
+              <span className="text-[11px] font-bold text-charcoal-muted uppercase">80G Certificates</span>
+              <p className="text-2xl font-black text-blue-700 mt-1">8 Issued</p>
+              <p className="text-[10px] text-charcoal-muted mt-0.5">100% Audit Verified</p>
+            </div>
+          </div>
+
+          {/* Budget Utilization & Thematic Distribution */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            {/* Capital Progress */}
+            <div className="bg-surface rounded-2xl p-6 border border-charcoal-border/50 shadow-soft space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-charcoal-border/30">
+                <h3 className="text-sm font-bold text-charcoal flex items-center gap-2">
+                  <TrendingUp className="w-4 h-4 text-emerald-700" />
+                  <span>Statewide CSR Capital Deployment</span>
+                </h3>
+                <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full">
+                  67.5% Disbursed
+                </span>
+              </div>
+
+              <div className="space-y-2 pt-2">
+                <div className="flex justify-between text-xs font-semibold">
+                  <span className="text-charcoal-muted">Disbursed (₹1.92 Cr)</span>
+                  <span className="text-terracotta font-mono font-bold">Total Pool (₹2.85 Cr)</span>
+                </div>
+                <div className="w-full h-3 rounded-full bg-sand-100 overflow-hidden border border-sand-300">
+                  <div
+                    className="h-full bg-gradient-to-r from-sand-600 via-terracotta to-emerald-600 rounded-full transition-all duration-500"
+                    style={{ width: '67.5%' }}
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2.5 pt-3">
+                <span className="text-[11px] font-bold text-charcoal uppercase tracking-wider block">
+                  Thematic CSR Allocations
+                </span>
+                {[
+                  { theme: 'Water Filtration & Shallow Aquifer Remediation', amount: '₹85,00,000', pct: 44, color: 'bg-emerald-600' },
+                  { theme: 'Rural Solar Microgrids & Village Streetlights', amount: '₹48,00,000', pct: 25, color: 'bg-amber-500' },
+                  { theme: 'Erosion Control & Culvert Infrastructure', amount: '₹35,00,000', pct: 18, color: 'bg-terracotta' },
+                  { theme: 'Indigenous Sorbent & Sanitation Prototyping', amount: '₹24,40,000', pct: 13, color: 'bg-sand-700' },
+                ].map((item) => (
+                  <div key={item.theme} className="space-y-1 text-xs">
+                    <div className="flex justify-between font-medium text-charcoal">
+                      <span className="truncate pr-2">{item.theme}</span>
+                      <span className="font-mono font-bold shrink-0">{item.amount} ({item.pct}%)</span>
+                    </div>
+                    <div className="w-full h-2 rounded-full bg-canvas-subtle overflow-hidden">
+                      <div className={`h-full ${item.color} rounded-full`} style={{ width: `${item.pct}%` }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 80G Tax Exemption Certificates Registry */}
+            <div className="bg-surface rounded-2xl p-6 border border-charcoal-border/50 shadow-soft flex flex-col justify-between space-y-4">
+              <div>
+                <div className="flex items-center justify-between pb-3 border-b border-charcoal-border/30 mb-3">
+                  <h3 className="text-sm font-bold text-charcoal flex items-center gap-2">
+                    <FileCheck className="w-4 h-4 text-terracotta" />
+                    <span>80G Tax Exemption Certificates (Section 135)</span>
+                  </h3>
+                  <span className="text-xs font-mono font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                    IT Act 1961
+                  </span>
+                </div>
+
+                <div className="space-y-2.5 max-h-80 overflow-y-auto pr-1">
+                  {[
+                    { certId: '80G-JHR-2026-0091', donor: 'Tata Steel Rural Development Society', pan: 'AAACT2819K', amount: 500000, project: 'Arsenic-Safe Gravity Sand Filter Node', hei: 'BIT Mesra', date: '2026-02-14', hash: '8f92a17cb44180e0' },
+                    { certId: '80G-JHR-2026-0084', donor: 'Coal India Limited (CSR Green Cell)', pan: 'AAACC1194E', amount: 750000, project: 'Monsoon Culvert Bypass & Scour Defense', hei: 'IIT (ISM) Dhanbad', date: '2026-01-28', hash: '7c81d392e104192b' },
+                    { certId: '80G-JHR-2026-0062', donor: 'NTPC Eastern Region CSR Trust', pan: 'AAACN9921B', amount: 350000, project: 'Solar Microgrid Battery Telemetry System', hei: 'NIT Jamshedpur', date: '2026-01-15', hash: '9b28f018e774109c' },
+                    { certId: '80G-JHR-2026-0045', donor: 'Jharkhand State Innovation Council', pan: 'AAAEJ8291M', amount: 250000, project: 'Dhanbad Arsenic Filtration Column Prototype', hei: 'IIT (ISM) Dhanbad', date: '2025-12-10', hash: '5e41a902b114881d' },
+                  ].map((cert) => (
+                    <div key={cert.certId} className="p-3 rounded-xl bg-canvas border border-charcoal-border/30 text-xs space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono font-bold text-terracotta">{cert.certId}</span>
+                        <span className="font-mono font-bold text-emerald-800">₹{cert.amount.toLocaleString('en-IN')}</span>
+                      </div>
+                      <p className="font-bold text-charcoal text-[11px] truncate">{cert.donor}</p>
+                      <div className="flex items-center justify-between text-[10px] text-charcoal-muted">
+                        <span>Beneficiary: {cert.hei}</span>
+                        <span>Date: {cert.date}</span>
+                      </div>
+                      <div className="pt-1.5 flex items-center justify-between border-t border-charcoal-border/20">
+                        <span className="font-mono text-[9px] text-charcoal-muted">PAN: {cert.pan}</span>
+                        <button
+                          type="button"
+                          onClick={() => setSelectedCert(cert)}
+                          className="px-2.5 py-1 rounded-lg bg-surface hover:bg-sand-100 text-charcoal border border-charcoal-border font-bold text-[10px] flex items-center gap-1 cursor-pointer transition-colors"
+                        >
+                          <Download className="w-3 h-3 text-terracotta" />
+                          <span>Download Certificate</span>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <p className="text-[10px] text-charcoal-muted pt-2 border-t border-charcoal-border/20">
+                Certificates are cryptographically verified by the Department of Planning & Finance, Government of Jharkhand under Section 80G(5)(vi) of the Income Tax Act.
+              </p>
+            </div>
+
+          </div>
+
+          {/* Unfunded & Partially Funded Projects Roster */}
+          <div className="bg-surface rounded-2xl p-6 border border-charcoal-border/50 shadow-soft space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-charcoal-border/30">
+              <div>
+                <h3 className="text-base font-bold text-charcoal flex items-center gap-2">
+                  <HeartHandshake className="w-5 h-5 text-terracotta" />
+                  <span>Unfunded & Partially Funded Capstones (Immediate Impact)</span>
+                </h3>
+                <p className="text-xs text-charcoal-muted mt-0.5">
+                  Spotlight on verified student capstone teams in urgent need of corporate sponsorship to unlock hardware fabrication.
+                </p>
+              </div>
+
+              <div className="relative w-full sm:w-64">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-charcoal-muted" />
+                <input
+                  type="text"
+                  value={unfundedSearch}
+                  onChange={(e) => setUnfundedSearch(e.target.value)}
+                  placeholder="Filter by title, village..."
+                  className="w-full pl-8 pr-3 py-1.5 rounded-xl border border-charcoal-border text-xs bg-canvas outline-none focus:border-terracotta"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {eligibleProjects
+                .filter((t) => {
+                  const q = unfundedSearch.toLowerCase().trim();
+                  return !q || t.title.toLowerCase().includes(q) || t.district.toLowerCase().includes(q) || (t.village || '').toLowerCase().includes(q);
+                })
+                .slice(0, 6)
+                .map((ticket) => {
+                  const team = ticket.projectTeam!;
+                  const totalDisbursed = team.sponsors?.reduce((acc, s) => acc + s.amount, 0) || 0;
+                  const targetCost = 150000;
+                  const remaining = Math.max(0, targetCost - totalDisbursed);
+                  return (
+                    <div
+                      key={ticket.id}
+                      className="p-4 rounded-2xl bg-canvas border border-charcoal-border/40 shadow-xs flex flex-col justify-between space-y-3"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="font-mono text-[10px] font-bold text-sand-800 bg-sand-200/80 px-2 py-0.5 rounded">
+                            {ticket.ticketCode}
+                          </span>
+                          <span className="text-[10px] font-bold text-terracotta">
+                            {ticket.district}
+                          </span>
+                        </div>
+                        <h4 className="text-xs font-bold text-charcoal line-clamp-1">{ticket.title}</h4>
+                        <p className="text-[11px] text-charcoal-muted mt-0.5">
+                          Assigned: <strong>{ticket.assignedHei?.name || 'HEI Team'}</strong>
+                        </p>
+                        <p className="text-[11px] text-charcoal-muted mt-0.5">
+                          Team: {team.teamName} ({team.facultyLead})
+                        </p>
+                      </div>
+
+                      <div className="space-y-2 pt-2 border-t border-charcoal-border/20">
+                        <div className="flex justify-between text-[11px]">
+                          <span className="text-charcoal-muted">Funded: ₹{totalDisbursed.toLocaleString('en-IN')}</span>
+                          <span className="font-bold text-terracotta">Needed: ₹{remaining.toLocaleString('en-IN')}</span>
+                        </div>
+                        <div className="w-full h-2 rounded-full bg-sand-100 overflow-hidden">
+                          <div
+                            className="h-full bg-terracotta rounded-full"
+                            style={{ width: `${Math.min(100, Math.round((totalDisbursed / targetCost) * 100))}%` }}
+                          />
+                        </div>
+
+                        <div className="flex gap-2 pt-1">
+                          <button
+                            type="button"
+                            onClick={() => handlePledgeGrant(ticket, 25000, 'Tata Steel Foundation')}
+                            className="flex-1 py-1.5 rounded-lg bg-terracotta hover:bg-terracotta-600 text-white font-bold text-xs shadow-xs transition-colors cursor-pointer"
+                          >
+                            + Disburse ₹25,000
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handlePledgeGrant(ticket, remaining || 50000, 'Coal India Ltd')}
+                            className="flex-1 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs shadow-xs transition-colors cursor-pointer"
+                          >
+                            Fund Full Balance
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+
+          {/* 80G Certificate Modal */}
+          {selectedCert && (
+            <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+              <div className="bg-surface w-full max-w-xl rounded-3xl p-6 sm:p-8 border border-charcoal-border shadow-2xl space-y-6 animate-in zoom-in-95 duration-200">
+                <div className="flex items-center justify-between pb-3 border-b border-charcoal-border/30">
+                  <div className="flex items-center gap-2">
+                    <ShieldCheck className="w-5 h-5 text-emerald-700" />
+                    <h3 className="text-base font-bold text-charcoal">Official 80G Tax Exemption Certificate</h3>
+                  </div>
+                  <button
+                    onClick={() => setSelectedCert(null)}
+                    className="p-1 rounded-lg hover:bg-sand-100 text-charcoal-muted hover:text-charcoal cursor-pointer"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {/* Printable Certificate Body */}
+                <div className="p-6 rounded-2xl bg-canvas border border-sand-300 space-y-4 font-sans text-xs">
+                  <div className="text-center pb-3 border-b border-sand-300">
+                    <p className="text-[10px] font-bold text-sand-800 uppercase tracking-widest">Government of Jharkhand</p>
+                    <p className="text-sm font-black text-charcoal mt-0.5">Department of Higher & Technical Education</p>
+                    <p className="text-[10px] text-charcoal-muted mt-0.5">In accordance with Section 80G(5)(vi) of the Income Tax Act, 1961</p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3 text-[11px]">
+                    <div>
+                      <span className="text-charcoal-muted block">Certificate Number:</span>
+                      <strong className="font-mono text-terracotta">{selectedCert.certId}</strong>
+                    </div>
+                    <div>
+                      <span className="text-charcoal-muted block">Date of Issuance:</span>
+                      <strong className="text-charcoal">{selectedCert.date}</strong>
+                    </div>
+                    <div>
+                      <span className="text-charcoal-muted block">Donor / Entity:</span>
+                      <strong className="text-charcoal">{selectedCert.donor}</strong>
+                    </div>
+                    <div>
+                      <span className="text-charcoal-muted block">Donor PAN:</span>
+                      <strong className="font-mono text-charcoal">{selectedCert.pan}</strong>
+                    </div>
+                    <div>
+                      <span className="text-charcoal-muted block">Eligible Contribution Amount:</span>
+                      <strong className="text-base font-black text-emerald-800 font-mono">
+                        ₹{selectedCert.amount.toLocaleString('en-IN')}
+                      </strong>
+                    </div>
+                    <div>
+                      <span className="text-charcoal-muted block">Beneficiary Institution:</span>
+                      <strong className="text-charcoal">{selectedCert.hei}</strong>
+                    </div>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-surface border border-charcoal-border/30 text-[11px]">
+                    <span className="text-charcoal-muted block text-[10px]">Supported Project & Capstone:</span>
+                    <strong className="text-charcoal">{selectedCert.project}</strong>
+                  </div>
+
+                  <div className="font-mono text-[9px] text-emerald-900 bg-emerald-50 p-2 rounded border border-emerald-200 truncate">
+                    Ledger Immutable Hash: {selectedCert.hash}98a4421bce8201fe...
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-end gap-2 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedCert(null)}
+                    className="px-4 py-2 rounded-xl border border-charcoal-border text-xs font-bold text-charcoal hover:bg-canvas cursor-pointer"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      window.print();
+                    }}
+                    className="px-5 py-2 rounded-xl bg-terracotta hover:bg-terracotta-600 text-white text-xs font-bold flex items-center gap-1.5 shadow-xs cursor-pointer"
+                  >
+                    <Printer className="w-3.5 h-3.5" />
+                    <span>Print Official Receipt</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
         </div>
       ) : (
         /* Co-Financing Opportunities List */

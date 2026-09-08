@@ -172,3 +172,108 @@ export interface DistrictMetric {
   heis: string[];
   urgencyRate: 'Low' | 'Moderate' | 'High' | 'Severe';
 }
+
+export interface HeiDirectoryEntry {
+  id: string;
+  code: string;
+  name: string;
+  type: string;
+  district: string;
+  nirfRank?: number;
+  nirfScore: number;
+  address: string;
+  website?: string;
+  facultyLead: string;
+  facultyEmail: string;
+  facultyPhone: string;
+  activeStudentVolunteers: number;
+  activeCapstones: number;
+  resolvedProblems: number;
+  societalImpactScore: number; // 0 - 1000
+  avgResolutionDays: number;
+  nepCreditsAwarded: number;
+  assignedJurisdiction: string[];
+  crcConnections: string[];
+  state?: string;
+  totalCsrDonationsINR?: number;
+}
+
+export interface CrcDirectoryEntry {
+  id: string;
+  companyName: string;
+  brandTag: string;
+  csrDirector: string;
+  contactEmail: string;
+  contactPhone: string;
+  regionalFocus: string[];
+  totalPledgedINR: number;
+  totalDisbursedINR: number;
+  state?: string;
+  activeSchemes: Array<{
+    title: string;
+    focusTheme: TicketCategory;
+    grantPerProjectINR: number;
+    description: string;
+  }>;
+  sponsoredTicketsCount: number;
+  taxCertificates80GCount: number;
+  communitiesImpactedCount: number;
+}
+
+export interface StudentLeaderboardEntry {
+  id: string;
+  name: string;
+  rollNo: string;
+  heiName: string;
+  heiCode: string;
+  department?: string;
+  district: string;
+  state?: string;
+  avatarUrl?: string;
+  fieldHoursLogged: number;
+  resolvedTasksCount: number;
+  nepCreditsEarned: number;
+  specialization: string;
+  badge: 'GOLD' | 'SILVER' | 'BRONZE' | 'FIELD_STAR';
+  rank: number;
+}
+
+export interface ManagedUser {
+  id: string;
+  registrationId: string;
+  fullName: string;
+  phone: string;
+  email: string;
+  role: UserRole;
+  district: string;
+  block?: string;
+  panchayat?: string;
+  organization?: string;
+  department?: string;
+  designation?: string;
+  status: 'ACTIVE' | 'SUSPENDED' | 'UNDER_REVIEW';
+  joinedDate: string;
+  lastActive: string;
+  verifiedAadhaar: boolean;
+  activityMetric?: {
+    ticketsReported?: number;
+    tasksResolved?: number;
+    hoursLogged?: number;
+    fundsPledgedINR?: number;
+  };
+}
+
+export interface PublicSentimentMetric {
+  overallSentiment: 'VERY_URGENT' | 'DISTRESSED' | 'NEUTRAL' | 'SATISFIED' | 'HIGHLY_POSITIVE';
+  urgentDistressedPct: number;
+  neutralPct: number;
+  positivePraisePct: number;
+  totalSocialShares: number;
+  whatsappShares: number;
+  instagramShares: number;
+  xShares: number;
+  viralMultiplier: number;
+  trendingHashtags: string[];
+  moderationFlagsCount: number;
+}
+

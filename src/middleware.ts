@@ -10,6 +10,7 @@ const AUTH_COOKIE_NAME = 'joharsetu_token';
 // Allowed roles per portal path
 const ROLE_PERMISSIONS: Record<string, string[]> = {
   '/portal/citizen': ['CITIZEN', 'PANCHAYAT_OFFICER', 'SUPER_ADMIN'],
+  '/portal/panchayat': ['PANCHAYAT_OFFICER', 'GOVT_OFFICER', 'SUPER_ADMIN'],
   '/portal/hei': ['STUDENT', 'FACULTY_MENTOR', 'DEPT_HEAD', 'HEI_DIRECTOR', 'SUPER_ADMIN'],
   '/portal/csr': ['INDUSTRY_CSR', 'SUPER_ADMIN'],
   '/portal/admin': ['GOVT_OFFICER', 'SUPER_ADMIN'],
@@ -38,7 +39,9 @@ export async function middleware(req: NextRequest) {
           if (!allowedRoles.includes(userRole)) {
             // Redirect to user's authorized portal
             let target = '/portal/citizen';
-            if (['STUDENT', 'FACULTY_MENTOR', 'DEPT_HEAD', 'HEI_DIRECTOR'].includes(userRole)) {
+            if (userRole === 'PANCHAYAT_OFFICER') {
+              target = '/portal/panchayat';
+            } else if (['STUDENT', 'FACULTY_MENTOR', 'DEPT_HEAD', 'HEI_DIRECTOR'].includes(userRole)) {
               target = '/portal/hei';
             } else if (userRole === 'INDUSTRY_CSR') {
               target = '/portal/csr';

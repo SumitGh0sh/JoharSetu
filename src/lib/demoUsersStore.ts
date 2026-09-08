@@ -20,19 +20,66 @@ const globalForDemoUsers = globalThis as unknown as {
   demoUsersList?: DemoUser[];
 };
 
-// Default pre-seeded evaluation accounts for SIH 2026 Demo
+// Default pre-seeded evaluation accounts for SIH 2026 Demo (Password: Johar@2026 for all)
 const DEFAULT_DEMO_USERS: DemoUser[] = [
   {
     id: 'usr-citizen-01',
     fullName: 'Mangal Soren',
     phone: '9431182910',
     email: 'mangal.soren@joharsetu.in',
-    // Pre-computed or verified against Johar@2026
     passwordHash: '$2a$10$wN1G2Xw87mQxS3l6tAekve9U7bQkY9lFvE87M03jC63n0QZ2c5eO6',
     role: 'CITIZEN',
-    district: 'Khunti',
-    block: 'Torpa Block',
+    district: 'Dhanbad',
+    block: 'Baghmara Block',
     panchayat: 'Tola 4',
+    designation: 'Citizen Resident & Lead Reporter',
+  },
+  {
+    id: 'usr-student-01',
+    fullName: 'Rahul Verma',
+    phone: '9431122222',
+    email: 'student@bitmesra.ac.in',
+    passwordHash: '$2a$10$wN1G2Xw87mQxS3l6tAekve9U7bQkY9lFvE87M03jC63n0QZ2c5eO6',
+    role: 'STUDENT',
+    district: 'Ranchi',
+    organization: 'Birla Institute of Technology (BIT) Mesra',
+    designation: 'B.Tech Civil & Environmental (Roll: 22JE0451)',
+    heiId: 'hei-bit-mesra',
+  },
+  {
+    id: 'usr-panchayat-01',
+    fullName: 'B. K. Mahto',
+    phone: '9431133333',
+    email: 'panchayat@baghmara.gov.in',
+    passwordHash: '$2a$10$wN1G2Xw87mQxS3l6tAekve9U7bQkY9lFvE87M03jC63n0QZ2c5eO6',
+    role: 'PANCHAYAT_OFFICER',
+    district: 'Dhanbad',
+    block: 'Baghmara Block',
+    panchayat: 'Baghmara Gram Panchayat',
+    designation: 'Panchayat Secretary & Designated Rural Nodal Officer',
+  },
+  {
+    id: 'usr-faculty-01',
+    fullName: 'Dr. Ananya Sen',
+    phone: '9431188888',
+    email: 'faculty@bitmesra.ac.in',
+    passwordHash: '$2a$10$wN1G2Xw87mQxS3l6tAekve9U7bQkY9lFvE87M03jC63n0QZ2c5eO6',
+    role: 'FACULTY_MENTOR',
+    district: 'Ranchi',
+    organization: 'Birla Institute of Technology (BIT) Mesra',
+    designation: 'Professor & Dean of Experiential Learning Capstones',
+    heiId: 'hei-bit-mesra',
+  },
+  {
+    id: 'usr-csr-01',
+    fullName: 'Rajeev Sharma',
+    phone: '9431177777',
+    email: 'csr@tatasteel.com',
+    passwordHash: '$2a$10$wN1G2Xw87mQxS3l6tAekve9U7bQkY9lFvE87M03jC63n0QZ2c5eO6',
+    role: 'INDUSTRY_CSR',
+    district: 'East Singhbhum',
+    organization: 'Tata Steel Rural Development Society (TSRDS)',
+    designation: 'Director of Corporate Social Responsibility & Co-Financing',
   },
   {
     id: 'usr-admin-01',
@@ -42,26 +89,7 @@ const DEFAULT_DEMO_USERS: DemoUser[] = [
     passwordHash: '$2a$10$wN1G2Xw87mQxS3l6tAekve9U7bQkY9lFvE87M03jC63n0QZ2c5eO6',
     role: 'GOVT_OFFICER',
     district: 'Ranchi',
-    designation: 'State Nodal Director, Higher & Technical Education',
-  },
-  {
-    id: 'usr-faculty-01',
-    fullName: 'Prof. Alok Kumar Sinha',
-    phone: '9431188888',
-    email: 'faculty@bitmesra.ac.in',
-    passwordHash: '$2a$10$wN1G2Xw87mQxS3l6tAekve9U7bQkY9lFvE87M03jC63n0QZ2c5eO6',
-    role: 'FACULTY_MENTOR',
-    designation: 'Dean of Experiential Learning',
-  },
-  {
-    id: 'usr-csr-01',
-    fullName: 'Ananya Mukherjee',
-    phone: '9431177777',
-    email: 'csr@tatasteel.com',
-    passwordHash: '$2a$10$wN1G2Xw87mQxS3l6tAekve9U7bQkY9lFvE87M03jC63n0QZ2c5eO6',
-    role: 'INDUSTRY_CSR',
-    organization: 'Tata Steel Rural Development Society (TSRDS)',
-    designation: 'Chief of CSR Programs',
+    designation: 'State Director, Department of Higher & Technical Education',
   },
 ];
 

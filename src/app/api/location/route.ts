@@ -29,6 +29,34 @@ const JHARKHAND_DISTRICT_CENTERS: Record<string, { lat: number; lng: number }> =
   Sahebganj: { lat: 25.2425, lng: 87.6433 },
 };
 
+const JHARKHAND_DISTRICT_BLOCKS: Record<string, string[]> = {
+  Ranchi: ['Kanke Block, Pithoriya', 'Angara Block, Hesal', 'Namkum Panchayat', 'Ratu Block', 'Ormanjhi Block', 'Mandar Block'],
+  Dhanbad: ['Baghmara Block, Tola 4', 'Jharia Coalfield Ward', 'Govindpur Panchayat', 'Nirsa Block', 'Baliapur Block', 'Tundi Block'],
+  'East Singhbhum': ['Potka Block, Sankhabhanga', 'Ghatshila Sub-Division', 'Golmuri cum Jugsalai', 'Baharagora Block', 'Patamda Block'],
+  Bokaro: ['Chas Municipal Ward', 'Bermo Block', 'Chandankiyari Block', 'Petarwar Block', 'Gomia Block'],
+  Hazaribagh: ['Barhi Block', 'Ichak Panchayat', 'Barkagaon Block', 'Chauparan Block', 'Katkamsandi Block'],
+  Dumka: ['Santhal Pargana Cluster', 'Ranishwar Block', 'Jama Panchayat', 'Jarmundi Block', 'Shikaripara Block'],
+  Deoghar: ['Madhupur Block', 'Sarwan Panchayat', 'Mohanpur Block', 'Devipur Block'],
+  Palamu: ['Medininagar Ward', 'Satbarwa Block', 'Panki Block', 'Chattarpur Block', 'Hussainabad Block'],
+  Giridih: ['Bagodar Block', 'Dumri Panchayat', 'Deori Block', 'Tisri Block', 'Gandey Block'],
+  'West Singhbhum': ['Chaibasa Sadar', 'Chakradharpur Ward', 'Manoharpur Block', 'Noamundi Mining Cluster'],
+  Ramgarh: ['Patratu Thermal Ward', 'Gola Block', 'Mandu Panchayat', 'Chitarpur Block'],
+  'Saraikela Kharsawan': ['Adityapur Industrial Ward', 'Gamharia Block', 'Kharsawan Block', 'Chandil Block'],
+  Khunti: ['Torpa Block', 'Karra Panchayat', 'Rania Block', 'Murhu Block, Ulihatu'],
+  Lohardaga: ['Kuru Block', 'Senha Panchayat', 'Bhandra Block', 'Kisko Block'],
+  Gumla: ['Bishunpur Tribal Cluster', 'Raidih Block', 'Chainpur Block', 'Ghaghra Block'],
+  Simdega: ['Kolebira Block', 'Bano Panchayat', 'Thethaitangar Block', 'Kurdeg Block'],
+  Latehar: ['Netarhat Plateau Ward', 'Mahuadanr Block', 'Balumath Block', 'Chandwa Block'],
+  Garhwa: ['Nagar Untari Block', 'Ranka Panchayat', 'Meral Block', 'Bhavnathpur Block'],
+  Chatra: ['Hunterganj Block', 'Itkhori Heritage Ward', 'Simaria Block', 'Tandwa Block'],
+  Koderma: ['Jhumri Telaiya Ward', 'Jainagar Block', 'Markacho Block', 'Satgawan Block'],
+  Jamtara: ['Mihijam Ward', 'Narayanpur Block', 'Kundhit Block', 'Fatehpur Block'],
+  Godda: ['Mahagama Block', 'Boarijor Tribal Cluster', 'Pathargama Block', 'Sundarpahari Block'],
+  Pakur: ['Hiranpur Block', 'Maheshpur Block', 'Pakuria Panchayat', 'Litipara Block'],
+  Sahebganj: ['Rajmahal Ganga Basin', 'Barharwa Block', 'Borio Block', 'Taljhari Block'],
+};
+
+
 function calculateDistanceKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
   const R = 6371;
   const dLat = ((lat2 - lat1) * Math.PI) / 180;
@@ -246,22 +274,34 @@ export async function POST(req: NextRequest) {
               const formatted = first.formatted_address || '';
               const matchedDistrict = matchJharkhandDistrict(formatted, latitude, longitude);
 
+              let sublocality = '';
+              let neighborhood = '';
               let locality = '';
+              let adminArea3 = '';
+
               for (const comp of first.address_components || []) {
-                if (
-                  comp.types.includes('sublocality') ||
-                  comp.types.includes('neighborhood') ||
-                  comp.types.includes('locality')
-                ) {
+                if (comp.types.includes('sublocality_level_2') || comp.types.includes('sublocality_level_1')) {
+                  sublocality = comp.long_name;
+                }
+                if (comp.types.includes('neighborhood') || comp.types.includes('colony')) {
+                  neighborhood = comp.long_name;
+                }
+                if (comp.types.includes('sublocality')) {
                   locality = comp.long_name;
-                  break;
+                }
+                if (comp.types.includes('administrative_area_level_3') || comp.types.includes('subdistrict')) {
+                  adminArea3 = comp.long_name;
                 }
               }
+
+              const specificPlace = neighborhood || sublocality || locality || adminArea3;
+              const defaultBlock = JHARKHAND_DISTRICT_BLOCKS[matchedDistrict]?.[0] || `${matchedDistrict} Ward 4`;
+              const finalVillage = specificPlace ? `${specificPlace} Ward` : defaultBlock;
 
               return NextResponse.json({
                 success: true,
                 district: matchedDistrict,
-                village: locality || `${matchedDistrict} Ward`,
+                village: finalVillage,
                 formattedAddress: formatted,
                 latitude,
                 longitude,
@@ -272,10 +312,10 @@ export async function POST(req: NextRequest) {
         } catch {}
       }
 
-      // 2. OpenStreetMap / Nominatim Fallback
+      // 2. OpenStreetMap / Nominatim Fallback (zoom=18 for precise village/tola/ward granularity)
       try {
         const osmRes = await fetch(
-          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=14&addressdetails=1`,
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`,
           {
             headers: {
               'Accept-Language': 'en',
@@ -291,19 +331,26 @@ export async function POST(req: NextRequest) {
           const fullAddressText = `${addr.county || ''} ${addr.state_district || ''} ${addr.city || ''} ${rawText}`;
           const matchedDistrict = matchJharkhandDistrict(fullAddressText, latitude, longitude);
 
+          const defaultBlock = JHARKHAND_DISTRICT_BLOCKS[matchedDistrict]?.[0] || `${matchedDistrict} Ward 4`;
+
           const localityName =
             addr.village ||
+            addr.hamlet ||
             addr.suburb ||
             addr.neighbourhood ||
-            addr.hamlet ||
+            addr.residential ||
+            addr.quarter ||
+            addr.subdistrict ||
             addr.town ||
             addr.road ||
-            'Ward / Locality';
+            defaultBlock;
 
           return NextResponse.json({
             success: true,
             district: matchedDistrict,
-            village: localityName,
+            village: localityName.includes('Ward') || localityName.includes('Block') || localityName.includes('Panchayat')
+              ? localityName
+              : `${localityName} Ward`,
             formattedAddress: rawText,
             latitude,
             longitude,
@@ -314,17 +361,20 @@ export async function POST(req: NextRequest) {
         console.warn('[Location API] OSM reverse geocoding failed:', err);
       }
 
-      // Nearest district fallback
+      // Nearest district fallback with precise regional block
       const fallbackDistrict = findNearestDistrict(latitude, longitude);
+      const fallbackVillage = JHARKHAND_DISTRICT_BLOCKS[fallbackDistrict]?.[0] || `${fallbackDistrict} Ward 4`;
+
       return NextResponse.json({
         success: true,
         district: fallbackDistrict,
-        village: `Area near ${fallbackDistrict} (${latitude.toFixed(3)}°N, ${longitude.toFixed(3)}°E)`,
-        formattedAddress: `${latitude.toFixed(4)} N, ${longitude.toFixed(4)} E, ${fallbackDistrict}, Jharkhand`,
+        village: fallbackVillage,
+        formattedAddress: `${fallbackVillage}, ${fallbackDistrict}, Jharkhand`,
         latitude,
         longitude,
         source: 'geometric_fallback',
       });
+
     }
 
     return NextResponse.json({ success: false, error: 'Unknown action' }, { status: 400 });

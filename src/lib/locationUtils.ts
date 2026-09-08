@@ -62,8 +62,39 @@ export const JHARKHAND_DISTRICT_CENTERS: Record<string, { lat: number; lng: numb
   Jamtara: { lat: 23.9599, lng: 86.8021 },
   Godda: { lat: 24.8267, lng: 87.2132 },
   Pakur: { lat: 24.6340, lng: 87.8492 },
-  Sahebganj: { lat: 25.2425, lng: 87.6433 },
 };
+
+export const JHARKHAND_DISTRICT_BLOCKS: Record<string, string[]> = {
+  Ranchi: ['Kanke Block, Pithoriya', 'Angara Block, Hesal', 'Namkum Panchayat', 'Ratu Block', 'Ormanjhi Block', 'Mandar Block'],
+  Dhanbad: ['Baghmara Block, Tola 4', 'Jharia Coalfield Ward', 'Govindpur Panchayat', 'Nirsa Block', 'Baliapur Block', 'Tundi Block'],
+  'East Singhbhum': ['Potka Block, Sankhabhanga', 'Ghatshila Sub-Division', 'Golmuri cum Jugsalai', 'Baharagora Block', 'Patamda Block'],
+  Bokaro: ['Chas Municipal Ward', 'Bermo Block', 'Chandankiyari Block', 'Petarwar Block', 'Gomia Block'],
+  Hazaribagh: ['Barhi Block', 'Ichak Panchayat', 'Barkagaon Block', 'Chauparan Block', 'Katkamsandi Block'],
+  Dumka: ['Santhal Pargana Cluster', 'Ranishwar Block', 'Jama Panchayat', 'Jarmundi Block', 'Shikaripara Block'],
+  Deoghar: ['Madhupur Block', 'Sarwan Panchayat', 'Mohanpur Block', 'Devipur Block'],
+  Palamu: ['Medininagar Ward', 'Satbarwa Block', 'Panki Block', 'Chattarpur Block', 'Hussainabad Block'],
+  Giridih: ['Bagodar Block', 'Dumri Panchayat', 'Deori Block', 'Tisri Block', 'Gandey Block'],
+  'West Singhbhum': ['Chaibasa Sadar', 'Chakradharpur Ward', 'Manoharpur Block', 'Noamundi Mining Cluster'],
+  Ramgarh: ['Patratu Thermal Ward', 'Gola Block', 'Mandu Panchayat', 'Chitarpur Block'],
+  'Saraikela Kharsawan': ['Adityapur Industrial Ward', 'Gamharia Block', 'Kharsawan Block', 'Chandil Block'],
+  Khunti: ['Torpa Block', 'Karra Panchayat', 'Rania Block', 'Murhu Block, Ulihatu'],
+  Lohardaga: ['Kuru Block', 'Senha Panchayat', 'Bhandra Block', 'Kisko Block'],
+  Gumla: ['Bishunpur Tribal Cluster', 'Raidih Block', 'Chainpur Block', 'Ghaghra Block'],
+  Simdega: ['Kolebira Block', 'Bano Panchayat', 'Thethaitangar Block', 'Kurdeg Block'],
+  Latehar: ['Netarhat Plateau Ward', 'Mahuadanr Block', 'Balumath Block', 'Chandwa Block'],
+  Garhwa: ['Nagar Untari Block', 'Ranka Panchayat', 'Meral Block', 'Bhavnathpur Block'],
+  Chatra: ['Hunterganj Block', 'Itkhori Heritage Ward', 'Simaria Block', 'Tandwa Block'],
+  Koderma: ['Jhumri Telaiya Ward', 'Jainagar Block', 'Markacho Block', 'Satgawan Block'],
+  Jamtara: ['Mihijam Ward', 'Narayanpur Block', 'Kundhit Block', 'Fatehpur Block'],
+  Godda: ['Mahagama Block', 'Boarijor Tribal Cluster', 'Pathargama Block', 'Sundarpahari Block'],
+  Pakur: ['Hiranpur Block', 'Maheshpur Block', 'Pakuria Panchayat', 'Litipara Block'],
+  Sahebganj: ['Rajmahal Ganga Basin', 'Barharwa Block', 'Borio Block', 'Taljhari Block'],
+};
+
+export function getDefaultVillageForDistrict(district: string): string {
+  return JHARKHAND_DISTRICT_BLOCKS[district]?.[0] || `${district} Ward 4`;
+}
+
 
 /**
  * Checks whether coordinates fall roughly inside the geopolitical bounds of Jharkhand
@@ -223,14 +254,16 @@ export async function reverseGeocodeCoordinates(
 
   // Local fallback calculation if offline or API route unavailable
   const nearest = findNearestJharkhandDistrict(lat, lng);
+  const fallbackVillage = getDefaultVillageForDistrict(nearest);
   return {
     district: nearest,
-    village: `Panchayat at ${lat.toFixed(3)}°N, ${lng.toFixed(3)}°E`,
-    formattedAddress: `${lat.toFixed(4)} N, ${lng.toFixed(4)} E, ${nearest}, Jharkhand`,
+    village: fallbackVillage,
+    formattedAddress: `${fallbackVillage}, ${nearest}, Jharkhand`,
     latitude: lat,
     longitude: lng,
     source: 'local_fallback',
   };
+
 }
 
 /**

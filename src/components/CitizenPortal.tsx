@@ -36,13 +36,16 @@ import {
   JHARKHAND_DISTRICT_CENTERS,
   reverseGeocodeCoordinates,
   acquireBrowserPosition,
-  fetchIpLocation
+  fetchIpLocation,
+  getDefaultVillageForDistrict
 } from '../lib/locationUtils';
 import IssuePhotoThumbnail from './IssuePhotoThumbnail';
 import CampaignBannerCarousel from './CampaignBannerCarousel';
 import { generateIssueImagePrompt, StructuredImagePrompt, CATEGORY_PRESET_IMAGES } from '../lib/issueImagePromptEngine';
 import { findOptimalHeiForTicket } from '../lib/heiRegistry';
 import SocialCivicCard from './SocialCivicCard';
+import ProblemInspectorModal from './ProblemInspectorModal';
+import SocialShareModal from './SocialShareModal';
 import { sortTickets } from '../lib/rankingEngine';
 import { API_ENDPOINTS } from '../lib/apiConfig';
 
@@ -84,6 +87,8 @@ export default function CitizenPortal({
   const [longitude, setLongitude] = useState(86.4412);
   const [isLocating, setIsLocating] = useState(false);
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
+  const [inspectingTicket, setInspectingTicket] = useState<ProblemTicket | null>(null);
+  const [sharingTicket, setSharingTicket] = useState<ProblemTicket | null>(null);
   const [locationStatus, setLocationStatus] = useState<{
     type: 'success' | 'warning' | 'info';
     message: string;
@@ -634,6 +639,14 @@ export default function CitizenPortal({
     // Reset form
     setTitle('');
     setDescription('');
+    // Clear filters so new ticket is instantly visible on public feed
+    setSelectedCategoryFilter('ALL');
+    setSearchQuery('');
+
+    // Broadcast instant public feed event
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('joharsetu_ticket_submitted', { detail: newTicket }));
+    }
   };
 
   const filteredTickets = tickets.filter((tkt) => {
@@ -1040,6 +1053,7 @@ export default function CitizenPortal({
                   onChange={(e) => {
                     const newDist = e.target.value;
                     setDistrict(newDist);
+                    setVillage(getDefaultVillageForDistrict(newDist));
                     const center = JHARKHAND_DISTRICT_CENTERS[newDist];
                     if (center) {
                       setLatitude(center.lat);
@@ -1374,6 +1388,8 @@ export default function CitizenPortal({
                 onUpvote={onUpvoteTicket}
                 onAddComment={onAddComment}
                 onDonate={onDonateCampaign}
+                onInspect={(t) => setInspectingTicket(t)}
+                onShare={(t) => setSharingTicket(t)}
               />
             ))}
           </div>
@@ -1398,6 +1414,23 @@ export default function CitizenPortal({
               message: `Location set from map: ${loc.village}, ${loc.district}`,
             });
           }}
+        />
+      )}
+
+      {inspectingTicket && (
+        <ProblemInspectorModal
+          isOpen={!!inspectingTicket}
+          onClose={() => setInspectingTicket(null)}
+          ticket={inspectingTicket}
+          userRole={userRole}
+        />
+      )}
+
+      {sharingTicket && (
+        <SocialShareModal
+          isOpen={!!sharingTicket}
+          onClose={() => setSharingTicket(null)}
+          ticket={sharingTicket}
         />
       )}
     </div>

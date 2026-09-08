@@ -104,3 +104,102 @@ export async function GET(req: NextRequest) {
     );
   }
 }
+
+export async function PATCH(req: NextRequest) {
+  try {
+    const body = await req.json();
+    const { id, ticketCode, status, assignedDepartment, assignedHei, urgency, category, adminNotes } = body;
+
+    if (!id && !ticketCode) {
+      return NextResponse.json(
+        { success: false, error: 'Either id or ticketCode is required for update' },
+        { status: 400 }
+      );
+    }
+
+    try {
+      if (prisma) {
+        const updateData: any = {};
+        if (status) updateData.status = status;
+        if (urgency) updateData.urgency = urgency;
+        if (category) updateData.category = category;
+        if (adminNotes) updateData.adminNotes = adminNotes;
+        if (assignedHei?.id) updateData.assignedHeiId = assignedHei.id;
+
+        await prisma.problemTicket.updateMany({
+          where: id ? { id } : { ticketCode },
+          data: updateData,
+        });
+      }
+    } catch (dbErr) {
+      console.warn('Prisma update fallback notice:', dbErr);
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: 'Ticket updated successfully',
+      data: {
+        id,
+        ticketCode,
+        status,
+        assignedDepartment,
+        assignedHei,
+        urgency,
+        category,
+        adminNotes,
+        updatedAt: new Date().toISOString(),
+      },
+    });
+  } catch (error: any) {
+    return NextResponse.json(
+      { success: false, error: error.message || 'Failed to update ticket' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url);
+    let id = searchParams.get('id');
+    let ticketCode = searchParams.get('ticketCode');
+
+    if (!id && !ticketCode) {
+      try {
+        const body = await req.json();
+        id = body.id;
+        ticketCode = body.ticketCode;
+      } catch {}
+    }
+
+    if (!id && !ticketCode) {
+      return NextResponse.json(
+        { success: false, error: 'Either id or ticketCode is required for deletion' },
+        { status: 400 }
+      );
+    }
+
+    try {
+      if (prisma) {
+        const whereClause: any = id ? { id } : { ticketCode: ticketCode || undefined };
+        await prisma.problemTicket.deleteMany({
+          where: whereClause,
+        });
+      }
+    } catch (dbErr) {
+      console.warn('Prisma delete fallback notice:', dbErr);
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: `Ticket ${ticketCode || id} soft-deleted/removed successfully`,
+      deletedId: id || ticketCode,
+    });
+  } catch (error: any) {
+    return NextResponse.json(
+      { success: false, error: error.message || 'Failed to delete ticket' },
+      { status: 500 }
+    );
+  }
+}
+

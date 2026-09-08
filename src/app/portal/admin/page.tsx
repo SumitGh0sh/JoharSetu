@@ -7,10 +7,12 @@ import GovtAdminPortal from '@/components/GovtAdminPortal';
 export default function GovtAdminPortalPage() {
   return (
     <PortalLayout>
-      {({ tickets, auditChain }) => (
+      {({ tickets, auditChain, onUpdateTicket, onDeleteTicket }) => (
         <GovtAdminPortal
           tickets={tickets}
           auditChain={auditChain}
+          onUpdateTicket={onUpdateTicket}
+          onDeleteTicket={onDeleteTicket}
           onOpenLedgerModal={() => {}}
         />
       )}

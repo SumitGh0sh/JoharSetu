@@ -1,11 +1,12 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Download, Wifi, WifiOff, CheckCircle2 } from 'lucide-react';
+import { Download, Wifi, WifiOff, CheckCircle2, X } from 'lucide-react';
 
 export default function PWAInstaller() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isInstallable, setIsInstallable] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(false);
   const [isOnline, setIsOnline] = useState(true);
   const [showSyncSuccess, setShowSyncSuccess] = useState(false);
 
@@ -77,16 +78,29 @@ export default function PWAInstaller() {
         </div>
       )}
 
-      {/* Install App Floating Button */}
-      {isInstallable && (
-        <div className="fixed bottom-20 right-6 z-50">
-          <button
-            onClick={handleInstallClick}
-            className="flex items-center gap-2 bg-terracotta hover:bg-terracotta-600 text-white font-medium px-4 py-2.5 rounded-full shadow-floating transition-transform hover:scale-105 cursor-pointer"
-          >
-            <Download className="w-4 h-4 shrink-0" />
-            <span className="text-sm font-bold">Add App to Phone</span>
-          </button>
+      {/* Install App Floating Button - Repositioned to bottom-left to prevent overlap with Sahayak AI */}
+      {isInstallable && !isDismissed && (
+        <div className="fixed bottom-20 md:bottom-6 left-3 sm:left-6 z-40 animate-fade-in">
+          <div className="flex items-center gap-2 bg-charcoal/95 backdrop-blur-md text-white pl-3.5 pr-2 py-2 rounded-full shadow-floating border border-sand-400/30">
+            <button
+              type="button"
+              onClick={handleInstallClick}
+              className="flex items-center gap-2 text-xs sm:text-sm font-bold hover:text-sand-200 transition-colors cursor-pointer"
+            >
+              <span className="w-6 h-6 rounded-full bg-terracotta flex items-center justify-center text-white shrink-0 shadow-xs">
+                <Download className="w-3.5 h-3.5 animate-bounce" />
+              </span>
+              <span>Install JoharSetu App</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsDismissed(true)}
+              className="p-1 rounded-full text-sand-300/70 hover:text-white hover:bg-white/10 transition-colors ml-1 cursor-pointer"
+              aria-label="Dismiss"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
       )}
     </>

@@ -5,22 +5,28 @@ import Navbar from './Navbar';
 import PWAInstaller from './PWAInstaller';
 import AuditLedgerModal from './AuditLedgerModal';
 import NepCertificateModal from './NepCertificateModal';
+import ProblemInspectorModal from './ProblemInspectorModal';
+import SocialShareModal from './SocialShareModal';
 import { ProblemTicket, AuditBlock } from '../lib/types';
 import { INITIAL_TICKETS, INITIAL_LEDGER_BLOCKS } from '../lib/mockData';
 import { useLanguage } from '../context/LanguageContext';
 import { LanguageCode } from '../lib/translations';
 import SahayakChatbot from './SahayakChatbot';
+import MobileBottomNav from './MobileBottomNav';
 
 interface PortalLayoutProps {
   children: (props: {
     tickets: ProblemTicket[];
     onNewTicket: (ticket: ProblemTicket) => void;
     onUpdateTicket: (ticket: ProblemTicket) => void;
+    onDeleteTicket?: (ticketId: string) => void;
     onUpvoteTicket: (ticketId: string) => void;
     onAddComment: (ticketId: string, commentText: string, authorName: string, authorRole: string) => void;
     onDonateCampaign: (ticketId: string, amount: number, donorName: string, isCorporate: boolean, isAnonymous: boolean) => void;
     onOpenCertificate: (ticket: ProblemTicket) => void;
     onRecordLedgerEvent: (ticketId: string, action: string, data: any) => void;
+    onInspectTicket?: (ticket: ProblemTicket) => void;
+    onShareTicket?: (ticket: ProblemTicket) => void;
     auditChain: AuditBlock[];
     language: string;
   }) => React.ReactNode;
@@ -34,6 +40,8 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
 
   const [isLedgerOpen, setIsLedgerOpen] = useState(false);
   const [certificateTicket, setCertificateTicket] = useState<ProblemTicket | null>(null);
+  const [inspectingTicket, setInspectingTicket] = useState<ProblemTicket | null>(null);
+  const [sharingTicket, setSharingTicket] = useState<ProblemTicket | null>(null);
 
   // Sync with localStorage & live Supabase PostgreSQL via /api/tickets
   useEffect(() => {
@@ -83,6 +91,19 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
     };
 
     fetchLiveTickets();
+
+    const handleTicketSubmitted = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      if (customEvent.detail) {
+        handleNewTicket(customEvent.detail);
+      }
+      fetchLiveTickets();
+    };
+
+    window.addEventListener('joharsetu_ticket_submitted', handleTicketSubmitted);
+    return () => {
+      window.removeEventListener('joharsetu_ticket_submitted', handleTicketSubmitted);
+    };
   }, []);
 
   const handleNewTicket = (ticket: ProblemTicket) => {
@@ -122,6 +143,16 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
   const handleUpdateTicket = (updatedTicket: ProblemTicket) => {
     setTickets((prev) => {
       const next = prev.map((t) => (t.id === updatedTicket.id ? updatedTicket : t));
+      try {
+        localStorage.setItem('joharsetu_live_tickets', JSON.stringify(next));
+      } catch {}
+      return next;
+    });
+  };
+
+  const handleDeleteTicket = (ticketId: string) => {
+    setTickets((prev) => {
+      const next = prev.filter((t) => t.id !== ticketId && t.ticketCode !== ticketId);
       try {
         localStorage.setItem('joharsetu_live_tickets', JSON.stringify(next));
       } catch {}
@@ -275,16 +306,19 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
         setLanguage={setLanguage}
       />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-8 pb-24 md:pb-12">
         {children({
           tickets,
           onNewTicket: handleNewTicket,
           onUpdateTicket: handleUpdateTicket,
+          onDeleteTicket: handleDeleteTicket,
           onUpvoteTicket: handleUpvoteTicket,
           onAddComment: handleAddComment,
           onDonateCampaign: handleDonateCampaign,
           onOpenCertificate: (ticket) => setCertificateTicket(ticket),
           onRecordLedgerEvent: handleRecordLedgerEvent,
+          onInspectTicket: (ticket) => setInspectingTicket(ticket),
+          onShareTicket: (ticket) => setSharingTicket(ticket),
           auditChain,
           language,
         })}
@@ -308,8 +342,27 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
         />
       )}
 
+      {inspectingTicket && (
+        <ProblemInspectorModal
+          isOpen={!!inspectingTicket}
+          onClose={() => setInspectingTicket(null)}
+          ticket={inspectingTicket}
+        />
+      )}
+
+      {sharingTicket && (
+        <SocialShareModal
+          isOpen={!!sharingTicket}
+          onClose={() => setSharingTicket(null)}
+          ticket={sharingTicket}
+        />
+      )}
+
       {/* 24/7 Sahayak AI Bilingual Chatbot (SIH26043 Groq + Upstash Redis) */}
       <SahayakChatbot onNewTicket={handleNewTicket} />
+
+      {/* Mobile-First Bottom Navigation Dock (Instagram / Reddit Style) */}
+      <MobileBottomNav />
     </div>
   );
 }

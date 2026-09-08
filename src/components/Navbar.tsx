@@ -101,17 +101,19 @@ export default function Navbar({
     };
   }, [isProfileOpen]);
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
+    setIsProfileOpen(false);
+    setCurrentUser(null);
     try {
-      setIsProfileOpen(false);
-      await fetch('/api/auth/logout', { method: 'POST' });
-      setCurrentUser(null);
-      router.push('/login');
-      router.refresh();
-    } catch {
-      router.push('/login');
-    }
+      localStorage.removeItem('joharsetu_auth_user');
+      localStorage.removeItem('joharsetu_demo_user');
+      document.cookie = 'joharsetu_auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax';
+    } catch {}
+    // Non-blocking asynchronous network logout
+    fetch('/api/auth/logout', { method: 'POST' }).catch(() => {});
+    router.push('/login');
   };
+
 
   const getInitials = (name: string) => {
     if (!name) return 'JS';
@@ -125,9 +127,12 @@ export default function Navbar({
   const getRoleBadge = (role: string) => {
     switch (role) {
       case 'CITIZEN':
-      case 'PANCHAYAT_OFFICER':
+      case 'CITIZEN':
         return { label: 'Citizen', color: 'bg-terracotta/10 text-terracotta border-terracotta/30' };
+      case 'PANCHAYAT_OFFICER':
+        return { label: 'Panchayat Officer', color: 'bg-emerald-100 text-emerald-800 border-emerald-300' };
       case 'STUDENT':
+        return { label: 'Student Volunteer', color: 'bg-indigo-50 text-indigo-700 border-indigo-200' };
       case 'FACULTY_MENTOR':
       case 'HEI_DIRECTOR':
         return { label: 'Academic HEI', color: 'bg-blue-50 text-blue-700 border-blue-200' };
@@ -144,8 +149,9 @@ export default function Navbar({
   const getPortalRouteForRole = (role: string) => {
     switch (role) {
       case 'CITIZEN':
-      case 'PANCHAYAT_OFFICER':
         return '/portal/citizen';
+      case 'PANCHAYAT_OFFICER':
+        return '/portal/panchayat';
       case 'STUDENT':
       case 'FACULTY_MENTOR':
       case 'DEPT_HEAD':
@@ -181,6 +187,33 @@ export default function Navbar({
               </p>
             </div>
           </Link>
+
+          {/* Center Navigation Links (Visible on tablets and desktop) */}
+          <nav className="hidden md:flex items-center gap-1.5 lg:gap-2">
+            <Link
+              href="/feed"
+              className="px-3.5 py-1.5 rounded-full text-xs font-bold text-charcoal hover:text-terracotta hover:bg-terracotta/10 border border-transparent hover:border-terracotta/20 transition-all flex items-center gap-1.5"
+            >
+              <span>🔥</span>
+              <span>Live Issue Feed</span>
+            </Link>
+
+            <Link
+              href="/leaderboard"
+              className="px-3.5 py-1.5 rounded-full text-xs font-bold text-charcoal hover:text-sand-800 hover:bg-sand-100 border border-transparent hover:border-sand-300 transition-all flex items-center gap-1.5"
+            >
+              <span>🏆</span>
+              <span>Impact Leaderboard</span>
+            </Link>
+
+            <Link
+              href={portalRoute}
+              className="px-3.5 py-1.5 rounded-full text-xs font-bold text-charcoal hover:text-emerald-800 hover:bg-emerald-50 border border-transparent hover:border-emerald-200 transition-all flex items-center gap-1.5"
+            >
+              <span>🏛️</span>
+              <span>My Portal</span>
+            </Link>
+          </nav>
 
           {/* Right Controls */}
           <div className="flex items-center gap-2 sm:gap-3 lg:gap-4 shrink-0">
@@ -287,6 +320,30 @@ export default function Navbar({
                     {/* Navigation Quick Links */}
                     <div className="px-3 pb-3 space-y-1">
                       <Link
+                        href="/feed"
+                        onClick={() => setIsProfileOpen(false)}
+                        className="w-full flex items-center justify-between px-3 py-2 rounded-xl bg-canvas-subtle hover:bg-sand-50 text-charcoal text-xs font-semibold transition-colors border border-charcoal-border/40 group"
+                      >
+                        <div className="flex items-center gap-2">
+                          <span>🔥</span>
+                          <span>Live Issue Feed</span>
+                        </div>
+                        <ArrowRight className="w-3.5 h-3.5 text-charcoal-muted group-hover:translate-x-0.5 transition-transform" />
+                      </Link>
+
+                      <Link
+                        href="/leaderboard"
+                        onClick={() => setIsProfileOpen(false)}
+                        className="w-full flex items-center justify-between px-3 py-2 rounded-xl bg-canvas-subtle hover:bg-sand-50 text-charcoal text-xs font-semibold transition-colors border border-charcoal-border/40 group"
+                      >
+                        <div className="flex items-center gap-2">
+                          <span>🏆</span>
+                          <span>Impact Leaderboard</span>
+                        </div>
+                        <ArrowRight className="w-3.5 h-3.5 text-charcoal-muted group-hover:translate-x-0.5 transition-transform" />
+                      </Link>
+
+                      <Link
                         href={portalRoute}
                         onClick={() => setIsProfileOpen(false)}
                         className="w-full flex items-center justify-between px-3 py-2 rounded-xl bg-canvas-subtle hover:bg-sand-50 text-charcoal text-xs font-semibold transition-colors border border-charcoal-border/40 group"
@@ -294,6 +351,18 @@ export default function Navbar({
                         <div className="flex items-center gap-2">
                           <Layers className="w-3.5 h-3.5 text-terracotta" />
                           <span>{t.myPortal}</span>
+                        </div>
+                        <ArrowRight className="w-3.5 h-3.5 text-charcoal-muted group-hover:translate-x-0.5 transition-transform" />
+                      </Link>
+
+                      <Link
+                        href="/profile"
+                        onClick={() => setIsProfileOpen(false)}
+                        className="w-full flex items-center justify-between px-3 py-2 rounded-xl bg-canvas-subtle hover:bg-sand-50 text-charcoal text-xs font-semibold transition-colors border border-charcoal-border/40 group"
+                      >
+                        <div className="flex items-center gap-2">
+                          <span>👤</span>
+                          <span>My Activity & Hub</span>
                         </div>
                         <ArrowRight className="w-3.5 h-3.5 text-charcoal-muted group-hover:translate-x-0.5 transition-transform" />
                       </Link>

@@ -57,8 +57,9 @@ export async function verifyAuthToken(token: string): Promise<UserSession | null
 export function getPortalRouteForRole(role: string): string {
   switch (role) {
     case 'CITIZEN':
-    case 'PANCHAYAT_OFFICER':
       return '/portal/citizen';
+    case 'PANCHAYAT_OFFICER':
+      return '/portal/panchayat';
     case 'STUDENT':
     case 'FACULTY_MENTOR':
     case 'DEPT_HEAD':

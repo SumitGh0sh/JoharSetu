@@ -23,7 +23,15 @@ import {
   Check,
   Flame,
   Building,
-  HeartHandshake
+  HeartHandshake,
+  BarChart3,
+  PieChart,
+  Filter,
+  MapPin,
+  TrendingUp,
+  AlertOctagon,
+  Search,
+  SlidersHorizontal
 } from 'lucide-react';
 import { ProblemTicket, Milestone, NssWorkflow } from '../lib/types';
 import { useLanguage } from '../context/LanguageContext';
@@ -45,8 +53,13 @@ export default function HeiPortal({
   onRecordLedgerEvent,
 }: HeiPortalProps) {
   const { t } = useLanguage();
-  const [activeView, setActiveView] = useState<'workspace' | 'nss' | 'map'>('workspace');
+  const [activeView, setActiveView] = useState<'workspace' | 'nss' | 'analytics' | 'map'>('workspace');
   const [selectedTicketId, setSelectedTicketId] = useState<string>(tickets[0]?.id || 'tkt-001');
+
+  // HEI Analytics Filter States
+  const [analyticsSearch, setAnalyticsSearch] = useState('');
+  const [analyticsCategory, setAnalyticsCategory] = useState<string>('ALL');
+  const [analyticsUrgency, setAnalyticsUrgency] = useState<string>('ALL');
 
   const selectedTicket = tickets.find((t) => t.id === selectedTicketId) || tickets[0];
 
@@ -401,6 +414,18 @@ export default function HeiPortal({
         >
           <GraduationCap className="w-4 h-4" />
           <span>🎓 NSS & Academic Credit Manager</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveView('analytics')}
+          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+            activeView === 'analytics'
+              ? 'bg-terracotta text-white shadow-xs'
+              : 'text-charcoal hover:text-terracotta'
+          }`}
+        >
+          <BarChart3 className="w-3.5 h-3.5" />
+          <span>📊 HEI Analytics & Regional Projects</span>
         </button>
         <button
           type="button"
@@ -808,6 +833,224 @@ export default function HeiPortal({
 
             </div>
           </div>
+        </div>
+      ) : activeView === 'analytics' ? (
+        /* Regional HEI Analytics & Split-Screen Problem Map */
+        <div className="space-y-8 animate-in fade-in duration-200">
+          {/* Strict RBAC & Institutional Authority Banner */}
+          <div className="bg-surface rounded-3xl p-6 border border-charcoal-border/50 shadow-soft">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <div className="flex flex-wrap items-center gap-2 mb-2">
+                  <span className="px-3 py-1 rounded-full bg-sand-200 text-sand-800 text-xs font-bold uppercase flex items-center gap-1.5">
+                    <Building className="w-3.5 h-3.5" />
+                    <span>Higher Education Institution Node (BIT Mesra / Jharkhand HEI Hub)</span>
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold">
+                    NEP 2020 Capstone Cell Active
+                  </span>
+                </div>
+                <h2 className="text-xl sm:text-2xl font-black text-charcoal">
+                  Regional Civic Innovation Analytics & Capstone Allocation
+                </h2>
+                <p className="text-xs text-charcoal-muted mt-1 max-w-3xl">
+                  Institutional overview of rural and urban challenges routed to university student project teams, field NSS deployment hours, and autonomous NEP credit conferral.
+                </p>
+              </div>
+
+              {/* RBAC Badge */}
+              <div className="p-3.5 rounded-2xl bg-canvas border border-charcoal-border/40 text-xs max-w-xs shrink-0">
+                <div className="flex items-center gap-1.5 font-bold text-charcoal mb-1">
+                  <ShieldCheck className="w-4 h-4 text-terracotta" />
+                  <span>Role: Faculty Guide & Student Roster</span>
+                </div>
+                <p className="text-[10px] text-charcoal-muted">
+                  Strict RBAC: Write access for milestone proof & NSS credits; permanent record deletion restricted to State Directorate.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Key Metric Tiles */}
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
+            <div className="bg-surface rounded-2xl p-4 sm:p-5 border border-charcoal-border/50 shadow-soft">
+              <span className="text-[11px] font-bold text-charcoal-muted uppercase">Assigned Challenges</span>
+              <p className="text-2xl font-black text-terracotta mt-1">{routedTickets.length}</p>
+              <p className="text-[10px] text-charcoal-muted mt-0.5">AI Routed to Institute</p>
+            </div>
+            <div className="bg-surface rounded-2xl p-4 sm:p-5 border border-charcoal-border/50 shadow-soft">
+              <span className="text-[11px] font-bold text-charcoal-muted uppercase">Active Project Teams</span>
+              <p className="text-2xl font-black text-sand-700 mt-1">{tickets.filter((t) => t.projectTeam).length}</p>
+              <p className="text-[10px] text-charcoal-muted mt-0.5">Engineering Capstones</p>
+            </div>
+            <div className="bg-surface rounded-2xl p-4 sm:p-5 border border-charcoal-border/50 shadow-soft">
+              <span className="text-[11px] font-bold text-charcoal-muted uppercase">NSS Hours Logged</span>
+              <p className="text-2xl font-black text-emerald-700 mt-1">
+                {tickets.reduce((acc, t) => acc + (t.nssWorkflow?.loggedFieldHours || 0), 0)} hrs
+              </p>
+              <p className="text-[10px] text-charcoal-muted mt-0.5">Community Field Labor</p>
+            </div>
+            <div className="bg-surface rounded-2xl p-4 sm:p-5 border border-charcoal-border/50 shadow-soft">
+              <span className="text-[11px] font-bold text-charcoal-muted uppercase">NEP Credits Awarded</span>
+              <p className="text-2xl font-black text-blue-700 mt-1">
+                {tickets.filter((t) => t.nssWorkflow?.status === 'CREDITS_AWARDED').length * 4} Credits
+              </p>
+              <p className="text-[10px] text-charcoal-muted mt-0.5">UGC Transcript Verified</p>
+            </div>
+            <div className="bg-surface rounded-2xl p-4 sm:p-5 border border-charcoal-border/50 shadow-soft">
+              <span className="text-[11px] font-bold text-charcoal-muted uppercase">Resolution Rate</span>
+              <p className="text-2xl font-black text-charcoal mt-1">
+                {Math.round((tickets.filter((t) => t.status === 'RESOLVED').length / Math.max(1, routedTickets.length)) * 100)}%
+              </p>
+              <p className="text-[10px] text-charcoal-muted mt-0.5">Physical Prototypes Tested</p>
+            </div>
+          </div>
+
+          {/* Split-Screen: Left Regional Problem Explorer, Right GIS Map */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            {/* Left 6-cols: Regional Problem List with Filters */}
+            <div className="lg:col-span-6 bg-surface rounded-3xl p-5 border border-charcoal-border/50 shadow-card flex flex-col justify-between space-y-4">
+              <div>
+                <div className="flex items-center justify-between pb-3 border-b border-charcoal-border/30">
+                  <h3 className="text-sm font-bold text-charcoal flex items-center gap-2">
+                    <SlidersHorizontal className="w-4 h-4 text-terracotta" />
+                    <span>Institutional Problem Queue</span>
+                  </h3>
+                  <span className="text-xs font-bold text-charcoal-muted">
+                    {tickets.filter((t) => {
+                      const q = analyticsSearch.toLowerCase().trim();
+                      const matchesSearch = !q || t.title.toLowerCase().includes(q) || t.district.toLowerCase().includes(q) || (t.village || '').toLowerCase().includes(q);
+                      const matchesCat = analyticsCategory === 'ALL' || t.category === analyticsCategory;
+                      const matchesUrg = analyticsUrgency === 'ALL' || t.urgency === analyticsUrgency;
+                      return matchesSearch && matchesCat && matchesUrg;
+                    }).length} Problem(s)
+                  </span>
+                </div>
+
+                {/* Filter Controls */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-3">
+                  <div className="relative">
+                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-charcoal-muted" />
+                    <input
+                      type="text"
+                      value={analyticsSearch}
+                      onChange={(e) => setAnalyticsSearch(e.target.value)}
+                      placeholder="Search title, village..."
+                      className="w-full pl-8 pr-2 py-1.5 rounded-xl border border-charcoal-border text-xs bg-canvas outline-none focus:border-terracotta"
+                    />
+                  </div>
+
+                  <select
+                    value={analyticsCategory}
+                    onChange={(e) => setAnalyticsCategory(e.target.value)}
+                    className="px-2 py-1.5 rounded-xl border border-charcoal-border text-xs bg-canvas outline-none focus:border-terracotta"
+                  >
+                    <option value="ALL">All Categories</option>
+                    <option value="WATER_MANAGEMENT">Water</option>
+                    <option value="ROAD_INFRASTRUCTURE">Roads</option>
+                    <option value="RURAL_ELECTRIFICATION_SOLAR">Solar</option>
+                    <option value="SUSTAINABLE_AGRICULTURE">Agriculture</option>
+                    <option value="HEALTHCARE_DELIVERY">Healthcare</option>
+                    <option value="SANITATION_WASTE">Sanitation</option>
+                  </select>
+
+                  <select
+                    value={analyticsUrgency}
+                    onChange={(e) => setAnalyticsUrgency(e.target.value)}
+                    className="px-2 py-1.5 rounded-xl border border-charcoal-border text-xs bg-canvas outline-none focus:border-terracotta"
+                  >
+                    <option value="ALL">All Urgencies</option>
+                    <option value="CRITICAL">Critical</option>
+                    <option value="HIGH">High</option>
+                    <option value="MEDIUM">Medium</option>
+                    <option value="LOW">Low</option>
+                  </select>
+                </div>
+
+                {/* Problem Cards List */}
+                <div className="space-y-2.5 mt-4 max-h-[460px] overflow-y-auto pr-1">
+                  {tickets
+                    .filter((t) => {
+                      const q = analyticsSearch.toLowerCase().trim();
+                      const matchesSearch = !q || t.title.toLowerCase().includes(q) || t.district.toLowerCase().includes(q) || (t.village || '').toLowerCase().includes(q);
+                      const matchesCat = analyticsCategory === 'ALL' || t.category === analyticsCategory;
+                      const matchesUrg = analyticsUrgency === 'ALL' || t.urgency === analyticsUrgency;
+                      return matchesSearch && matchesCat && matchesUrg;
+                    })
+                    .map((t) => (
+                      <div
+                        key={t.id}
+                        onClick={() => {
+                          setSelectedTicketId(t.id);
+                          setActiveView('workspace');
+                        }}
+                        className={`p-3.5 rounded-2xl border transition-all cursor-pointer text-left space-y-2 ${
+                          selectedTicketId === t.id
+                            ? 'border-terracotta bg-terracotta-50/40 shadow-xs'
+                            : 'border-charcoal-border/50 bg-canvas hover:border-terracotta/60'
+                        }`}
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <div>
+                            <span className="font-mono text-[10px] font-bold text-sand-800 bg-sand-200/80 px-2 py-0.5 rounded">
+                              {t.ticketCode}
+                            </span>
+                            <h4 className="text-xs font-bold text-charcoal mt-1 line-clamp-1">{t.title}</h4>
+                          </div>
+                          <span
+                            className={`text-[9px] font-bold px-2 py-0.5 rounded-full shrink-0 ${
+                              t.urgency === 'CRITICAL'
+                                ? 'bg-red-100 text-red-800'
+                                : t.urgency === 'HIGH'
+                                ? 'bg-amber-100 text-amber-800'
+                                : 'bg-emerald-100 text-emerald-800'
+                            }`}
+                          >
+                            {t.urgency}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center justify-between text-[11px] text-charcoal-muted pt-1">
+                          <span className="flex items-center gap-1">
+                            <MapPin className="w-3 h-3 text-terracotta shrink-0" />
+                            <span className="truncate">{t.village || 'Gram Panchayat'}, {t.district}</span>
+                          </span>
+                          <span className="font-semibold text-terracotta text-[10px]">
+                            {t.projectTeam ? `Team: ${t.projectTeam.teamName}` : 'Needs Team'}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+
+              <p className="text-[11px] text-charcoal-muted pt-2 border-t border-charcoal-border/30">
+                Click any challenge card to open its Capstone Workspace, log NSS volunteer hours, or upload milestone evidence.
+              </p>
+            </div>
+
+            {/* Right 6-cols: GIS Problem Map */}
+            <div className="lg:col-span-6 bg-surface rounded-3xl p-2 border border-charcoal-border/50 shadow-card overflow-hidden">
+              <AgencyMapView
+                tickets={tickets.filter((t) => {
+                  const q = analyticsSearch.toLowerCase().trim();
+                  const matchesSearch = !q || t.title.toLowerCase().includes(q) || t.district.toLowerCase().includes(q) || (t.village || '').toLowerCase().includes(q);
+                  const matchesCat = analyticsCategory === 'ALL' || t.category === analyticsCategory;
+                  const matchesUrg = analyticsUrgency === 'ALL' || t.urgency === analyticsUrgency;
+                  return matchesSearch && matchesCat && matchesUrg;
+                })}
+                onSelectTicket={(t) => {
+                  setSelectedTicketId(t.id);
+                  setActiveView('workspace');
+                }}
+                title="Regional HEI Incident Map"
+                subtitle="Live geo-locations of challenges in university catchment area."
+              />
+            </div>
+
+          </div>
+
         </div>
       ) : (
         /* Main 2-Column Academic Workspace */

@@ -40,7 +40,8 @@ import {
   JHARKHAND_DISTRICT_CENTERS,
   acquireBrowserPosition,
   reverseGeocodeCoordinates,
-  fetchIpLocation
+  fetchIpLocation,
+  getDefaultVillageForDistrict
 } from '../lib/locationUtils';
 import { findOptimalHeiForTicket } from '../lib/heiRegistry';
 import { API_ENDPOINTS } from '../lib/apiConfig';
@@ -591,6 +592,7 @@ export default function SahayakChatbot({ onNewTicket }: SahayakChatbotProps) {
 
   const handleSelectFilingDistrict = (dist: string) => {
     setFilingDistrict(dist);
+    setFilingVillage(getDefaultVillageForDistrict(dist));
     const center = JHARKHAND_DISTRICT_CENTERS[dist];
     if (center && !isGpsAutoAcquired) {
       setFilingLat(center.lat);
@@ -684,6 +686,11 @@ export default function SahayakChatbot({ onNewTicket }: SahayakChatbotProps) {
     // 2. Notify JoharSetu global state & save to localStorage
     if (onNewTicket) {
       onNewTicket(newTicket);
+    }
+
+    // Broadcast instant public feed event
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('joharsetu_ticket_submitted', { detail: newTicket }));
     }
 
     // 3. Post to friend backend if alive
@@ -832,7 +839,7 @@ export default function SahayakChatbot({ onNewTicket }: SahayakChatbotProps) {
   };
 
   return (
-    <div className="fixed bottom-5 right-4 sm:right-6 z-50 font-sans">
+    <div className="fixed bottom-20 md:bottom-6 right-3 sm:right-6 z-50 font-sans">
       {/* Floating Trigger Button */}
       {!isOpen && (
         <button

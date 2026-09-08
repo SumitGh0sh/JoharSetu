@@ -178,60 +178,88 @@ function LoginForm() {
               <Sparkles className="w-3.5 h-3.5 text-terracotta" />
               <span>Evaluation Quick-Select (Judge Demo)</span>
             </div>
-            <div className="grid grid-cols-2 gap-2 text-xs">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
               <button
                 type="button"
                 onClick={() => handleQuickFill('Citizen', '9431182910', 'Johar@2026')}
-                className="p-2.5 rounded-xl border border-charcoal-border hover:border-terracotta bg-canvas/60 hover:bg-terracotta-50 text-left transition-colors flex items-center gap-2"
+                className="p-2.5 rounded-xl border border-charcoal-border hover:border-terracotta bg-canvas/60 hover:bg-terracotta-50 text-left transition-colors flex items-center gap-2 cursor-pointer"
               >
-                <div className="w-6 h-6 rounded-lg bg-terracotta/10 text-terracotta flex items-center justify-center font-bold text-xs">
+                <div className="w-6 h-6 rounded-lg bg-terracotta/10 text-terracotta flex items-center justify-center font-bold text-xs shrink-0">
                   🏡
                 </div>
-                <div>
-                  <div className="font-bold text-charcoal">Citizen</div>
-                  <div className="text-[10px] text-charcoal-muted">Village Khunti</div>
+                <div className="min-w-0">
+                  <div className="font-bold text-charcoal truncate">Citizen</div>
+                  <div className="text-[10px] text-charcoal-muted truncate">Mangal Soren</div>
                 </div>
               </button>
 
               <button
                 type="button"
-                onClick={() => handleQuickFill('Govt Admin', 'admin@jharkhand.gov.in', 'Johar@2026')}
-                className="p-2.5 rounded-xl border border-charcoal-border hover:border-sand-500 bg-canvas/60 hover:bg-sand-50 text-left transition-colors flex items-center gap-2"
+                onClick={() => handleQuickFill('Panchayat Officer', 'panchayat@baghmara.gov.in', 'Johar@2026')}
+                className="p-2.5 rounded-xl border border-charcoal-border hover:border-emerald-500 bg-canvas/60 hover:bg-emerald-50 text-left transition-colors flex items-center gap-2 cursor-pointer"
               >
-                <div className="w-6 h-6 rounded-lg bg-sand/20 text-sand-800 flex items-center justify-center font-bold text-xs">
-                  🏛️
+                <div className="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs shrink-0">
+                  📜
                 </div>
-                <div>
-                  <div className="font-bold text-charcoal">Govt Officer</div>
-                  <div className="text-[10px] text-charcoal-muted">24-Dist GIS</div>
+                <div className="min-w-0">
+                  <div className="font-bold text-charcoal truncate">Panchayat</div>
+                  <div className="text-[10px] text-charcoal-muted truncate">Baghmara Sec</div>
+                </div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleQuickFill('College Student', 'student@bitmesra.ac.in', 'Johar@2026')}
+                className="p-2.5 rounded-xl border border-charcoal-border hover:border-indigo-400 bg-canvas/60 hover:bg-indigo-50 text-left transition-colors flex items-center gap-2 cursor-pointer"
+              >
+                <div className="w-6 h-6 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-xs shrink-0">
+                  🎒
+                </div>
+                <div className="min-w-0">
+                  <div className="font-bold text-charcoal truncate">Student Lead</div>
+                  <div className="text-[10px] text-charcoal-muted truncate">Rahul Verma</div>
                 </div>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleQuickFill('HEI Faculty', 'faculty@bitmesra.ac.in', 'Johar@2026')}
-                className="p-2.5 rounded-xl border border-charcoal-border hover:border-blue-400 bg-canvas/60 hover:bg-blue-50 text-left transition-colors flex items-center gap-2"
+                className="p-2.5 rounded-xl border border-charcoal-border hover:border-blue-400 bg-canvas/60 hover:bg-blue-50 text-left transition-colors flex items-center gap-2 cursor-pointer"
               >
-                <div className="w-6 h-6 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs">
+                <div className="w-6 h-6 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs shrink-0">
                   🎓
                 </div>
-                <div>
-                  <div className="font-bold text-charcoal">HEI Mentor</div>
-                  <div className="text-[10px] text-charcoal-muted">BIT Mesra</div>
+                <div className="min-w-0">
+                  <div className="font-bold text-charcoal truncate">HEI Faculty</div>
+                  <div className="text-[10px] text-charcoal-muted truncate">Dr. Ananya Sen</div>
                 </div>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleQuickFill('CSR Corporate', 'csr@tatasteel.com', 'Johar@2026')}
-                className="p-2.5 rounded-xl border border-charcoal-border hover:border-amber-400 bg-canvas/60 hover:bg-amber-50 text-left transition-colors flex items-center gap-2"
+                className="p-2.5 rounded-xl border border-charcoal-border hover:border-amber-400 bg-canvas/60 hover:bg-amber-50 text-left transition-colors flex items-center gap-2 cursor-pointer"
               >
-                <div className="w-6 h-6 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xs">
+                <div className="w-6 h-6 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xs shrink-0">
                   🏢
                 </div>
-                <div>
-                  <div className="font-bold text-charcoal">CSR Sponsor</div>
-                  <div className="text-[10px] text-charcoal-muted">Tata Steel</div>
+                <div className="min-w-0">
+                  <div className="font-bold text-charcoal truncate">CSR Sponsor</div>
+                  <div className="text-[10px] text-charcoal-muted truncate">Tata Steel Dir</div>
+                </div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleQuickFill('Govt Admin', 'admin@jharkhand.gov.in', 'Johar@2026')}
+                className="p-2.5 rounded-xl border border-charcoal-border hover:border-sand-500 bg-canvas/60 hover:bg-sand-50 text-left transition-colors flex items-center gap-2 cursor-pointer"
+              >
+                <div className="w-6 h-6 rounded-lg bg-sand/20 text-sand-800 flex items-center justify-center font-bold text-xs shrink-0">
+                  🏛️
+                </div>
+                <div className="min-w-0">
+                  <div className="font-bold text-charcoal truncate">Govt Officer</div>
+                  <div className="text-[10px] text-charcoal-muted truncate">Dr. R. Soren, IAS</div>
                 </div>
               </button>
             </div>
