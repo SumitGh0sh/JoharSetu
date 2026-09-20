@@ -108,9 +108,11 @@ export default function NepCertificateModal({
           </div>
 
           {/* Credit Details */}
-          <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full bg-sand-100 border border-sand-300 text-charcoal text-[11px] sm:text-xs font-bold mb-6 sm:mb-8 shadow-soft">
+          <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full bg-sand-100 border border-sand-300 text-charcoal text-[11px] sm:text-xs font-bold mb-6 sm:mb-8 shadow-soft flex-wrap justify-center">
             <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-sand-800 shrink-0" />
             <span>Academic Credits: 4 Credits (NEP Capstone)</span>
+            <span className="text-sand-400">•</span>
+            <span className="text-purple-900 font-mono">Soulbound SBT #1</span>
             <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-700 shrink-0" />
           </div>
 
@@ -126,7 +128,8 @@ export default function NepCertificateModal({
               <div className="w-14 h-14 sm:w-16 sm:h-16 bg-white p-1 rounded-lg border border-charcoal-border/50 shadow-soft flex items-center justify-center mb-1">
                 <QrCode className="w-10 h-10 sm:w-12 sm:h-12 text-charcoal" />
               </div>
-              <p className="text-[9px] font-mono text-charcoal-muted">Verified SHA-256</p>
+              <p className="text-[9px] font-mono text-purple-900 font-bold">Polygon Amoy SBT</p>
+              <p className="text-[8px] font-mono text-charcoal-muted">0xe7f1...0512</p>
             </div>
 
             <div className="flex flex-col items-center sm:items-end sm:text-right">

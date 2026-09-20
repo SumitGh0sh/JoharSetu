@@ -57,6 +57,22 @@ export default function UserProfileActivityHub({
   const [copiedLink, setCopiedLink] = useState(false);
   const [exportingCert, setExportingCert] = useState(false);
   const [exportSuccess, setExportSuccess] = useState(false);
+  const [copiedContract, setCopiedContract] = useState(false);
+
+  const [sbtCredential, setSbtCredential] = useState<{
+    tokenId: number;
+    studentName: string;
+    studentRollNumber: string;
+    abcId: string;
+    heiName: string;
+    ticketId: string;
+    nepCredits: number;
+    nssHours: number;
+    issuedAt: string;
+    contractAddress: string;
+    transactionHash: string;
+    explorerUrl: string;
+  } | null>(null);
 
   const [user, setUser] = useState<{
     id: string;
@@ -92,6 +108,16 @@ export default function UserProfileActivityHub({
       .then((data) => {
         if (data?.authenticated && data?.user) {
           setUser(data.user);
+        }
+      })
+      .catch(() => {});
+
+    // Fetch on-chain Soulbound Token credential
+    fetch('/api/blockchain/credentials?tokenId=1')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.success && data?.credential) {
+          setSbtCredential(data.credential);
         }
       })
       .catch(() => {});
@@ -882,24 +908,47 @@ export default function UserProfileActivityHub({
                     <Shield className="w-6 h-6 text-terracotta" />
                   </div>
                   <div>
-                    <span className="text-[10px] font-mono tracking-widest text-terracotta-700 uppercase font-black block">
-                      DigiLocker Certified Verifiable Transcript
-                    </span>
-                    <h3 className="text-lg sm:text-xl font-black text-charcoal">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-[10px] font-mono tracking-widest text-terracotta-700 uppercase font-black block">
+                        DigiLocker Certified Verifiable Transcript
+                      </span>
+                      <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-purple-100 text-purple-900 border border-purple-300 flex items-center gap-1">
+                        <span>Polygon Amoy</span>
+                      </span>
+                      <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center gap-1">
+                        <CheckCircle2 className="w-3 h-3 text-emerald-700" />
+                        <span>Soulbound SBT #{sbtCredential?.tokenId || 1}</span>
+                      </span>
+                    </div>
+                    <h3 className="text-lg sm:text-xl font-black text-charcoal mt-0.5">
                       Department of Higher & Technical Education, Government of Jharkhand
                     </h3>
                   </div>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={handleExportTranscript}
-                  disabled={exportingCert}
-                  className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-terracotta to-amber-600 hover:from-terracotta-600 hover:to-amber-700 text-white text-xs font-black shadow-md hover:scale-105 active:scale-95 transition-all flex items-center gap-2 cursor-pointer self-start sm:self-auto shrink-0"
-                >
-                  <Download className="w-4 h-4" />
-                  <span>{exportingCert ? 'Generating...' : exportSuccess ? 'Transcript Saved!' : 'Download Official PDF'}</span>
-                </button>
+                <div className="flex items-center gap-2 self-start sm:self-auto flex-wrap">
+                  {sbtCredential?.explorerUrl && (
+                    <a
+                      href={sbtCredential.explorerUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3.5 py-2.5 rounded-2xl bg-purple-50 hover:bg-purple-100 text-purple-800 border border-purple-300 text-xs font-black shadow-xs hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 shrink-0"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      <span>Polygonscan Proof</span>
+                    </a>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={handleExportTranscript}
+                    disabled={exportingCert}
+                    className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-terracotta to-amber-600 hover:from-terracotta-600 hover:to-amber-700 text-white text-xs font-black shadow-md hover:scale-105 active:scale-95 transition-all flex items-center gap-2 cursor-pointer shrink-0"
+                  >
+                    <Download className="w-4 h-4" />
+                    <span>{exportingCert ? 'Generating...' : exportSuccess ? 'Transcript Saved!' : 'Download Official PDF'}</span>
+                  </button>
+                </div>
               </div>
 
               {/* Certificate Telemetry Grid */}
@@ -907,18 +956,63 @@ export default function UserProfileActivityHub({
                 <div>
                   <span className="text-[10px] uppercase text-charcoal-muted font-bold block">Candidate</span>
                   <span className="font-black text-charcoal text-sm">{user.fullName}</span>
+                  <span className="text-[10px] text-charcoal-muted font-mono block">Roll: {sbtCredential?.studentRollNumber || '22JE0451'}</span>
                 </div>
                 <div>
                   <span className="text-[10px] uppercase text-charcoal-muted font-bold block">ABC Identifier</span>
-                  <span className="font-mono text-terracotta font-black text-sm">ABC-JH-2026-88912</span>
+                  <span className="font-mono text-terracotta font-black text-sm">{sbtCredential?.abcId || 'ABC-JH-2026-88912'}</span>
+                  <span className="text-[10px] text-charcoal-muted block">Academic Bank of Credits</span>
                 </div>
                 <div>
                   <span className="text-[10px] uppercase text-charcoal-muted font-bold block">Credits Awarded</span>
                   <span className="font-black text-jharkhand-forest text-sm">4.0 / 4.0 NEP Credits</span>
+                  <span className="text-[10px] text-charcoal-muted block">120 Verified NSS Hours</span>
                 </div>
                 <div>
-                  <span className="text-[10px] uppercase text-charcoal-muted font-bold block">Blockchain Hash</span>
-                  <span className="font-mono text-[10px] text-charcoal-muted truncate block">0x9a7b...ef125432</span>
+                  <span className="text-[10px] uppercase text-charcoal-muted font-bold block">Token Type</span>
+                  <span className="font-black text-purple-900 text-sm">Soulbound Token</span>
+                  <span className="text-[10px] text-purple-700 font-medium block">Non-Transferable (EIP-721)</span>
+                </div>
+              </div>
+
+              {/* On-Chain Verification Ledger Footer */}
+              <div className="pt-3 border-t border-charcoal-border/30 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className="text-[10px] uppercase font-mono font-bold text-charcoal-muted shrink-0">Contract:</span>
+                  <span className="font-mono text-[11px] text-charcoal truncate bg-white px-2 py-0.5 rounded border border-charcoal-border/30">
+                    {sbtCredential?.contractAddress || '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512'}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (typeof window !== 'undefined') {
+                        navigator.clipboard?.writeText(sbtCredential?.contractAddress || '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512');
+                        setCopiedContract(true);
+                        setTimeout(() => setCopiedContract(false), 2000);
+                      }
+                    }}
+                    className="p-1 rounded hover:bg-canvas text-charcoal-muted hover:text-charcoal cursor-pointer shrink-0"
+                    title="Copy Contract Address"
+                  >
+                    {copiedContract ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                  </button>
+                </div>
+
+                <div className="flex items-center gap-2 self-start sm:self-auto">
+                  <span className="text-[10px] uppercase font-mono font-bold text-charcoal-muted shrink-0">Tx:</span>
+                  {sbtCredential?.transactionHash ? (
+                    <a
+                      href={sbtCredential.explorerUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono text-[11px] text-purple-700 hover:underline flex items-center gap-1"
+                    >
+                      <span className="truncate max-w-[140px] sm:max-w-[200px]">{sbtCredential.transactionHash}</span>
+                      <ExternalLink className="w-3 h-3 shrink-0" />
+                    </a>
+                  ) : (
+                    <span className="font-mono text-[10px] text-charcoal-muted truncate">0x9a7b...ef125432</span>
+                  )}
                 </div>
               </div>
             </div>

@@ -38,3 +38,11 @@ Thumbs.db
 
 # Uploaded evidence scratch
 public/uploads/evidence_*
+
+# Hardhat build artifacts and cache
+artifacts/
+artifacts_hardhat/
+cache/
+cache_hardhat/
+typechain-types/
+
